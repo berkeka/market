@@ -50,5 +50,10 @@ namespace Market
             main.Content = NewWindow;
             */
         }
+
+        private void MusteriButtonClicked(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

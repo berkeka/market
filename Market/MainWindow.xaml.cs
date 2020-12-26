@@ -46,5 +46,10 @@ namespace Market
             
 
         }
+
+        private void RaporButtonClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
