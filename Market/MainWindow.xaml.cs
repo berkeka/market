@@ -24,5 +24,14 @@ namespace Market
         {
             InitializeComponent();
         }
+        private void SatisButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // Check authentication then change window
+            SaleWindow NewWindow = new SaleWindow();
+
+            this.Title = NewWindow.Title;
+            this.Content = NewWindow;
+
+        }
     }
 }
