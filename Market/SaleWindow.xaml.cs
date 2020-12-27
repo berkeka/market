@@ -53,7 +53,12 @@ namespace Market
 
         private void MusteriButtonClicked(object sender, RoutedEventArgs e)
         {
-            
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            CustomerWindow NewWindow = new CustomerWindow();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
         }
     }
 }
