@@ -10,7 +10,15 @@
 
     <Grid>
         <Label Content="Müşteriler" HorizontalAlignment="Left" Margin="51,49,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="CustomerList" HorizontalAlignment="Left" Height="300" Margin="51,75,0,0" VerticalAlignment="Top" Width="438"/>
+        <ListView x:Name="CustomerList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="500">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="İsim" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                    <GridViewColumn Header="Soyisim" DisplayMemberBinding="{Binding LastName}" Width="200"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Label Content="İsim" HorizontalAlignment="Left" Margin="600,49,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="NameText" HorizontalAlignment="Left" Height="30" Margin="600,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
         <Button Content="Ekle" Click="EkleButtonClicked" HorizontalAlignment="Left" Margin="610,250,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
