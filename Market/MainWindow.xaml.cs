@@ -22,15 +22,34 @@ namespace Market
     {
         public MainWindow()
         {
+            MarketDBInitializer.initDB(new MarketDBContext());
             InitializeComponent();
         }
         private void SatisButtonClicked(object sender, RoutedEventArgs e)
         {
-            // Check authentication then change window
-            SaleWindow NewWindow = new SaleWindow();
+            // Show loginwindow
+            LogInWindow Login = new LogInWindow();
+            var ReturnValue=  Login.ShowDialog();
+            // After login is successful
 
-            this.Title = NewWindow.Title;
-            this.Content = NewWindow;
+            if (ReturnValue == true)
+            {
+                // Login is succesful
+                SaleWindow NewWindow = new SaleWindow();
+
+                this.Title = NewWindow.Title;
+                this.Content = NewWindow;
+            }
+            else
+            {
+                // Login is unsuccesful
+            }
+            
+
+        }
+
+        private void RaporButtonClicked(object sender, RoutedEventArgs e)
+        {
 
         }
     }

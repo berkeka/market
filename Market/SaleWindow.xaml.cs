@@ -24,5 +24,36 @@ namespace Market
         {
             InitializeComponent();
         }
+        private void PesinButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // Gets the instance of MainWindow
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            SaleCartWindow NewWindow = new SaleCartWindow();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
+
+        }
+        private void CariButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // First select a customer 
+            // Then proceed to the salecart window
+            // Need to pass CustomerID to the new page
+
+            /*
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            SaleCartWindow NewWindow = new SaleCartWindow();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
+            */
+        }
+
+        private void MusteriButtonClicked(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

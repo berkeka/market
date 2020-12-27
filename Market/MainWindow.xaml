@@ -8,6 +8,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button Content="Satış" Click="SatisButtonClicked" HorizontalAlignment="Left" Margin="200,100,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        
+        <Button Content="Rapor" Click="RaporButtonClicked" HorizontalAlignment="Left" Margin="498,100,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
     </Grid>
 </Window>
