@@ -22,6 +22,7 @@ namespace Market
     {
         public MainWindow()
         {
+            MarketDBInitializer.initDB(new MarketDBContext());
             InitializeComponent();
         }
         private void SatisButtonClicked(object sender, RoutedEventArgs e)
