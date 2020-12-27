@@ -15,8 +15,16 @@
         <Button Content="Ekle" Click="EkleButtonClicked" HorizontalAlignment="Left" Margin="715,152,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="Cikar" Click="CikarButtonClicked" HorizontalAlignment="Left" Margin="610,152,0,0" VerticalAlignment="Top" Width="75"/>
         <Button Content="Tamamla" Click="TamamlaButtonClicked" HorizontalAlignment="Left" Margin="289,348,0,0" VerticalAlignment="Top" Width="100" Height="40"/>
-        <ListBox x:Name="ItemList" HorizontalAlignment="Left" Height="202" Margin="51,95,0,0" VerticalAlignment="Top" Width="506"/>
         <Label x:Name="SumLabel" HorizontalAlignment="Left" Margin="492,297,0,0" VerticalAlignment="Top" Height="28" Width="65"/>
-        
+        <ListView x:Name="ItemList" HorizontalAlignment="Left" Height="202" Margin="51,95,0,0" VerticalAlignment="Top" Width="500">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Product Name" Width="300"/>
+                    <GridViewColumn Header="Amount" Width="100"/>
+                    <GridViewColumn Header="Price" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Page>
