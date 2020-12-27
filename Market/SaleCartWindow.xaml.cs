@@ -31,6 +31,13 @@ namespace Market
             // Calculate sum value and change the label
 
         }
+
+        private void CikarButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // Remove the selected item from the list 
+            // Calculate sum value and change the label
+
+        }
         private void TamamlaButtonClicked(object sender, RoutedEventArgs e)
         {
             // Check if no problems exists
