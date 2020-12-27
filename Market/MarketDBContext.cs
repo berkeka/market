@@ -11,5 +11,7 @@ namespace Market
     class MarketDBContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Storage> Storages { get; set; }
     }
 }
