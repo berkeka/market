@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [ Release ]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
@@ -26,7 +26,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
               
       - name: Restore NuGet packages
-        run: nuget restore actions_deneme.sln
+        run: nuget restore Market.sln
         
       - name: Build the solution
-        run: msbuild actions_deneme.sln
+        run: msbuild Market.sln
