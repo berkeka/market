@@ -15,8 +15,10 @@ namespace Market
             if (!context.Database.Exists())
             {
                 User User1 = new User(1, "Admin", "12345", "admin", "admin");
+                Product Product1 = new Product("1", 1, "a", 1);
 
                 context.Users.Add(User1);
+                context.Products.Add(Product1);
                 context.SaveChanges();
             }
         }
