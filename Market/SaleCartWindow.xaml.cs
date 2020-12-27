@@ -111,13 +111,14 @@ namespace Market
         private void RefreshSum()
         {
             double sum = 0.0;
+            // Loop through each item in the list
             for (int i = 0; i < ItemList.Items.Count; i++)
             {
                 ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
 
                 sum += (pi.Amount * pi.Price);
             }
-
+            // Set content of the label to sum of all values
             SumLabel.Content = sum.ToString();
         }
 
