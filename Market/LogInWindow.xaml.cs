@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
+using Market.Entities;
 
 namespace Market
 {
@@ -26,19 +28,28 @@ namespace Market
 
         private void LoginButtonClicked(object sender, RoutedEventArgs e)
         {
+            var context = new MarketDBContext();
+
             // Get inputs from UsernameText PasswordText text boxes
+            string InputUsername = UsernameText.Text;
+            string InputPassword = PasswordText.Text;
 
             // Check if credientials are correct
 
-            // if correct close window
-            // this.DialogResult = true;
+            // hash input password here 
 
-            // else try again
+            var query = context.Users.Where(s => s.Username == InputUsername && 
+                                            s.PasswordHash == InputPassword);
 
-            this.DialogResult = false;
-
-
-
+            if(query.Count() != 0)
+            {
+                this.DialogResult = true;
+            }
+            else
+            {
+                MessageBox.Show("Username or Password is wrong!");
+                this.DialogResult = false;
+            }
         }
     }
 }
