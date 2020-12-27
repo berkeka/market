@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Market.Entities;
 
 namespace Market
 {
@@ -27,8 +28,59 @@ namespace Market
 
         private void EkleButtonClicked(object sender, RoutedEventArgs e)
         {
-            // Add item to list 
-            // Calculate sum value and change the label
+            var context = new MarketDBContext();
+            var InputBarcode = BarcodeText.Text;
+            int Amount;
+
+            if(AmountText.Text != "")
+            {
+                // Parse amount value
+                Amount = int.Parse(AmountText.Text);
+
+                var query = context.Products.Where(s => s.Barcode == InputBarcode);
+
+                if (query.Any() && Amount > 0)
+                {
+                    // Create object for new item
+                    Product p = query.First();
+                    ProductItem pi = new ProductItem(p, Amount);
+
+                    bool productInList = false;
+
+                    for (int i = 0; i < ItemList.Items.Count; i++)
+                    {
+                        ProductItem piFromWindow = (ProductItem)ItemList.Items.GetItemAt(i);
+                          
+                        // If product was already in the list
+                        if (piFromWindow.Barcode == pi.Barcode)
+                        {
+                            productInList = true;
+                            piFromWindow.Amount += pi.Amount;
+                            ItemList.Items.Remove(piFromWindow);
+                            ItemList.Items.Add(piFromWindow);
+                            
+                        }
+
+                    }
+                    
+                    // If product wasn't already in the list 
+                    if(!productInList)
+                    {
+                        ItemList.Items.Add(pi);
+                    }
+
+                    // Calculate new sum
+                    RefreshSum();
+                }
+                else
+                {
+                    MessageBox.Show("Couldn't find Product");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Wrong Amount!");
+            }
 
         }
 
@@ -43,6 +95,35 @@ namespace Market
             // Check if no problems exists
         }
 
+        private void RefreshSum()
+        {
+            double sum = 0.0;
+            for (int i = 0; i < ItemList.Items.Count; i++)
+            {
+                ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+
+                sum += (pi.Amount * pi.Price);
+            }
+
+            SumLabel.Content = sum.ToString();
+        }
+
+
+    }
+
+    class ProductItem : Product
+    {
+        public int Amount { get; set; }
+
+        public ProductItem() { }
+        public ProductItem(Product p, int Amount)
+        {
+            this.Barcode = p.Barcode;
+            this.ID = p.ID;
+            this.Name = p.Name;
+            this.Price = p.Price;
+            this.Amount = Amount;
+        }
 
     }
 }
