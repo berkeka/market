@@ -45,6 +45,7 @@ namespace Market
                     Product p = query.First();
                     ProductItem pi = new ProductItem(p, Amount);
 
+                    // Check if the added item was already in the list
                     bool productInList = false;
 
                     for (int i = 0; i < ItemList.Items.Count; i++)
@@ -86,6 +87,18 @@ namespace Market
 
         private void CikarButtonClicked(object sender, RoutedEventArgs e)
         {
+            // Get selected items
+            var List = ItemList.SelectedItems;
+
+            // Loop through items
+            for (int i = 0; i < List.Count; i++)
+            {
+                // Remove each one of them
+                ItemList.Items.Remove(List[i]);
+                // Calculate sum after each removal
+                RefreshSum();
+            }
+
             // Remove the selected item from the list 
             // Calculate sum value and change the label
 
