@@ -121,8 +121,8 @@ namespace Market
             context.Sales.Add(sale);
             context.SaveChanges();
 
-            // Get the ID of the newly created Sale
-            Sale s = (Sale)context.Sales.Where(x => x.CustomerID == CustomerID).First();
+            // Use the newly created sale's id
+            Sale s = (Sale)context.Sales.Find(sale.ID);
 
             // For each product in the listview create a Product-Sale duo and save them to the database
             for (int i = 0; i < ItemList.Items.Count; i++)
