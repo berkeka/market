@@ -36,10 +36,11 @@ namespace Market
             if (ReturnValue == true)
             {
                 // Login is succesful
+                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
                 SalePage NewWindow = new SalePage();
 
-                this.Title = NewWindow.Title;
-                this.Content = NewWindow;
+                main.Title = NewWindow.Title;
+                main.Content = NewWindow;
             }
             else
             {

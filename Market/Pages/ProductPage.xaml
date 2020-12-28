@@ -26,6 +26,9 @@
         <Label Content="Fiyat" HorizontalAlignment="Left" Margin="600,203,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="PriceText" HorizontalAlignment="Left" Height="30" Margin="600,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
         <Button Content="Ekle" Click="EkleButtonClicked" HorizontalAlignment="Left" Margin="600,290,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
+        <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
+        </Button>
 
     </Grid>
 </Page>

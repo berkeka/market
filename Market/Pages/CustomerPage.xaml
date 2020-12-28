@@ -24,5 +24,8 @@
         <Button Content="Ekle" Click="EkleButtonClicked" HorizontalAlignment="Left" Margin="610,250,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
         <Label Content="Soyisim" HorizontalAlignment="Left" Margin="600,150,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="SurnameText" HorizontalAlignment="Left" Height="30" Margin="600,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
+        </Button>
     </Grid>
 </Page>

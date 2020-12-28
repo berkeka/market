@@ -52,5 +52,17 @@ namespace Market.Pages
 
             List.ItemsSource = context.Products.ToList<Product>();
         }
+
+        private void HomeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
+        }
     }
 }
