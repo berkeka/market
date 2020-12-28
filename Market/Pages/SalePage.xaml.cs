@@ -19,9 +19,9 @@ namespace Market
     /// <summary>
     /// Interaction logic for SaleWindow.xaml
     /// </summary>
-    public partial class SaleWindow : Page
+    public partial class SalePage : Page
     {
-        public SaleWindow()
+        public SalePage()
         {
             InitializeComponent();
         }
@@ -30,7 +30,7 @@ namespace Market
             // Gets the instance of MainWindow
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-            SaleCartWindow NewWindow = new SaleCartWindow();
+            SaleCartPage NewWindow = new SaleCartPage();
 
             main.Title = NewWindow.Title;
             main.Content = NewWindow;
@@ -56,7 +56,7 @@ namespace Market
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
-            CustomerWindow NewWindow = new CustomerWindow();
+            CustomerPage NewWindow = new CustomerPage();
 
             main.Title = NewWindow.Title;
             main.Content = NewWindow;

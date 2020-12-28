@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Market.Pages;
 
 namespace Market
 {
@@ -35,7 +36,7 @@ namespace Market
             if (ReturnValue == true)
             {
                 // Login is succesful
-                SaleWindow NewWindow = new SaleWindow();
+                SalePage NewWindow = new SalePage();
 
                 this.Title = NewWindow.Title;
                 this.Content = NewWindow;

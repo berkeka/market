@@ -13,15 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Market.Entities;
+using Market.Pages;
 
 namespace Market
 {
     /// <summary>
     /// Interaction logic for SaleCartWindow.xaml
     /// </summary>
-    public partial class SaleCartWindow : Page
+    public partial class SaleCartPage : Page
     {
-        public SaleCartWindow()
+        public SaleCartPage()
         {
             InitializeComponent();
         }

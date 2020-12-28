@@ -18,9 +18,9 @@ namespace Market
     /// <summary>
     /// Interaction logic for CustomerWindow.xaml
     /// </summary>
-    public partial class CustomerWindow : Page
+    public partial class CustomerPage : Page
     {
-        public CustomerWindow()
+        public CustomerPage()
         {
             InitializeComponent();
         }

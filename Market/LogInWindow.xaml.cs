@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
 using Market.Entities;
+using Market.Pages;
 
 namespace Market
 {
