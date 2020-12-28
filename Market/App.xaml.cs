@@ -13,6 +13,7 @@ namespace Market
     /// </summary>
     public partial class App : Application
     {
+        // Some Application level variable to keep session data
         public static DateTime LastLogin { get; set; }
         public static int LoggedUser { get; set; }
     }

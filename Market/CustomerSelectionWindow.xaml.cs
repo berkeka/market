@@ -33,11 +33,13 @@ namespace Market
         private void SecButtonClicked(object sender, RoutedEventArgs e)
         {
             var selection = CustomerList.SelectedItem;
-
+            // Selection not being null means we can continue to the cart
             if(selection != null)
             {
+                // Hand over the customerID info to the cart
                 var customer = (Customer)selection;
                 this.selectedCustomerID = customer.ID;
+                // Set dialogresult to true so we can move on to the cart
                 this.DialogResult = true;
                 this.Close();
             }

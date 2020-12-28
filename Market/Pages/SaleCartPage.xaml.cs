@@ -117,12 +117,14 @@ namespace Market
             {
                 sale.CustomerID = CustomerID;
             }
-
+            // Since ID is generated automatically we save sale to the database and then get its ID
             context.Sales.Add(sale);
             context.SaveChanges();
 
+            // Get the ID of the newly created Sale
             Sale s = (Sale)context.Sales.Where(x => x.CustomerID == CustomerID).First();
 
+            // For each product in the listview create a Product-Sale duo and save them to the database
             for (int i = 0; i < ItemList.Items.Count; i++)
             {
                 ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
@@ -132,6 +134,7 @@ namespace Market
             }
 
             context.SaveChanges();
+            // Clear the list after sale is complete
             ItemList.Items.Clear();
             MessageBox.Show("Completed Sale");
         }
