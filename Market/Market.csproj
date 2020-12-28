@@ -65,6 +65,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomerSelectionWindow.xaml.cs">
+      <DependentUpon>CustomerSelectionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entities\ProductSale.cs" />
     <Compile Include="Entities\Sale.cs" />
     <Compile Include="Pages\CustomerPage.xaml.cs">
@@ -88,6 +91,10 @@
     <Compile Include="Pages\SalePage.xaml.cs">
       <DependentUpon>SalePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomerSelectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CustomerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

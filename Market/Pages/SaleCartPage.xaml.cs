@@ -22,6 +22,7 @@ namespace Market
     /// </summary>
     public partial class SaleCartPage : Page
     {
+        public int SelectedCustomerID { get; set; }
         public SaleCartPage()
         {
             InitializeComponent();
@@ -106,7 +107,33 @@ namespace Market
         }
         private void TamamlaButtonClicked(object sender, RoutedEventArgs e)
         {
-            // Check if no problems exists
+            var context = new MarketDBContext();
+
+            int CustomerID = this.SelectedCustomerID;
+            Sale sale = new Sale();
+            // If there is a selected Customer (This means that we will continue with the "Cari" sale)
+            // Else continue with the "Peşin" sale
+            if (CustomerID != 0)
+            {
+                sale.CustomerID = CustomerID;
+            }
+
+            context.Sales.Add(sale);
+            context.SaveChanges();
+
+            Sale s = (Sale)context.Sales.Where(x => x.CustomerID == CustomerID).First();
+
+            for (int i = 0; i < ItemList.Items.Count; i++)
+            {
+                ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+                ProductSale ps = new ProductSale(pi.ID, s.ID, pi.Amount);
+
+                context.ProductSales.Add(ps);
+            }
+
+            context.SaveChanges();
+            ItemList.Items.Clear();
+            MessageBox.Show("Completed Sale");
         }
 
         private void RefreshSum()

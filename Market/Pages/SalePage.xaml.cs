@@ -38,18 +38,22 @@ namespace Market
         }
         private void CariButtonClicked(object sender, RoutedEventArgs e)
         {
-            // First select a customer 
-            // Then proceed to the salecart window
-            // Need to pass CustomerID to the new page
+            CustomerSelectionWindow csw = new CustomerSelectionWindow();
 
-            /*
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            bool returnValue = (bool)csw.ShowDialog();
 
-            SaleCartWindow NewWindow = new SaleCartWindow();
+            if(returnValue == true)
+            {
+                int sc = csw.selectedCustomerID;
 
-            main.Title = NewWindow.Title;
-            main.Content = NewWindow;
-            */
+                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+                SaleCartPage NewWindow = new SaleCartPage();
+                NewWindow.SelectedCustomerID = sc;
+
+                main.Title = NewWindow.Title;
+                main.Content = NewWindow;
+            }
         }
 
         private void MusteriButtonClicked(object sender, RoutedEventArgs e)

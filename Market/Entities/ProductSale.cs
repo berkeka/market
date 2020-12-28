@@ -12,5 +12,13 @@ namespace Market.Entities
         public int ProductID { get; set; }
         public int SaleID { get; set; }
         public double Amount { get; set; }
+
+        public ProductSale() { }
+        public ProductSale(int ProductID, int SaleID, float Amount)
+        {
+            this.ProductID = ProductID;
+            this.SaleID = SaleID;
+            this.Amount = Amount;
+        }
     }
 }
