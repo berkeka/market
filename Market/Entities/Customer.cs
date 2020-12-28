@@ -11,6 +11,7 @@ namespace Market.Entities
         public int ID { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+        public List<Sale> Sales { get; set; }
         public Customer()
         {
         }
