@@ -13,15 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Market.Entities;
+using Market.Pages;
 
 namespace Market
 {
     /// <summary>
     /// Interaction logic for SaleCartWindow.xaml
     /// </summary>
-    public partial class SaleCartWindow : Page
+    public partial class SaleCartPage : Page
     {
-        public SaleCartWindow()
+        public SaleCartPage()
         {
             InitializeComponent();
         }
@@ -122,6 +123,17 @@ namespace Market
             SumLabel.Content = sum.ToString();
         }
 
+        private void HomeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
+        }
 
     }
 

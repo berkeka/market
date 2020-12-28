@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Market.Pages;
 
 namespace Market
 {
@@ -22,30 +23,48 @@ namespace Market
     {
         public MainWindow()
         {
+            // If this is first run of the app 
+            // Initialize session values
+            if (App.LastLogin == null) {
+                App.LastLogin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                App.LoggedUser = 0;
+            }
+
             MarketDBInitializer.initDB(new MarketDBContext());
             InitializeComponent();
         }
         private void SatisButtonClicked(object sender, RoutedEventArgs e)
         {
-            // Show loginwindow
-            LogInWindow Login = new LogInWindow();
-            var ReturnValue=  Login.ShowDialog();
+            var ReturnValue = false;
+            // If last login was in the last 5 minutes
+
+            if ((DateTime.Now - App.LastLogin).TotalMinutes < 5)
+            {
+                // No need for login
+                ReturnValue = true;
+                
+            }
+            else
+            {
+                // Show loginwindow
+                LogInWindow Login = new LogInWindow();
+                ReturnValue = (bool)Login.ShowDialog();
+            }
+            
             // After login is successful
 
             if (ReturnValue == true)
             {
                 // Login is succesful
-                SaleWindow NewWindow = new SaleWindow();
+                // Set LastLogin time
+                App.LastLogin = DateTime.Now;
+                // Change page
+                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                SalePage NewWindow = new SalePage();
 
-                this.Title = NewWindow.Title;
-                this.Content = NewWindow;
+                main.Title = NewWindow.Title;
+                main.Content = NewWindow;
             }
-            else
-            {
-                // Login is unsuccesful
-            }
-            
-
         }
 
         private void RaporButtonClicked(object sender, RoutedEventArgs e)

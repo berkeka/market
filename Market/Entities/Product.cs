@@ -15,11 +15,9 @@ namespace Market.Entities
         public Product()
         {
         }
-        public Product(string Barcode, int ID, string Name, float Price)
+        public Product(string Barcode, string Name, float Price)
         {
-            // Fix me - Implement auto incremented id
             this.Barcode = Barcode;
-            this.ID = ID;
             this.Name = Name;
             this.Price = Price;
         }

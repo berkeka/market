@@ -18,9 +18,9 @@ namespace Market
     /// <summary>
     /// Interaction logic for CustomerWindow.xaml
     /// </summary>
-    public partial class CustomerWindow : Page
+    public partial class CustomerPage : Page
     {
-        public CustomerWindow()
+        public CustomerPage()
         {
             InitializeComponent();
         }
@@ -28,6 +28,21 @@ namespace Market
         private void EkleButtonClicked(object sender, RoutedEventArgs e)
         {
             //Add customer to the customers list if its already exists don't.
+        }
+
+        private void HomeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // Get the instance of the MainWindow
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            // Initialize new MainWindow
+            MainWindow new_main = new MainWindow();
+
+            // Rebuild mainWindow
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
         }
     }
 }

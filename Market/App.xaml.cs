@@ -13,5 +13,7 @@ namespace Market
     /// </summary>
     public partial class App : Application
     {
+        public static DateTime LastLogin { get; set; }
+        public static int LoggedUser { get; set; }
     }
 }

@@ -14,10 +14,8 @@ namespace Market.Entities
         public Customer()
         {
         }
-        public Customer(int ID, string Name, string LastName)
+        public Customer(string Name, string LastName)
         {
-            // Fix me - Implement auto incremented id
-            this.ID = ID;
             this.Name = Name;
             this.LastName = LastName;
         }
