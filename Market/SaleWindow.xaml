@@ -12,5 +12,6 @@
         <Button Content="Peşin" Click="PesinButtonClicked" HorizontalAlignment="Left" Margin="91,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
         <Button Content="Cari" Click="CariButtonClicked" HorizontalAlignment="Left" Margin="241,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
         <Button Content="Müşteri Oluştur" Click="MusteriButtonClicked" HorizontalAlignment="Left" Margin="602,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Ürün Oluştur" Click="UrunButtonClicked" HorizontalAlignment="Left" Margin="467,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
     </Grid>
 </Page>

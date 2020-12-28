@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Market.Pages;
 
 namespace Market
 {
@@ -59,6 +60,16 @@ namespace Market
 
             main.Title = NewWindow.Title;
             main.Content = NewWindow;
+        }
+
+        private void UrunButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            ProductPage NewPage = new ProductPage();
+
+            main.Title = NewPage.Title;
+            main.Content = NewPage;
         }
     }
 }
