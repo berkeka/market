@@ -39,7 +39,7 @@ namespace Market.Pages
 
             // Check inputs for exceptions
 
-            Product p = new Product(InputBarcode, 1, InputName, InputPrice);
+            Product p = new Product(InputBarcode, InputName, InputPrice);
 
             context.Products.Add(p);
             context.SaveChanges();
