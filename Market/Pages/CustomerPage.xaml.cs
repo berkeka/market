@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Market.Entities;
+using Market.Pages;
 
 namespace Market
 {
@@ -23,11 +25,49 @@ namespace Market
         public CustomerPage()
         {
             InitializeComponent();
+            RefreshList(CustomerList);
+        }
+        
+        private void EkleButtonClicked(object sender, RoutedEventArgs e)
+        {            
+            var context = new MarketDBContext();
+
+            string InputName = NameText.Text;
+            string InputLastName = LastNameText.Text;
+            
+
+            if (NameText.Text != "" || LastNameText.Text != "" || IDNumberText.Text != "")
+            {
+                long InputIDNumber = long.Parse(IDNumberText.Text);
+                var query = context.Customers.Where(s => s.IDNumber == InputIDNumber);
+                if (query.Count() == 0) 
+                {
+                    //if customer was not registered.
+                    Customer cst = new Customer(InputName, InputLastName, InputIDNumber);
+
+                    context.Customers.Add(cst);
+                    context.SaveChanges();
+                    RefreshList(CustomerList);
+                    NameText.Text = String.Empty;
+                    LastNameText.Text = String.Empty;
+                    IDNumberText.Text = String.Empty;
+                }
+                else
+                {
+                    MessageBox.Show("Customer was registered before.");
+                }
+            }
+            else 
+            {
+                MessageBox.Show("Please fill name, lastname and id!");
+            }
         }
 
-        private void EkleButtonClicked(object sender, RoutedEventArgs e)
+        public void RefreshList(ListView List)
         {
-            //Add customer to the customers list if its already exists don't.
+            var context = new MarketDBContext();
+
+            List.ItemsSource = context.Customers.ToList<Customer>();
         }
 
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
