@@ -76,6 +76,16 @@ namespace Market
             main.Content = NewPage;
         }
 
+        private void UrunGirisButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            ProductIntakePage NewPage = new ProductIntakePage();
+
+            main.Title = NewPage.Title;
+            main.Content = NewPage;
+        }
+
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
