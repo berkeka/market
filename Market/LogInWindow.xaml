@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Market"
         mc:Ignorable="d"
+        ResizeMode="CanMinimize"
         Title="LogInWindow" Height="300" Width="400">
     <Grid>
         <Label Content="Username" HorizontalAlignment="Left" Margin="112,70,0,0" VerticalAlignment="Top"/>
