@@ -25,10 +25,7 @@ namespace Market
         {
             // If this is first run of the app 
             // Initialize session values
-            if (App.LastLogin == null) {
-                App.LastLogin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                App.LoggedUser = 0;
-            }
+            if (App.LastLogin == null) { App.DestroySession(); }
 
             MarketDBInitializer.initDB(new MarketDBContext());
             InitializeComponent();
@@ -42,7 +39,6 @@ namespace Market
             {
                 // No need for login
                 ReturnValue = true;
-                
             }
             else
             {
@@ -56,8 +52,8 @@ namespace Market
             if (ReturnValue == true)
             {
                 // Login is succesful
-                // Set LastLogin time
-                App.LastLogin = DateTime.Now;
+                // Set Session
+                App.CreateSession();
                 // Change page
                 MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
                 SalePage NewWindow = new SalePage();

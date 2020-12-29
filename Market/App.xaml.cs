@@ -16,5 +16,16 @@ namespace Market
         // Some Application level variable to keep session data
         public static DateTime LastLogin { get; set; }
         public static int LoggedUser { get; set; }
+
+        public static void CreateSession()
+        {
+            App.LastLogin = DateTime.Now;
+        }
+
+        public static void DestroySession()
+        {
+            App.LastLogin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            App.LoggedUser = 0;
+        }
     }
 }
