@@ -22,7 +22,24 @@ namespace Market
     /// </summary>
     public partial class SaleCartPage : Page
     {
-        public int SelectedCustomerID { get; set; }
+        public int SelectedCustomerID 
+        { 
+            get 
+            { 
+                return _SelectedCustomerID; 
+            } 
+            set 
+            {
+                _SelectedCustomerID = value;
+                if(_SelectedCustomerID != 0)
+                {
+                    var context = new MarketDBContext();
+                    Customer c = context.Customers.Find(SelectedCustomerID);
+                    CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
+                }
+            } 
+        }
+        private int _SelectedCustomerID;
         public SaleCartPage()
         {
             InitializeComponent();
