@@ -107,36 +107,44 @@ namespace Market
         }
         private void TamamlaButtonClicked(object sender, RoutedEventArgs e)
         {
-            var context = new MarketDBContext();
-
-            int CustomerID = this.SelectedCustomerID;
-            Sale sale = new Sale();
-            // If there is a selected Customer (This means that we will continue with the "Cari" sale)
-            // Else continue with the "Peşin" sale
-            if (CustomerID != 0)
+            
+            if (ItemList.Items.IsEmpty)
             {
-                sale.CustomerID = CustomerID;
+                MessageBox.Show("List is Empty");
             }
-            // Since ID is generated automatically we save sale to the database and then get its ID
-            context.Sales.Add(sale);
-            context.SaveChanges();
-
-            // Use the newly created sale's id
-            Sale s = (Sale)context.Sales.Find(sale.ID);
-
-            // For each product in the listview create a Product-Sale duo and save them to the database
-            for (int i = 0; i < ItemList.Items.Count; i++)
+            else
             {
-                ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
-                ProductSale ps = new ProductSale(pi.ID, s.ID, pi.Amount);
+                var context = new MarketDBContext();
 
-                context.ProductSales.Add(ps);
+                int CustomerID = this.SelectedCustomerID;
+                Sale sale = new Sale();
+                // If there is a selected Customer (This means that we will continue with the "Cari" sale)
+                // Else continue with the "Peşin" sale
+                if (CustomerID != 0)
+                {
+                    sale.CustomerID = CustomerID;
+                }
+                // Since ID is generated automatically we save sale to the database and then get its ID
+                context.Sales.Add(sale);
+                context.SaveChanges();
+
+                // Use the newly created sale's id
+                Sale s = (Sale)context.Sales.Find(sale.ID);
+
+                // For each product in the listview create a Product-Sale duo and save them to the database
+                for (int i = 0; i < ItemList.Items.Count; i++)
+                {
+                    ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+                    ProductSale ps = new ProductSale(pi.ID, s.ID, pi.Amount);
+
+                    context.ProductSales.Add(ps);
+                }
+
+                context.SaveChanges();
+                // Clear the list after sale is complete
+                ItemList.Items.Clear();
+                MessageBox.Show("Completed Sale");
             }
-
-            context.SaveChanges();
-            // Clear the list after sale is complete
-            ItemList.Items.Clear();
-            MessageBox.Show("Completed Sale");
         }
 
         private void RefreshSum()
