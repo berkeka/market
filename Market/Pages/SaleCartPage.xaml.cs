@@ -117,7 +117,7 @@ namespace Market
                 var context = new MarketDBContext();
 
                 int CustomerID = this.SelectedCustomerID;
-                Sale sale = new Sale();
+                Sale sale = new Sale(DateTime.Now);
                 // If there is a selected Customer (This means that we will continue with the "Cari" sale)
                 // Else continue with the "Peşin" sale
                 if (CustomerID != 0)

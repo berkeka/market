@@ -10,6 +10,13 @@ namespace Market.Entities
     {
         public int ID { get; set; }
         public int? CustomerID { get; set; }
+        public DateTime Date { get; set; }
         public List<ProductSale> ProductSales { get; set; }
+
+        public Sale() { }
+        public Sale(DateTime Date)
+        {
+            this.Date = Date;
+        }
     }
 }
