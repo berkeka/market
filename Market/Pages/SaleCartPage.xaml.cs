@@ -143,6 +143,7 @@ namespace Market
                 context.SaveChanges();
                 // Clear the list after sale is complete
                 ItemList.Items.Clear();
+                RefreshSum();
                 MessageBox.Show("Completed Sale");
             }
         }

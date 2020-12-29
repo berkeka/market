@@ -17,7 +17,7 @@
         <Button Content="Cikar" Click="CikarButtonClicked" HorizontalAlignment="Left" Margin="610,198,0,0" VerticalAlignment="Top" Width="60"/>
         <Button Content="Tamamla" Click="TamamlaButtonClicked" HorizontalAlignment="Left" Margin="289,348,0,0" VerticalAlignment="Top" Width="100" Height="40"/>
         <Label Content="Toplam" HorizontalAlignment="Left" Margin="457,299,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="SumLabel" HorizontalAlignment="Left" Margin="511,297,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
+        <Label x:Name="SumLabel" Content="0" HorizontalAlignment="Left" Margin="511,297,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
         <ListView x:Name="ItemList" HorizontalAlignment="Left" Height="202" Margin="51,95,0,0" VerticalAlignment="Top" Width="500">
             <ListView.View>
                 <GridView>
