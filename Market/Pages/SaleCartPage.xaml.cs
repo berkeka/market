@@ -22,6 +22,24 @@ namespace Market
     /// </summary>
     public partial class SaleCartPage : Page
     {
+        public int SelectedCustomerID 
+        { 
+            get 
+            { 
+                return _SelectedCustomerID; 
+            } 
+            set 
+            {
+                _SelectedCustomerID = value;
+                if(_SelectedCustomerID != 0)
+                {
+                    var context = new MarketDBContext();
+                    Customer c = context.Customers.Find(SelectedCustomerID);
+                    CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
+                }
+            } 
+        }
+        private int _SelectedCustomerID;
         public SaleCartPage()
         {
             InitializeComponent();
@@ -33,57 +51,47 @@ namespace Market
             var InputBarcode = BarcodeText.Text;
             int Amount;
 
-            if(AmountText.Text != "")
+            // If AmountText is empty
+            if(AmountText.Text == "") { MessageBox.Show("Wrong Amount!"); return; }
+
+            // Parse amount value
+            Amount = int.Parse(AmountText.Text);
+
+            var query = context.Products.Where(s => s.Barcode == InputBarcode);
+            // If no product exists with the given barcode
+            if (!query.Any()) { MessageBox.Show("Couldn't find Product"); return; }
+            // If amount isn't possible
+            if (Amount < 1) { MessageBox.Show("Wrong Amount!"); return; }
+
+            // Create object for new item
+            Product p = query.First();
+            ProductItem pi = new ProductItem(p, Amount);
+
+            // Check if the added item was already in the list
+            bool productInList = false;
+
+            for (int i = 0; i < ItemList.Items.Count; i++)
             {
-                // Parse amount value
-                Amount = int.Parse(AmountText.Text);
-
-                var query = context.Products.Where(s => s.Barcode == InputBarcode);
-
-                if (query.Any() && Amount > 0)
-                {
-                    // Create object for new item
-                    Product p = query.First();
-                    ProductItem pi = new ProductItem(p, Amount);
-
-                    // Check if the added item was already in the list
-                    bool productInList = false;
-
-                    for (int i = 0; i < ItemList.Items.Count; i++)
-                    {
-                        ProductItem piFromWindow = (ProductItem)ItemList.Items.GetItemAt(i);
+                ProductItem piFromWindow = (ProductItem)ItemList.Items.GetItemAt(i);
                           
-                        // If product was already in the list
-                        if (piFromWindow.Barcode == pi.Barcode)
-                        {
-                            productInList = true;
-                            piFromWindow.Amount += pi.Amount;
-                            ItemList.Items.Remove(piFromWindow);
-                            ItemList.Items.Add(piFromWindow);
-                            
-                        }
-
-                    }
-                    
-                    // If product wasn't already in the list 
-                    if(!productInList)
-                    {
-                        ItemList.Items.Add(pi);
-                    }
-
-                    // Calculate new sum
-                    RefreshSum();
-                }
-                else
+                // If product was already in the list
+                if (piFromWindow.Barcode == pi.Barcode)
                 {
-                    MessageBox.Show("Couldn't find Product");
+                    productInList = true;
+                    piFromWindow.Amount += pi.Amount;
+                    ItemList.Items.Remove(piFromWindow);
+                    ItemList.Items.Add(piFromWindow);
                 }
             }
-            else
+                    
+            // If product wasn't already in the list 
+            if(!productInList)
             {
-                MessageBox.Show("Wrong Amount!");
+                ItemList.Items.Add(pi);
             }
 
+            // Calculate new sum
+            RefreshSum();
         }
 
         private void CikarButtonClicked(object sender, RoutedEventArgs e)
@@ -106,7 +114,40 @@ namespace Market
         }
         private void TamamlaButtonClicked(object sender, RoutedEventArgs e)
         {
-            // Check if no problems exists
+            
+            if (ItemList.Items.IsEmpty) { MessageBox.Show("List is Empty"); return; }
+
+            var context = new MarketDBContext();
+
+            int CustomerID = this.SelectedCustomerID;
+            Sale sale = new Sale(DateTime.Now);
+            // If there is a selected Customer (This means that we will continue with the "Cari" sale)
+            // Else continue with the "Peşin" sale
+            if (CustomerID != 0)
+            {
+                sale.CustomerID = CustomerID;
+            }
+            // Since ID is generated automatically we save sale to the database and then get its ID
+            context.Sales.Add(sale);
+            context.SaveChanges();
+
+            // Use the newly created sale's id
+            Sale s = (Sale)context.Sales.Find(sale.ID);
+
+            // For each product in the listview create a Product-Sale duo and save them to the database
+            for (int i = 0; i < ItemList.Items.Count; i++)
+            {
+                ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+                ProductSale ps = new ProductSale(pi.ID, s.ID, pi.Amount);
+
+                context.ProductSales.Add(ps);
+            }
+
+            context.SaveChanges();
+            // Clear the list after sale is complete
+            ItemList.Items.Clear();
+            RefreshSum();
+            MessageBox.Show("Completed Sale");
         }
 
         private void RefreshSum()
@@ -137,19 +178,4 @@ namespace Market
 
     }
 
-    class ProductItem : Product
-    {
-        public int Amount { get; set; }
-
-        public ProductItem() { }
-        public ProductItem(Product p, int Amount)
-        {
-            this.Barcode = p.Barcode;
-            this.ID = p.ID;
-            this.Name = p.Name;
-            this.Price = p.Price;
-            this.Amount = Amount;
-        }
-
-    }
 }

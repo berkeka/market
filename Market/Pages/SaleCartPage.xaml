@@ -9,7 +9,7 @@
       Title="SaleCartPage">
 
     <Grid>
-        <Label Content="Ürün Listesi" HorizontalAlignment="Left" Margin="51,49,0,0" VerticalAlignment="Top"/>
+        <Label Content="Ürün Listesi" HorizontalAlignment="Left" Margin="51,57,0,0" VerticalAlignment="Top"/>
         <Label Content="Barkod" HorizontalAlignment="Left" Margin="610,49,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="BarcodeText" HorizontalAlignment="Left" Height="30" Margin="610,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
         <TextBox x:Name="AmountText" HorizontalAlignment="Left" Height="30" Margin="610,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
@@ -17,7 +17,7 @@
         <Button Content="Cikar" Click="CikarButtonClicked" HorizontalAlignment="Left" Margin="610,198,0,0" VerticalAlignment="Top" Width="60"/>
         <Button Content="Tamamla" Click="TamamlaButtonClicked" HorizontalAlignment="Left" Margin="289,348,0,0" VerticalAlignment="Top" Width="100" Height="40"/>
         <Label Content="Toplam" HorizontalAlignment="Left" Margin="457,299,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="SumLabel" HorizontalAlignment="Left" Margin="511,297,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
+        <Label x:Name="SumLabel" Content="0" HorizontalAlignment="Left" Margin="511,297,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
         <ListView x:Name="ItemList" HorizontalAlignment="Left" Height="202" Margin="51,95,0,0" VerticalAlignment="Top" Width="500">
             <ListView.View>
                 <GridView>
@@ -27,9 +27,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label x:Name="CustomerLabel" HorizontalAlignment="Left" Margin="51,18,0,0" VerticalAlignment="Top" MinHeight="20" MinWidth="150"/>
         <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
         </Button>
+        
 
     </Grid>
 </Page>
