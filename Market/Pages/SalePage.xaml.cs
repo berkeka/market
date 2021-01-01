@@ -85,6 +85,25 @@ namespace Market
             main.Title = NewPage.Title;
             main.Content = NewPage;
         }
+        private void DebtButtonClicked(object sender, RoutedEventArgs e)
+        {
+            DebtWindow dw = new DebtWindow();
+
+            bool returnValue = (bool)dw.ShowDialog();
+
+            if (returnValue == true)
+            {
+                int sc = dw.selectedCustomerID;
+
+                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+                CustomerDebtPaymentPage NewWindow = new CustomerDebtPaymentPage();
+                NewWindow.SelectedCustomerID = sc;
+
+                main.Title = NewWindow.Title;
+                main.Content = NewWindow;
+            }
+        }
 
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {

@@ -69,9 +69,16 @@
     <Compile Include="CustomerSelectionWindow.xaml.cs">
       <DependentUpon>CustomerSelectionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DebtWindow.xaml.cs">
+      <DependentUpon>DebtWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CustomerDebt.cs" />
     <Compile Include="Entities\ProductItem.cs" />
     <Compile Include="Entities\ProductSale.cs" />
     <Compile Include="Entities\Sale.cs" />
+    <Compile Include="Pages\CustomerDebtPaymentPage.xaml.cs">
+      <DependentUpon>CustomerDebtPaymentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CustomerPage.xaml.cs">
       <DependentUpon>CustomerPage.xaml</DependentUpon>
     </Compile>
@@ -97,6 +104,14 @@
       <DependentUpon>SalePage.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomerSelectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DebtWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CustomerDebtPaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
