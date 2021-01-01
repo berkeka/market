@@ -30,15 +30,14 @@ namespace Market
         
         private void EkleButtonClicked(object sender, RoutedEventArgs e)
         {            
-            var context = new MarketDBContext();
+            var context = new MarketDBContext();            
 
-            string InputName = NameText.Text;
-            string InputLastName = LastNameText.Text;
-            
-
-            if (NameText.Text != "" || LastNameText.Text != "" || IDNumberText.Text != "")
+            if (NameText.Text != "" && LastNameText.Text != "" && IDNumberText.Text != "")
             {
+                string InputName = NameText.Text;
+                string InputLastName = LastNameText.Text;
                 long InputIDNumber = long.Parse(IDNumberText.Text);
+
                 var query = context.Customers.Where(s => s.IDNumber == InputIDNumber);
                 if (query.Count() == 0) 
                 {
