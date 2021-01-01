@@ -67,7 +67,11 @@ namespace Market
 
         private void RaporButtonClicked(object sender, RoutedEventArgs e)
         {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            ReportMainPage NewWindow = new ReportMainPage();
 
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
         }
     }
 }
