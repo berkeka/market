@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
 using Market.Entities;
 
 namespace Market
@@ -20,18 +22,42 @@ namespace Market
     /// </summary>
     public partial class DebtWindow : Window
     {
-        public int selectedCustomerID { get; set; }
+        public long selectedCustomerIDNumber { get; set; }
         public DebtWindow()
         {
             var context = new MarketDBContext();
             List<CustomerDebt> ls = context.CustomerDebts.ToList();
-
+            
             InitializeComponent();
             CustomerDebtList.ItemsSource = ls;
         }
         private void AraButtonClicked(object sender, RoutedEventArgs e)
         {
+            long InputIDNumber = long.Parse(IDNumberText.Text);
 
+            if (IDNumberText.Text != "")
+            {
+                var context = new MarketDBContext();
+                
+                var query = context.CustomerDebts.Where(s => s.IDNumber == InputIDNumber);
+                if(query.Count() != 0)
+                {
+                    Customer cstmr = context.Customers.Find(InputIDNumber);
+
+                    this.selectedCustomerIDNumber = cstmr.IDNumber;
+                    this.DialogResult = true;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong ID!");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Sign customer's ID to textbox!");
+            }
         }
         private void SecButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -40,8 +66,8 @@ namespace Market
             if (selection != null)
             {
                 // Hand over the customerID info to the payment
-                var customer = (CustomerDebt)selection;
-                this.selectedCustomerID = customer.ID;
+                var customer = (Customer)selection;
+                this.selectedCustomerIDNumber = customer.IDNumber;
                 // Set dialogresult to true so we can move on to the payment
                 this.DialogResult = true;
                 this.Close();

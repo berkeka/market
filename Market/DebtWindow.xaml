@@ -11,10 +11,9 @@
         <ListView x:Name="CustomerDebtList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="500">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="İsim" DisplayMemberBinding="{Binding Name}" Width="120"/>
-                    <GridViewColumn Header="Soyisim" DisplayMemberBinding="{Binding LastName}" Width="120"/>
-                    <GridViewColumn Header="Kimlik numarası" DisplayMemberBinding="{Binding IDNumber}" Width="120"/>
-                    <GridViewColumn Header="Toplam Borç" DisplayMemberBinding="{Binding TotalDebt}" Width="140"/>
+                    <GridViewColumn Header="İsim" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    <GridViewColumn Header="Soyisim" DisplayMemberBinding="{Binding LastName}" Width="150"/>
+                    <GridViewColumn Header="Kimlik numarası" DisplayMemberBinding="{Binding IDNumber}" Width="200"/>
                 </GridView>
             </ListView.View>
         </ListView>

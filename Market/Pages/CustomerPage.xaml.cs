@@ -42,7 +42,7 @@ namespace Market
                 if (query.Count() == 0) 
                 {
                     //if customer was not registered.
-                    Customer cst = new Customer(InputName, InputLastName, InputIDNumber);
+                    Customer cst = new Customer(InputIDNumber, InputName, InputLastName);
 
                     context.Customers.Add(cst);
                     context.SaveChanges();

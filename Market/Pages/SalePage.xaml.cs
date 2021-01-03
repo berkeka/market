@@ -44,12 +44,12 @@ namespace Market
 
             if(returnValue == true)
             {
-                int sc = csw.selectedCustomerID;
+                long sc = csw.selectedCustomerIDNumber;
 
                 MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
                 SaleCartPage NewWindow = new SaleCartPage();
-                NewWindow.SelectedCustomerID = sc;
+                NewWindow.SelectedCustomerIDNumber = sc;
 
                 main.Title = NewWindow.Title;
                 main.Content = NewWindow;
@@ -93,7 +93,7 @@ namespace Market
 
             if (returnValue == true)
             {
-                int sc = dw.selectedCustomerID;
+                long sc = dw.selectedCustomerIDNumber;
 
                 MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 

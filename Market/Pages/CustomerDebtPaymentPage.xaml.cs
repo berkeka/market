@@ -22,7 +22,7 @@ namespace Market.Pages
     /// </summary>
     public partial class CustomerDebtPaymentPage : Page
     {
-        public int SelectedCustomerID
+        public long SelectedCustomerID
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Market.Pages
                 }
             }
         }
-        private int _SelectedCustomerID;
+        private long _SelectedCustomerID;
         public CustomerDebtPaymentPage()
         {
             InitializeComponent();

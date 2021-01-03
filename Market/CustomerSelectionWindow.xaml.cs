@@ -20,7 +20,7 @@ namespace Market
     /// </summary>
     public partial class CustomerSelectionWindow : Window
     {
-        public int selectedCustomerID { get; set; }
+        public long selectedCustomerIDNumber { get; set; }
         public CustomerSelectionWindow()
         {
             var context = new MarketDBContext();
@@ -38,7 +38,7 @@ namespace Market
             {
                 // Hand over the customerID info to the cart
                 var customer = (Customer)selection;
-                this.selectedCustomerID = customer.ID;
+                this.selectedCustomerIDNumber = customer.IDNumber;
                 // Set dialogresult to true so we can move on to the cart
                 this.DialogResult = true;
                 this.Close();

@@ -22,24 +22,24 @@ namespace Market
     /// </summary>
     public partial class SaleCartPage : Page
     {
-        public int SelectedCustomerID 
+        public long SelectedCustomerIDNumber 
         { 
             get 
             { 
-                return _SelectedCustomerID; 
+                return _SelectedCustomerIDNumber; 
             } 
             set 
             {
-                _SelectedCustomerID = value;
-                if(_SelectedCustomerID != 0)
+                _SelectedCustomerIDNumber = value;
+                if(_SelectedCustomerIDNumber != 0)
                 {
                     var context = new MarketDBContext();
-                    Customer c = context.Customers.Find(SelectedCustomerID);
+                    Customer c = context.Customers.Find(SelectedCustomerIDNumber);
                     CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
                 }
             } 
         }
-        private int _SelectedCustomerID;
+        private long _SelectedCustomerIDNumber;
         public SaleCartPage()
         {
             InitializeComponent();
@@ -119,13 +119,13 @@ namespace Market
 
             var context = new MarketDBContext();
 
-            int CustomerID = this.SelectedCustomerID;
+            long CustomerIDNumber = this.SelectedCustomerIDNumber;
             Sale sale = new Sale(DateTime.Now);
             // If there is a selected Customer (This means that we will continue with the "Cari" sale)
             // Else continue with the "Peşin" sale
-            if (CustomerID != 0)
+            if (CustomerIDNumber != 0)
             {
-                sale.CustomerID = CustomerID;
+                sale.CustomerIDNumber = CustomerIDNumber;
             }
             // Since ID is generated automatically we save sale to the database and then get its ID
             context.Sales.Add(sale);
