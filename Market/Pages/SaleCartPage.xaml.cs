@@ -49,13 +49,13 @@ namespace Market
         {
             var context = new MarketDBContext();
             var InputBarcode = BarcodeText.Text;
-            int Amount;
+            double Amount;
 
             // If AmountText is empty
             if(AmountText.Text == "") { MessageBox.Show("Wrong Amount!"); return; }
 
             // Parse amount value
-            Amount = int.Parse(AmountText.Text);
+            Amount = double.Parse(AmountText.Text);
 
             var queryStrg = context.Stocks.Where(a => a.Barcode == InputBarcode);
 

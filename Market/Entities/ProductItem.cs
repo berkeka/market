@@ -8,10 +8,10 @@ namespace Market.Entities
 {
     class ProductItem : Product
     {
-        public int Amount { get; set; }
+        public double Amount { get; set; }
 
         public ProductItem() { }
-        public ProductItem(Product p, int Amount)
+        public ProductItem(Product p, double Amount)
         {
             this.Barcode = p.Barcode;
             this.ID = p.ID;
