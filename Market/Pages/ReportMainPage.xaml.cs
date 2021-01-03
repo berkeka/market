@@ -26,6 +26,16 @@ namespace Market.Pages
             InitializeComponent();
         }
 
+        private void ProductSaleButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            SaleCountReportPage NewPage = new SaleCountReportPage();
+
+            main.Title = NewPage.Title;
+            main.Content = NewPage.Content;
+        }
+
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();

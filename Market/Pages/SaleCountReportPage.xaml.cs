@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Market.Entities;
+
+namespace Market.Pages
+{
+    /// <summary>
+    /// Interaction logic for SaleCountReportPage.xaml
+    /// </summary>
+    public partial class SaleCountReportPage : Page
+    {
+        public SaleCountReportPage()
+        {
+            var context = new MarketDBContext();
+
+            var result = context.Database.SqlQuery<ProductItem>(@"select 1 as ID, cast(1 as float) as Price, Products.Name as ""Name"", Products.Barcode as Barcode, SUM(ProductSales.Amount) as Amount
+                                                                from ProductSales
+                                                                join Products
+                                                                on ProductSales.ProductID = Products.ID
+                                                                group by ""Name"", Barcode
+                                                                order by Amount DESC;");
+
+            InitializeComponent();
+
+            if (result.ToList().Count > 0)
+            {
+                List.ItemsSource = result.ToList();
+            }
+            
+        }
+
+        private void HomeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
+        }
+    }
+}
