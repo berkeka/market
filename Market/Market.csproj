@@ -96,6 +96,9 @@
     <Compile Include="Pages\SaleCartPage.xaml.cs">
       <DependentUpon>SaleCartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SaleCountReportPage.xaml.cs">
+      <DependentUpon>SaleCountReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SalePage.xaml.cs">
       <DependentUpon>SalePage.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SaleCartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SaleCountReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
