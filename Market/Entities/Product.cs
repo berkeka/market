@@ -11,13 +11,13 @@ namespace Market.Entities
         public string Barcode { get; set; }
         public int ID { get; set; }
         public string Name { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
         public List<ProductSale> ProductSales { get; set; }
 
         public Product()
         {
         }
-        public Product(string Barcode, string Name, float Price)
+        public Product(string Barcode, string Name, double Price)
         {
             this.Barcode = Barcode;
             this.Name = Name;
