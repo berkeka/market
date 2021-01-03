@@ -12,37 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using System.Windows.Forms;
 
 namespace Market.Pages
 {
     /// <summary>
-    /// Interaction logic for ReportMainPage.xaml
+    /// Interaction logic for TrendChartPage.xaml
     /// </summary>
-    public partial class ReportMainPage : Page
+    public partial class TrendChartPage : Page
     {
-        public ReportMainPage()
+        public TrendChartPage()
         {
+            var context = new MarketDBContext();
             InitializeComponent();
+            ProductList.ItemsSource = context.Products.ToList();
         }
 
-        private void ProductSaleButtonClicked(object sender, RoutedEventArgs e)
+        private void ShowButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            SaleCountReportPage NewPage = new SaleCountReportPage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage.Content;
-        }
-        private void TrendButtonClicked(object sender, RoutedEventArgs e)
-        {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            TrendChartPage NewPage = new TrendChartPage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage.Content;
+            Console.WriteLine(ProductList.SelectedItems.Count);
         }
 
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
