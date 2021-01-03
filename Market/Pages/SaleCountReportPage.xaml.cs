@@ -40,6 +40,21 @@ namespace Market.Pages
             }
             
         }
+        private void ColumnClicked(object sender, RoutedEventArgs e)
+        {
+            if(((GridViewColumnHeader)e.OriginalSource).Column.Header.ToString() == "Satılma miktarı")
+            {
+                var items = List.Items;
+                List<ProductItem> reversed_items = new List<ProductItem>();
+                for (int i = (items.Count) - 1; i >= 0; i--)
+                {
+                    reversed_items.Add((ProductItem)items.GetItemAt(i));
+                }
+
+                List.ItemsSource = reversed_items;
+            }
+        }
+        
 
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
