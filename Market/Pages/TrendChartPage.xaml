@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Market.Pages"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TrendChartPage">
@@ -26,6 +27,17 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <lvc:CartesianChart Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="166,31,49,53" >
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}" MinValue="0" Unit="1"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Day" Labels="{Binding Labels}" MinValue="0" Unit="1"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+        
+
+
         <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
         </Button>
