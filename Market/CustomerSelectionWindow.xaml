@@ -14,7 +14,7 @@
                 <GridView>
                     <GridViewColumn Header="İsim" DisplayMemberBinding="{Binding Name}" Width="200"/>
                     <GridViewColumn Header="Soyisim" DisplayMemberBinding="{Binding LastName}" Width="200"/>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding IDNumber}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

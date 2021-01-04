@@ -85,7 +85,7 @@ namespace Market
             main.Title = NewPage.Title;
             main.Content = NewPage;
         }
-        private void DebtButtonClicked(object sender, RoutedEventArgs e)
+        private void BorcButtonClicked(object sender, RoutedEventArgs e)
         {
             DebtWindow dw = new DebtWindow();
 
@@ -98,7 +98,7 @@ namespace Market
                 MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
                 CustomerDebtPaymentPage NewWindow = new CustomerDebtPaymentPage();
-                NewWindow.SelectedCustomerID = sc;
+                NewWindow.SelectedCustomerIDNumber = sc;
 
                 main.Title = NewWindow.Title;
                 main.Content = NewWindow;

@@ -22,24 +22,29 @@ namespace Market.Pages
     /// </summary>
     public partial class CustomerDebtPaymentPage : Page
     {
-        public long SelectedCustomerID
+        public long SelectedCustomerIDNumber
         {
             get
             {
-                return _SelectedCustomerID;
+                return _SelectedCustomerIDNumber;
             }
             set
             {
-                _SelectedCustomerID = value;
-                if (_SelectedCustomerID != 0)
+                _SelectedCustomerIDNumber = value;
+                if (_SelectedCustomerIDNumber != 0)
                 {
                     var context = new MarketDBContext();
-                    Customer c = context.Customers.Find(SelectedCustomerID);
+                    Customer c = context.Customers.Find(SelectedCustomerIDNumber);
                     CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
+
+                    CustomerDebt cd = context.CustomerDebts.Find(SelectedCustomerIDNumber);
+                    double sum = cd.DebtAmount;
+                    // Set content of the label to sum
+                    SumLabel.Content = sum.ToString();
                 }
             }
         }
-        private long _SelectedCustomerID;
+        private long _SelectedCustomerIDNumber;
         public CustomerDebtPaymentPage()
         {
             InitializeComponent();
@@ -47,6 +52,18 @@ namespace Market.Pages
         private void OdeButtonClicked(object sender, EventArgs e)
         {
 
+        }
+        
+        private void HomeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
         }
     }
 }

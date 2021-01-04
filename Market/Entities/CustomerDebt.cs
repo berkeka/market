@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Market.Entities
 {
     class CustomerDebt
     {
-        public int ID { get; set; }
-        public DateTime DebtDate { get; set; }
-        public int DebtAmount { get; set; }
-        //foreign key for Customer
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long IDNumber { get; set; }
-        public Customer Customer { get; set; }
+        public double DebtAmount { get; set; }
         public CustomerDebt()
         {
         }
-        public CustomerDebt(long IDNumber, DateTime DebtDate, int DebtAmount)
+        public CustomerDebt(long IDNumber, double DebtAmount)
         {
             this.IDNumber = IDNumber;
-            this.DebtDate = DebtDate;
             this.DebtAmount = DebtAmount;
         }
     }

@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="DebtWindow" Height="450" Width="800">
     <Grid>
-        <Label Content=" Borçlular" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="CustomerDebtList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="500">
+        <Label Content="Müşteri Kayıtları" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="CustomerList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="500">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="İsim" DisplayMemberBinding="{Binding Name}" Width="150"/>

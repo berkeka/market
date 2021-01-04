@@ -10,20 +10,11 @@
 
     <Grid>
         <Label x:Name="CustomerLabel" HorizontalAlignment="Left" Margin="51,18,0,0" VerticalAlignment="Top" MinHeight="20" MinWidth="150"/>
-        <Label Content="Yapılan Satın almalar" HorizontalAlignment="Left" Margin="51,49,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="DebtList" HorizontalAlignment="Left" Height="232" Margin="51,75,0,0" VerticalAlignment="Top" Width="320">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Tarih" DisplayMemberBinding="{Binding Date}" Width="160"/>
-                    <GridViewColumn Header="Borç miktarı" DisplayMemberBinding="{Binding DebtAmount}" Width="160"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Label Content="Toplam Borç" HorizontalAlignment="Left" Margin="152,312,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.29,0.566"/>
-        <Label x:Name="SumLabel" Content="0" HorizontalAlignment="Left" Margin="269,312,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
-        <Label Content="Ödenecek miktar:" HorizontalAlignment="Left" Margin="51,375,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.515,0.486"/>
-        <TextBox x:Name="PaymentAmount" HorizontalAlignment="Left" Height="30" Margin="159,375,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
-        <Button Content="Öde" Click="OdeButtonClicked" HorizontalAlignment="Left" Margin="333,375,0,0" VerticalAlignment="Top" Width="38" Height="30"/>
+        <Label Content="Toplam Borç(₺):" HorizontalAlignment="Left" Margin="51,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.29,0.566"/>
+        <Label x:Name="SumLabel" Content="0" HorizontalAlignment="Left" Margin="161,75,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
+        <Label Content="Ödenecek miktar:" HorizontalAlignment="Left" Margin="51,126,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.515,0.486"/>
+        <TextBox x:Name="PaymentAmount" HorizontalAlignment="Left" Height="30" Margin="161,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <Button Content="Öde" Click="OdeButtonClicked" HorizontalAlignment="Left" Margin="337,126,0,0" VerticalAlignment="Top" Width="38" Height="30"/>
         <Label Content="Ödemeler" HorizontalAlignment="Left" Margin="429,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.515,0.486"/>
         <ListView x:Name="PaymentList" HorizontalAlignment="Left" Height="330" Margin="429,75,0,0" VerticalAlignment="Top" Width="320">
             <ListView.View>
@@ -33,5 +24,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
+        </Button>
     </Grid>
 </Page>

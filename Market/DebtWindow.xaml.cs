@@ -26,10 +26,10 @@ namespace Market
         public DebtWindow()
         {
             var context = new MarketDBContext();
-            List<CustomerDebt> ls = context.CustomerDebts.ToList();
+            List<Customer> ls = context.Customers.ToList();
             
             InitializeComponent();
-            CustomerDebtList.ItemsSource = ls;
+            CustomerList.ItemsSource = ls;
         }
         private void AraButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -39,7 +39,7 @@ namespace Market
             {
                 var context = new MarketDBContext();
                 
-                var query = context.CustomerDebts.Where(s => s.IDNumber == InputIDNumber);
+                var query = context.Customers.Where(s => s.IDNumber == InputIDNumber);
                 if(query.Count() != 0)
                 {
                     Customer cstmr = context.Customers.Find(InputIDNumber);
@@ -61,11 +61,11 @@ namespace Market
         }
         private void SecButtonClicked(object sender, RoutedEventArgs e)
         {
-            var selection = CustomerDebtList.SelectedItem;
+            var selection = CustomerList.SelectedItem;
             // Selection not being null means we can continue to the payment
             if (selection != null)
             {
-                // Hand over the customerID info to the payment
+                // Hand over the customerIDNumber info to the payment
                 var customer = (Customer)selection;
                 this.selectedCustomerIDNumber = customer.IDNumber;
                 // Set dialogresult to true so we can move on to the payment

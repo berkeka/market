@@ -130,6 +130,36 @@ namespace Market
             // Since ID is generated automatically we save sale to the database and then get its ID
             context.Sales.Add(sale);
             context.SaveChanges();
+            
+            var query = context.CustomerDebts.Where(i => i.IDNumber == CustomerIDNumber);
+            if (query.Count() != 0)
+            {
+                CustomerDebt cstdebt = context.CustomerDebts.Find(CustomerIDNumber);
+                double sum = 0.0;
+                // Loop through each item in the list
+                for (int i = 0; i < ItemList.Items.Count; i++)
+                {
+                    ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+
+                    sum += (pi.Amount * pi.Price);
+                }
+                cstdebt.DebtAmount += sum;
+            }
+            else
+            {
+                double sum = 0.0;
+                // Loop through each item in the list
+                for (int i = 0; i < ItemList.Items.Count; i++)
+                {
+                    ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+
+                    sum += (pi.Amount * pi.Price);
+                }
+
+                CustomerDebt cstdebt = new CustomerDebt(CustomerIDNumber, sum);
+                context.CustomerDebts.Add(cstdebt);
+            }
+            context.SaveChanges();
 
             // Use the newly created sale's id
             Sale s = (Sale)context.Sales.Find(sale.ID);
