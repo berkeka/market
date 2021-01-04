@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Market.Entities;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Market.Pages
 {
@@ -29,7 +32,90 @@ namespace Market.Pages
 
         private void ShowButtonClicked(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(ProductList.SelectedItems.Count);
+            // Clear the chart if it has values already
+            if (Chart.Series != null) { Chart.Series.Clear(); }
+
+            // Exception control
+            // If date fields are empty
+            if (StartDatePicker.SelectedDate == null || EndDatePicker.SelectedDate == null) { MessageBox.Show("Please select dates"); return; }
+            // If selected dates aren't possible
+            if (StartDatePicker.SelectedDate >= EndDatePicker.SelectedDate) { MessageBox.Show("Start date should be before the end date"); return; }
+
+            DateTime Start = (DateTime)StartDatePicker.SelectedDate;
+            DateTime End = (DateTime)EndDatePicker.SelectedDate;
+
+            string dateFormat;
+            if(End.Year != Start.Year) { dateFormat = "dd/MM/yyyy"; }
+            else{ dateFormat = "dd/MM"; }
+            
+            // Calculate total days between selected dates
+            int TotalDays = (int)(End - Start).TotalDays + 1;
+
+            // Get selected product
+            Product selectedProduct = (Product)ProductList.SelectedItem;
+            if (selectedProduct == null) { MessageBox.Show("Please select a product"); return; }
+
+            // Create arrays for x and y values of the graph
+            DateTime[] dates = new DateTime[TotalDays];
+            ChartValues<string> DateLabels = new ChartValues<string>();
+            ChartValues<double> AmountOfProductsSold = new ChartValues<double>();
+
+            var context = new MarketDBContext();
+
+            // Loop for total days
+            for(int i = 0; i < TotalDays; i++)
+            {
+                DateTime indexDate = Start.AddDays(i);
+                DateTime queryEndDate = indexDate.AddDays(1);
+
+                dates[i] = indexDate;
+
+                // List of sales that are between start and end date
+                List<Sale> saleList = context.Sales.Where(s => s.Date >= indexDate && s.Date < queryEndDate).ToList();
+
+                if (saleList.Count() > 0)
+                {
+                    double amountSum = 0;
+                    // Loop through each sale we found
+                    foreach(Sale saleItem in saleList)
+                    {   
+                        // Get each product that is related to the sale we are currently looping
+                        // Then check if we have the selected product in those related products
+                        List<ProductSale> psList = context.ProductSales.Where(s => s.SaleID == saleItem.ID)
+                                                                        .Where(ps => ps.ProductID == selectedProduct.ID).ToList();
+                        
+                        if(psList.Count > 0)
+                        {
+                            amountSum += psList.First().Amount;
+                        }
+                    }
+                    // Insert the sum to the corresponding chartValue
+                    AmountOfProductsSold.Insert(i, amountSum);
+                }
+                else
+                {
+                    AmountOfProductsSold.Insert(i, 0);
+                }
+            }
+            foreach(DateTime date in dates)
+            {
+                DateLabels.Add(date.ToString(dateFormat));
+            }
+
+            //Console.WriteLine(Chart.AxisX.First().Name);    
+            // Input data to the chart
+            Chart.Series = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    LineSmoothness = 0,
+                    Title = selectedProduct.Name,
+                    Values = AmountOfProductsSold
+                }
+            };
+
+            // Set date strings to labels on the X axis
+            Chart.AxisX.First().Labels = DateLabels;
         }
 
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
