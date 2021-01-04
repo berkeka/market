@@ -22,6 +22,13 @@ namespace Market.Pages
     /// </summary>
     public partial class CustomerDebtPaymentPage : Page
     {
+        
+        public CustomerDebtPaymentPage()
+        {
+            InitializeComponent();            
+            RefreshList(PaymentList);
+            RefreshSum(SumLabel);
+        }
         public long SelectedCustomerIDNumber
         {
             get
@@ -37,7 +44,7 @@ namespace Market.Pages
                     Customer c = context.Customers.Find(SelectedCustomerIDNumber);
                     CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
 
-                    CustomerDebt cd = context.CustomerDebts.Find(SelectedCustomerIDNumber);
+                    CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
                     double sum = cd.DebtAmount;
                     // Set content of the label to sum
                     SumLabel.Content = sum.ToString();
@@ -45,15 +52,43 @@ namespace Market.Pages
             }
         }
         private long _SelectedCustomerIDNumber;
-        public CustomerDebtPaymentPage()
-        {
-            InitializeComponent();
-        }
         private void OdeButtonClicked(object sender, EventArgs e)
         {
+            var context = new MarketDBContext();
 
+            if (PaymentAmountText.Text != "")
+            {
+                double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
+
+                CustomerPayment cp = new CustomerPayment(this.SelectedCustomerIDNumber, InputPaymentAmount, DateTime.Now);
+                context.CustomerPayments.Add(cp);
+
+                CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
+                cd.DebtAmount -= InputPaymentAmount;
+
+                context.SaveChanges();
+
+                RefreshList(PaymentList);
+                RefreshSum(SumLabel);
+
+                PaymentAmountText.Text = String.Empty;
+            }
         }
-        
+        public void RefreshList(ListView List)
+        {
+            var context = new MarketDBContext();
+
+            List.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<CustomerPayment>();
+        }
+        public void RefreshSum(Label label)
+        {
+            //var context = new MarketDBContext();
+
+            //CustomerDebt da = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
+            //double sum = da.DebtAmount;
+            // Set content of the label to sum
+            //SumLabel.Content = sum.ToString();
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();

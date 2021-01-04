@@ -17,5 +17,6 @@ namespace Market
         public DbSet<ProductSale> ProductSales { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerDebt> CustomerDebts { get; set; }
+        public DbSet<CustomerPayment> CustomerPayments { get; set; }
     }
 }

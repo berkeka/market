@@ -13,7 +13,7 @@
         <Label Content="Toplam Borç(₺):" HorizontalAlignment="Left" Margin="51,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.29,0.566"/>
         <Label x:Name="SumLabel" Content="0" HorizontalAlignment="Left" Margin="161,75,0,0" VerticalAlignment="Top" Height="28" Width="40"/>
         <Label Content="Ödenecek miktar:" HorizontalAlignment="Left" Margin="51,126,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.515,0.486"/>
-        <TextBox x:Name="PaymentAmount" HorizontalAlignment="Left" Height="30" Margin="161,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <TextBox x:Name="PaymentAmountText" HorizontalAlignment="Left" Height="30" Margin="161,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
         <Button Content="Öde" Click="OdeButtonClicked" HorizontalAlignment="Left" Margin="337,126,0,0" VerticalAlignment="Top" Width="38" Height="30"/>
         <Label Content="Ödemeler" HorizontalAlignment="Left" Margin="429,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.515,0.486"/>
         <ListView x:Name="PaymentList" HorizontalAlignment="Left" Height="330" Margin="429,75,0,0" VerticalAlignment="Top" Width="320">
