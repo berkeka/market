@@ -18,6 +18,7 @@
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
         </Button>
         <Button Content="Borçlar" Click="BorcButtonClicked" HorizontalAlignment="Left" Margin="602,140,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Çıkış" Click="CikisButtonClicked" HorizontalAlignment="Left" Margin="91,387,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
 
     </Grid>
 </Page>

@@ -87,7 +87,7 @@ namespace Market
         }
         private void BorcButtonClicked(object sender, RoutedEventArgs e)
         {
-            DebtWindow dw = new DebtWindow();
+            CustomerSelectionWindow dw = new CustomerSelectionWindow();
 
             bool returnValue = (bool)dw.ShowDialog();
 
@@ -110,6 +110,19 @@ namespace Market
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
             MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
+        }
+        private void CikisButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            MainWindow new_main = new MainWindow();
+
+            //Log out
+            App.DestroySession();
 
             main.Title = new_main.Title;
             main.Content = new_main.Content;

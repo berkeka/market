@@ -8,16 +8,19 @@
         mc:Ignorable="d"
         Title="CustomerSelectionWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="Müşteriler" HorizontalAlignment="Left" Margin="51,49,0,0" VerticalAlignment="Top"/>
+        <Label Content="Müşteri Kayıtları" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top"/>
         <ListView x:Name="CustomerList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="500">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="İsim" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                    <GridViewColumn Header="Soyisim" DisplayMemberBinding="{Binding LastName}" Width="200"/>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding IDNumber}" Width="100"/>
+                    <GridViewColumn Header="İsim" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    <GridViewColumn Header="Soyisim" DisplayMemberBinding="{Binding LastName}" Width="150"/>
+                    <GridViewColumn Header="Kimlik numarası" DisplayMemberBinding="{Binding IDNumber}" Width="200"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Seç" Click="SecButtonClicked" HorizontalAlignment="Left" Margin="644,217,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Kimlik numarası:" HorizontalAlignment="Left" Margin="600,50,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="IDNumberText" HorizontalAlignment="Left" Height="30" Margin="600,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <Button Content="Ara" Click="AraButtonClicked" HorizontalAlignment="Left" Margin="610,125,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
+        <Button Content="Seç" Click="SecButtonClicked" HorizontalAlignment="Left" Margin="556,365,0,0" VerticalAlignment="Top" Width="100" Height="40" RenderTransformOrigin="0.212,1.301"/>
     </Grid>
 </Window>

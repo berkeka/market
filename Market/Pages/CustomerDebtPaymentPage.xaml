@@ -20,7 +20,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Tarih" DisplayMemberBinding="{Binding Date}" Width="160"/>
-                    <GridViewColumn Header="Ödeme Miktarı" DisplayMemberBinding="{Binding PaymentAmount}" Width="160"/>
+                    <GridViewColumn Header="Ödenen Miktar(₺)" DisplayMemberBinding="{Binding PaymentAmount}" Width="160"/>
                 </GridView>
             </ListView.View>
         </ListView>

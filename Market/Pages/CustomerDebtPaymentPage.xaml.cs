@@ -25,9 +25,7 @@ namespace Market.Pages
         
         public CustomerDebtPaymentPage()
         {
-            InitializeComponent();            
-            RefreshList(PaymentList);
-            RefreshSum(SumLabel);
+            InitializeComponent();
         }
         public long SelectedCustomerIDNumber
         {
@@ -43,11 +41,14 @@ namespace Market.Pages
                     var context = new MarketDBContext();
                     Customer c = context.Customers.Find(SelectedCustomerIDNumber);
                     CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
-
+                    
                     CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
                     double sum = cd.DebtAmount;
                     // Set content of the label to sum
                     SumLabel.Content = sum.ToString();
+
+
+                    PaymentList.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<CustomerPayment>();
                 }
             }
         }
@@ -58,20 +59,28 @@ namespace Market.Pages
 
             if (PaymentAmountText.Text != "")
             {
-                double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
-
-                CustomerPayment cp = new CustomerPayment(this.SelectedCustomerIDNumber, InputPaymentAmount, DateTime.Now);
-                context.CustomerPayments.Add(cp);
-
                 CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-                cd.DebtAmount -= InputPaymentAmount;
+                if(double.Parse(PaymentAmountText.Text) <= cd.DebtAmount)
+                {
+                    double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
 
-                context.SaveChanges();
+                    CustomerPayment cp = new CustomerPayment(this.SelectedCustomerIDNumber, InputPaymentAmount, DateTime.Now);
+                    context.CustomerPayments.Add(cp);
 
-                RefreshList(PaymentList);
-                RefreshSum(SumLabel);
+                    CustomerDebt tcd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
+                    tcd.DebtAmount -= InputPaymentAmount;
 
-                PaymentAmountText.Text = String.Empty;
+                    context.SaveChanges();
+
+                    RefreshList(PaymentList);
+                    RefreshSum(SumLabel);
+
+                    PaymentAmountText.Text = String.Empty;
+                }
+                else
+                {
+                    MessageBox.Show("Wrong amount!");
+                }
             }
         }
         public void RefreshList(ListView List)
@@ -82,12 +91,12 @@ namespace Market.Pages
         }
         public void RefreshSum(Label label)
         {
-            //var context = new MarketDBContext();
+            var context = new MarketDBContext();
 
-            //CustomerDebt da = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-            //double sum = da.DebtAmount;
+            CustomerDebt da = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
+            double sum = da.DebtAmount;
             // Set content of the label to sum
-            //SumLabel.Content = sum.ToString();
+            SumLabel.Content = sum.ToString();
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {

@@ -30,11 +30,13 @@ namespace Market
             MarketDBInitializer.initDB(new MarketDBContext());
             InitializeComponent();
         }
+        
+       
         private void SatisButtonClicked(object sender, RoutedEventArgs e)
         {
             var ReturnValue = false;
-            // If last login was in the last 5 minutes
 
+            // If last login was in the last 5 minutes
             if ((DateTime.Now - App.LastLogin).TotalMinutes < 5)
             {
                 // No need for login
@@ -46,7 +48,7 @@ namespace Market
                 LogInWindow Login = new LogInWindow();
                 ReturnValue = (bool)Login.ShowDialog();
             }
-            
+
             // After login is successful
 
             if (ReturnValue == true)
