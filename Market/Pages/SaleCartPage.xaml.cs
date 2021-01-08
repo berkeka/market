@@ -57,7 +57,13 @@ namespace Market
             // Parse amount value
             Amount = int.Parse(AmountText.Text);
 
-            var query = context.Products.Where(s => s.Barcode == InputBarcode);
+            var queryStrg = context.Stocks.Where(a => a.Barcode == InputBarcode);
+
+            //Check the product in storage
+            if(!queryStrg.Any()) { MessageBox.Show("There is no product with this barcode!"); return; }
+            Stock s = queryStrg.First();
+            
+            var query = context.Products.Where(i => i.Barcode == InputBarcode);
             // If no product exists with the given barcode
             if (!query.Any()) { MessageBox.Show("Couldn't find Product"); return; }
             // If amount isn't possible
@@ -77,6 +83,12 @@ namespace Market
                 // If product was already in the list
                 if (piFromWindow.Barcode == pi.Barcode)
                 {
+                    //Compare the input with available amount of product
+                    if ((s.Amount - piFromWindow.Amount) < Amount)
+                    {
+                        MessageBox.Show("Available product is fewer than input");
+                        return;
+                    }
                     productInList = true;
                     piFromWindow.Amount += pi.Amount;
                     ItemList.Items.Remove(piFromWindow);
@@ -164,13 +176,18 @@ namespace Market
             // Use the newly created sale's id
             Sale s = (Sale)context.Sales.Find(sale.ID);
 
-            // For each product in the listview create a Product-Sale duo and save them to the database
+            // For each product in the listview 
             for (int i = 0; i < ItemList.Items.Count; i++)
             {
+                //Create a Product-Sale duo and save them to the database
                 ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
                 ProductSale ps = new ProductSale(pi.ID, s.ID, pi.Amount);
 
                 context.ProductSales.Add(ps);
+
+                //Decrease the product amount in stock
+                Stock stock = context.Stocks.Find(pi.Barcode);
+                stock.Amount -= pi.Amount;
             }
 
             context.SaveChanges();
