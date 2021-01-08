@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using System.Windows.Forms;
+using Market.Entities;
+using Market.Utils;
 
 namespace Market.Pages
 {
@@ -21,6 +22,7 @@ namespace Market.Pages
     /// </summary>
     public partial class ReportMainPage : Page
     {
+        
         public ReportMainPage()
         {
             InitializeComponent();
@@ -45,6 +47,19 @@ namespace Market.Pages
             main.Content = NewPage.Content;
         }
 
+        
+        private void CustomerReportButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var context = new MarketDBContext();
+            // Show customer selection window
+            CustomerSelectionWindow csw = new CustomerSelectionWindow();
+            csw.ShowDialog();
+
+            if(csw.selectedCustomerID == 0) { return; }
+
+            ReportFileGenerator fileGenerator = new ReportFileGenerator();
+            fileGenerator.SingleCustomerReport(csw.selectedCustomerID);
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();

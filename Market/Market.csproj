@@ -120,6 +120,7 @@
     <Compile Include="Pages\SalePage.xaml.cs">
       <DependentUpon>SalePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ReportFileGenerator.cs" />
     <Page Include="CustomerSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
