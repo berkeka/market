@@ -94,6 +94,15 @@ namespace Market
                     ItemList.Items.Remove(piFromWindow);
                     ItemList.Items.Add(piFromWindow);
                 }
+                else
+                {
+                    if(s.Amount < Amount)
+                    {
+                        MessageBox.Show("Available product is fewer than input");
+                        return;
+                    }
+                    piFromWindow.Amount += pi.Amount;
+                }
             }
                     
             // If product wasn't already in the list 

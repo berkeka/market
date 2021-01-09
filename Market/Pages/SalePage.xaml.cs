@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Market.Pages;
+using Market.Entities;
 
 namespace Market
 {
@@ -24,6 +25,23 @@ namespace Market
         public SalePage()
         {
             InitializeComponent();
+
+            var context = new MarketDBContext();
+            var queryPrd = context.Products;
+            var queryStock = context.Stocks;
+            if (queryStock.Any())
+            {
+                List<StockItem> items = new List<StockItem>();
+                for (int i = 1; i <= queryStock.Count(); i++)
+                {
+                    var temp = queryPrd.Find(i);
+                    var tempp = queryStock.Find(temp.Barcode);
+                    int amountt = tempp.Amount;
+                    if(amountt > 100) { amountt = 100; }
+                    items.Add(new StockItem() { Title = temp.Name, Completion = amountt });
+                }
+                StockList.ItemsSource = items;                
+            }
         }
         private void PesinButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -104,7 +122,11 @@ namespace Market
                 main.Content = NewWindow;
             }
         }
-
+        public class StockItem
+        {
+            public string Title { get; set; }
+            public int Completion { get; set; }
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();

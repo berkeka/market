@@ -18,7 +18,22 @@
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
         </Button>
         <Button Content="Borçlar" Click="BorcButtonClicked" HorizontalAlignment="Left" Margin="602,140,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Çıkış" Click="CikisButtonClicked" HorizontalAlignment="Left" Margin="91,387,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
-
+        <Button Content="Çıkış" Click="CikisButtonClicked" HorizontalAlignment="Left" Margin="602,356,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
+        <ListBox Name="StockList" HorizontalContentAlignment="Stretch" Margin="91,179,459,66">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Title}" />
+                        <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Stoktaki ürün miktarı" HorizontalAlignment="Left" Height="34" Margin="91,140,0,0" VerticalAlignment="Top" Width="121"/>
+        <Label Content="Sadece 100 un altı" HorizontalAlignment="Left" Height="44" Margin="346,338,0,0" VerticalAlignment="Top" Width="111"/>
     </Grid>
 </Page>
