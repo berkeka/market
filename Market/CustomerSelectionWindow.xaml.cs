@@ -20,7 +20,7 @@ namespace Market
     /// </summary>
     public partial class CustomerSelectionWindow : Window
     {
-        public int selectedCustomerID { get; set; }
+        public long selectedCustomerIDNumber { get; set; }
         public CustomerSelectionWindow()
         {
             var context = new MarketDBContext();
@@ -29,7 +29,34 @@ namespace Market
             InitializeComponent();
             CustomerList.ItemsSource = ls;
         }
+        private void AraButtonClicked(object sender, RoutedEventArgs e)
+        {
+            long InputIDNumber = long.Parse(IDNumberText.Text);
 
+            if (IDNumberText.Text != "")
+            {
+                var context = new MarketDBContext();
+
+                var query = context.Customers.Where(s => s.IDNumber == InputIDNumber);
+                if (query.Count() != 0)
+                {
+                    Customer cstmr = context.Customers.Find(InputIDNumber);
+
+                    this.selectedCustomerIDNumber = cstmr.IDNumber;
+                    this.DialogResult = true;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong ID!");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Sign customer's ID to textbox!");
+            }
+        }
         private void SecButtonClicked(object sender, RoutedEventArgs e)
         {
             var selection = CustomerList.SelectedItem;
@@ -38,7 +65,7 @@ namespace Market
             {
                 // Hand over the customerID info to the cart
                 var customer = (Customer)selection;
-                this.selectedCustomerID = customer.ID;
+                this.selectedCustomerIDNumber = customer.IDNumber;
                 // Set dialogresult to true so we can move on to the cart
                 this.DialogResult = true;
                 this.Close();

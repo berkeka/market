@@ -37,6 +37,7 @@ namespace Market
                     var temp = queryPrd.Find(i);
                     var tempp = queryStock.Find(temp.Barcode);
                     int amountt = (int)tempp.Amount;
+                    
                     if(amountt > 100) { amountt = 100; }
                     items.Add(new StockItem() { Title = temp.Name, Completion = amountt });
                 }

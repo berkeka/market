@@ -13,6 +13,7 @@ namespace Market.Entities
         public string Name { get; set; }
         public double Price { get; set; }
         public List<ProductSale> ProductSales { get; set; }
+        public List<Stock> Stocks { get; set; }
 
         public Product()
         {

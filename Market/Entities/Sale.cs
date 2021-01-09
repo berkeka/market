@@ -9,7 +9,7 @@ namespace Market.Entities
     class Sale
     {
         public int ID { get; set; }
-        public int? CustomerID { get; set; }
+        public long? CustomerIDNumber { get; set; }
         public DateTime Date { get; set; }
         public List<ProductSale> ProductSales { get; set; }
 
