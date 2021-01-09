@@ -8,7 +8,12 @@
         ResizeMode="CanMinimize"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Satış" Click="SatisButtonClicked" HorizontalAlignment="Left" Margin="200,100,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Rapor" Click="RaporButtonClicked" HorizontalAlignment="Left" Margin="498,100,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Rectangle Fill="#F0F0F0" HorizontalAlignment="Left" Height="380" Margin="20,20,0,0"  VerticalAlignment="Top" Width="360"/>
+        <Rectangle Fill="#F0F0F0" HorizontalAlignment="Right" Height="380" Margin="0,20,20,0" VerticalAlignment="Top" Width="360"/>
+        <Button Content="Satıcı Arayüzü" Click="SatisButtonClicked" FontSize="20" HorizontalAlignment="Left" Margin="130,200,0,0" Height="60" Width="140"/>
+        <Button Content="Rapor Arayüzü" Click="RaporButtonClicked" FontSize="20" HorizontalAlignment="Right" Margin="0,200,130,0" Height="60" Width="140"/>
+        <Image Source="/Assets/Images/salesman.png" HorizontalAlignment="Left"  Margin="150,130,0,180" Height="100" Width="100"/>
+        <Image Source="/Assets/Images/report.png" HorizontalAlignment="Right" Margin="0,130,150,180" Height="100" Width="100"/>
+
     </Grid>
 </Window>

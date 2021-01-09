@@ -1,0 +1,45 @@
+﻿<Page x:Class="Market.Pages.TrendChartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Market.Pages"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TrendChartPage">
+
+    <Grid>
+        <Button Content="Göster" Click="ShowButtonClicked" HorizontalAlignment="Left" Margin="24,377,0,0" VerticalAlignment="Top" Width="75"/>
+        <DatePicker Name="StartDatePicker" HorizontalAlignment="Left" Margin="24,280,0,0" VerticalAlignment="Top"/>
+        <DatePicker Name="EndDatePicker" HorizontalAlignment="Left" Margin="24,326,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="ProductList" HorizontalAlignment="Left" Height="250" Margin="24,10,0,0" VerticalAlignment="Top" Width="120">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Ürün ismi" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <lvc:CartesianChart Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="166,31,49,53" >
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}" MinValue="0" Unit="1"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Day" Labels="{Binding Labels}" MinValue="0" Unit="1"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+        
+
+
+        <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
+        </Button>
+    </Grid>
+</Page>

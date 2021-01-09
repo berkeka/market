@@ -76,7 +76,7 @@ namespace Market.Pages
 
                             pi.Name = Name;
                             pi.Barcode = Barcode;
-                            pi.Price = (float)Price;
+                            pi.Price = Price;
                             pi.Amount = (int)Amount;
 
                             ProductList.Items.Add(pi);

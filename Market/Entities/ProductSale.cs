@@ -14,7 +14,7 @@ namespace Market.Entities
         public double Amount { get; set; }
 
         public ProductSale() { }
-        public ProductSale(int ProductID, int SaleID, float Amount)
+        public ProductSale(int ProductID, int SaleID, double Amount)
         {
             this.ProductID = ProductID;
             this.SaleID = SaleID;

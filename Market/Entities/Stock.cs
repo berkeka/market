@@ -13,9 +13,9 @@ namespace Market.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Barcode { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public Stock() { }
-        public Stock(string Barcode, int Amount)
+        public Stock(string Barcode, double Amount)
         {
             this.Barcode = Barcode;
             this.Amount = Amount;
