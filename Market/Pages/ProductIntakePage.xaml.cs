@@ -114,6 +114,21 @@ namespace Market.Pages
                     ProductItem item = (ProductItem)ProductList.Items.GetItemAt(i);
                     Storage s = new Storage(DispatchID, item.Barcode, item.Price, item.Amount);
                     context.Storages.Add(s);
+
+                    var query = context.Stocks.Where(t => t.Barcode == item.Barcode);
+                    //Product already exists in stock
+                    if(query.Count() != 0)
+                    {
+                        //Add how many came in to stock
+                        Stock stck = context.Stocks.Find(item.Barcode);
+                        stck.Amount += item.Amount;
+                    }
+                    //Product doesn't exist in stock
+                    else
+                    {
+                        Stock stck = new Stock(item.Barcode, item.Amount);
+                        context.Stocks.Add(stck);
+                    }
                 }
             }
             else

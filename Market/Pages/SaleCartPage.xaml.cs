@@ -22,24 +22,24 @@ namespace Market
     /// </summary>
     public partial class SaleCartPage : Page
     {
-        public int SelectedCustomerID 
+        public long SelectedCustomerIDNumber 
         { 
             get 
             { 
-                return _SelectedCustomerID; 
+                return _SelectedCustomerIDNumber; 
             } 
             set 
             {
-                _SelectedCustomerID = value;
-                if(_SelectedCustomerID != 0)
+                _SelectedCustomerIDNumber = value;
+                if(_SelectedCustomerIDNumber != 0)
                 {
                     var context = new MarketDBContext();
-                    Customer c = context.Customers.Find(SelectedCustomerID);
+                    Customer c = context.Customers.Find(SelectedCustomerIDNumber);
                     CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
                 }
             } 
         }
-        private int _SelectedCustomerID;
+        private long _SelectedCustomerIDNumber;
         public SaleCartPage()
         {
             InitializeComponent();
@@ -57,7 +57,13 @@ namespace Market
             // Parse amount value
             Amount = int.Parse(AmountText.Text);
 
-            var query = context.Products.Where(s => s.Barcode == InputBarcode);
+            var queryStrg = context.Stocks.Where(a => a.Barcode == InputBarcode);
+
+            //Check the product in storage
+            if(!queryStrg.Any()) { MessageBox.Show("There is no product with this barcode!"); return; }
+            Stock s = queryStrg.First();
+            
+            var query = context.Products.Where(i => i.Barcode == InputBarcode);
             // If no product exists with the given barcode
             if (!query.Any()) { MessageBox.Show("Couldn't find Product"); return; }
             // If amount isn't possible
@@ -77,10 +83,25 @@ namespace Market
                 // If product was already in the list
                 if (piFromWindow.Barcode == pi.Barcode)
                 {
+                    //Compare the input with available amount of product
+                    if ((s.Amount - piFromWindow.Amount) < Amount)
+                    {
+                        MessageBox.Show("Available product is fewer than input");
+                        return;
+                    }
                     productInList = true;
                     piFromWindow.Amount += pi.Amount;
                     ItemList.Items.Remove(piFromWindow);
                     ItemList.Items.Add(piFromWindow);
+                }
+                else
+                {
+                    if(s.Amount < Amount)
+                    {
+                        MessageBox.Show("Available product is fewer than input");
+                        return;
+                    }
+                    piFromWindow.Amount += pi.Amount;
                 }
             }
                     
@@ -119,28 +140,63 @@ namespace Market
 
             var context = new MarketDBContext();
 
-            int CustomerID = this.SelectedCustomerID;
+            long CustomerIDNumber = this.SelectedCustomerIDNumber;
             Sale sale = new Sale(DateTime.Now);
             // If there is a selected Customer (This means that we will continue with the "Cari" sale)
             // Else continue with the "Peşin" sale
-            if (CustomerID != 0)
+            if (CustomerIDNumber != 0)
             {
-                sale.CustomerID = CustomerID;
+                sale.CustomerIDNumber = CustomerIDNumber;
             }
             // Since ID is generated automatically we save sale to the database and then get its ID
             context.Sales.Add(sale);
+            context.SaveChanges();
+            
+            var query = context.CustomerDebts.Where(i => i.IDNumber == CustomerIDNumber);
+            if (query.Count() != 0)
+            {
+                CustomerDebt cstdebt = context.CustomerDebts.Find(CustomerIDNumber);
+                double sum = 0.0;
+                // Loop through each item in the list
+                for (int i = 0; i < ItemList.Items.Count; i++)
+                {
+                    ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+
+                    sum += (pi.Amount * pi.Price);
+                }
+                cstdebt.DebtAmount += sum;
+            }
+            else
+            {
+                double sum = 0.0;
+                // Loop through each item in the list
+                for (int i = 0; i < ItemList.Items.Count; i++)
+                {
+                    ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
+
+                    sum += (pi.Amount * pi.Price);
+                }
+
+                CustomerDebt cstdebt = new CustomerDebt(CustomerIDNumber, sum);
+                context.CustomerDebts.Add(cstdebt);
+            }
             context.SaveChanges();
 
             // Use the newly created sale's id
             Sale s = (Sale)context.Sales.Find(sale.ID);
 
-            // For each product in the listview create a Product-Sale duo and save them to the database
+            // For each product in the listview 
             for (int i = 0; i < ItemList.Items.Count; i++)
             {
+                //Create a Product-Sale duo and save them to the database
                 ProductItem pi = (ProductItem)ItemList.Items.GetItemAt(i);
                 ProductSale ps = new ProductSale(pi.ID, s.ID, pi.Amount);
 
                 context.ProductSales.Add(ps);
+
+                //Decrease the product amount in stock
+                Stock stock = context.Stocks.Find(pi.Barcode);
+                stock.Amount -= pi.Amount;
             }
 
             context.SaveChanges();
