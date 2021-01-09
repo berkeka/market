@@ -12,7 +12,7 @@ namespace Market.Utils
 {
     class ReportFileGenerator
     {
-        public void SingleCustomerReport(int CustomerID)
+        public void SingleCustomerReport(long CustomerID)
         {
 
             var context = new MarketDBContext();
@@ -24,7 +24,7 @@ namespace Market.Utils
 	                                                                from Sales
 	                                                                join ProductSales
 	                                                                on Sales.ID = ProductSales.SaleID
-	                                                                where Sales.CustomerID = {customer.ID}
+	                                                                where Sales.CustomerID = {customer.IDNumber}
 	                                                                group by ProductID) a
                                                                 join Products
                                                                 on Products.ID = a.ProductID;");

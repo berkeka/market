@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Market.Pages;
+using Market.Entities;
 
 namespace Market
 {
@@ -24,6 +25,23 @@ namespace Market
         public SalePage()
         {
             InitializeComponent();
+
+            var context = new MarketDBContext();
+            var queryPrd = context.Products;
+            var queryStock = context.Stocks;
+            if (queryStock.Any())
+            {
+                List<StockItem> items = new List<StockItem>();
+                for (int i = 1; i <= queryStock.Count(); i++)
+                {
+                    var temp = queryPrd.Find(i);
+                    var tempp = queryStock.Find(temp.Barcode);
+                    int amountt = (int)tempp.Amount;
+                    if(amountt > 100) { amountt = 100; }
+                    items.Add(new StockItem() { Title = temp.Name, Completion = amountt });
+                }
+                StockList.ItemsSource = items;                
+            }
         }
         private void PesinButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -44,12 +62,12 @@ namespace Market
 
             if(returnValue == true)
             {
-                int sc = csw.selectedCustomerID;
+                long sc = csw.selectedCustomerIDNumber;
 
                 MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
                 SaleCartPage NewWindow = new SaleCartPage();
-                NewWindow.SelectedCustomerID = sc;
+                NewWindow.SelectedCustomerIDNumber = sc;
 
                 main.Title = NewWindow.Title;
                 main.Content = NewWindow;
@@ -85,12 +103,48 @@ namespace Market
             main.Title = NewPage.Title;
             main.Content = NewPage;
         }
+        private void BorcButtonClicked(object sender, RoutedEventArgs e)
+        {
+            CustomerSelectionWindow dw = new CustomerSelectionWindow();
 
+            bool returnValue = (bool)dw.ShowDialog();
+
+            if (returnValue == true)
+            {
+                long sc = dw.selectedCustomerIDNumber;
+
+                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+                CustomerDebtPaymentPage NewWindow = new CustomerDebtPaymentPage();
+                NewWindow.SelectedCustomerIDNumber = sc;
+
+                main.Title = NewWindow.Title;
+                main.Content = NewWindow;
+            }
+        }
+        public class StockItem
+        {
+            public string Title { get; set; }
+            public int Completion { get; set; }
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
             MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
+        }
+        private void CikisButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            MainWindow new_main = new MainWindow();
+
+            //Log out
+            App.DestroySession();
 
             main.Title = new_main.Title;
             main.Content = new_main.Content;

@@ -55,10 +55,10 @@ namespace Market.Pages
             CustomerSelectionWindow csw = new CustomerSelectionWindow();
             csw.ShowDialog();
 
-            if(csw.selectedCustomerID == 0) { return; }
+            if(csw.selectedCustomerIDNumber == 0) { return; }
 
             ReportFileGenerator fileGenerator = new ReportFileGenerator();
-            fileGenerator.SingleCustomerReport(csw.selectedCustomerID);
+            fileGenerator.SingleCustomerReport(csw.selectedCustomerIDNumber);
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
