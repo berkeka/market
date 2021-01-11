@@ -7,6 +7,8 @@ using Market.Entities;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
+using System.Data;
+using System.Windows;
 
 namespace Market.Utils
 {
@@ -31,7 +33,7 @@ namespace Market.Utils
 
             List<ProductItem> piList = result.ToList();
 
-            if(piList.Count == 0) {Console.WriteLine("Selected customer bougth no items"); return; }
+            if(piList.Count == 0) {Console.WriteLine("Selected customer bought no items"); return; }
 
             // Create a A4 sized document
             Document document = new Document(PageSize.A4, 30, 30, 30, 30);
@@ -103,7 +105,126 @@ namespace Market.Utils
 
         public void AllCustomerReport()
         {
+            var context = new MarketDBContext();
 
+            var resultCustomer = context.Database.SqlQuery<Customer>($@"select IDNumber, Name, Lastname from Customers");
+
+            List<Customer> cList = resultCustomer.ToList();
+
+            //Check if there is any customer
+            if(cList.Count() == 0) { Console.WriteLine("There is no registered customer in database"); return; }
+
+            // Create a A4 sized document
+            Document document = new Document(PageSize.A4, 30, 30, 30, 30);
+
+            // Set file path to desktop and create filename
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string fileName = "/Toplu_musteri_raporu.pdf";
+
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(path + fileName, FileMode.Create));
+
+            if (document.IsOpen() == false)
+            {
+
+                document.Open();
+                //Report title
+                string infoText = $"Toplu musteri raporu\n";
+
+                Paragraph paragr = new Paragraph(infoText);
+                paragr.Alignment = Element.ALIGN_CENTER;
+                paragr.Font = FontFactory.GetFont(FontFactory.HELVETICA, 12f, BaseColor.GREEN);
+                paragr.SpacingAfter = 30;
+                document.Add(paragr);
+
+                // Create a table( 5 columns )
+                PdfPTable table = new PdfPTable(5);
+                table.DefaultCell.Border = Rectangle.NO_BORDER;
+                List<PdfPCell> cellList = new List<PdfPCell>();
+
+                
+                cellList.Add(new PdfPCell(new Phrase("Musteri adi")));
+                cellList.Add(new PdfPCell(new Phrase("Musteri soyadi")));
+                cellList.Add(new PdfPCell(new Phrase("Toplam satis")));
+                cellList.Add(new PdfPCell(new Phrase("Toplam odeme")));
+                cellList.Add(new PdfPCell(new Phrase("Toplam Kalan")));
+
+                // Add all products to the table and calculate sum of spent money
+                
+                foreach (Customer c in cList)
+                {
+                    cellList.Add(new PdfPCell(new Phrase(c.Name)));
+                    cellList.Add(new PdfPCell(new Phrase(c.LastName)));
+
+                    Customer customer = context.Customers.Find(c.IDNumber);
+
+                    var resultSale = context.Database.SqlQuery<ProductItem>($@"select 1 as ID, 'abc' as Barcode, Products.Price as Price, Products.Name, a.Amount
+                                                                from (select ProductID, SUM(Amount) Amount
+	                                                                from Sales
+	                                                                join ProductSales
+	                                                                on Sales.ID = ProductSales.SaleID
+	                                                                where Sales.CustomerIDNumber = {customer.IDNumber}
+	                                                                group by ProductID) a
+                                                                join Products
+                                                                on Products.ID = a.ProductID;");
+
+                    List<ProductItem> piList = resultSale.ToList();
+
+                    if (piList.Count == 0) 
+                    { 
+                        cellList.Add(new PdfPCell(new Phrase("No purchase"))); 
+                    }
+                    else
+                    {
+                        double sumPaid = 0;
+                        foreach (ProductItem pi in piList)
+                        {
+                            sumPaid += (pi.Amount * pi.Price);
+                        }
+                        cellList.Add(new PdfPCell(new Phrase(sumPaid.ToString())));
+                    }
+                    
+                    var resultPayment = context.Database.SqlQuery<CustomerPayment>($@"select ID, CustomerIDNumber, PaymentAmount, Date from CustomerPayments where CustomerPayments.CustomerIDNumber = {customer.IDNumber}");
+
+                    List<CustomerPayment> cpList = resultPayment.ToList();
+
+                    if(cpList.Count() == 0)
+                    {
+                        cellList.Add(new PdfPCell(new Phrase("No payment")));
+                    }
+                    else
+                    {
+                        double sumPayment = 0;
+                        foreach (CustomerPayment cp in cpList)
+                        {
+                            sumPayment += cp.PaymentAmount;
+                        }
+                        cellList.Add(new PdfPCell(new Phrase(sumPayment.ToString())));
+                    }
+                    
+                    var queryDebt = context.CustomerDebts.Find(customer.IDNumber);
+
+                    //Check if there is any debt
+                    if(queryDebt != null) 
+                    { 
+                        cellList.Add(new PdfPCell(new Phrase(queryDebt.DebtAmount.ToString()))); 
+                    }
+                    else
+                    {
+                        cellList.Add(new PdfPCell(new Phrase("No Debt")));
+                    }
+                }
+
+                foreach (PdfPCell cell in cellList)
+                {
+                    cell.Border = 0;
+                    cell.FixedHeight = 25f;
+                    cell.HorizontalAlignment = 1;
+                    table.AddCell(cell);
+                }
+
+                document.Add(table);
+                document.Close();
+            }
         }
     }
 }

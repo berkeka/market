@@ -60,6 +60,16 @@ namespace Market.Pages
             ReportFileGenerator fileGenerator = new ReportFileGenerator();
             fileGenerator.SingleCustomerReport(csw.selectedCustomerIDNumber);
         }
+        private void MultiCustomerReportButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var context = new MarketDBContext();
+            var query = context.CustomerDebts;
+
+            if (!query.Any()) { MessageBox.Show("There is no customer debt!"); return; }
+
+            ReportFileGenerator fileGenerator = new ReportFileGenerator();
+            fileGenerator.AllCustomerReport();
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
