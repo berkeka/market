@@ -36,10 +36,16 @@ namespace Market.Pages
             string InputBarcode = BarcodeText.Text;
             string InputName = NameText.Text;
             int InputPrice = int.Parse(PriceText.Text);
+            double InputWarningPrice = 0.0;
+            if (WarningLimitText.Text != null)
+            {
+                InputWarningPrice = double.Parse(WarningLimitText.Text);
+            }
 
             // Check inputs for exceptions
 
             Product p = new Product(InputBarcode, InputName, InputPrice);
+            p.WarningLimit = InputWarningPrice;
 
             context.Products.Add(p);
             context.SaveChanges();
