@@ -31,10 +31,11 @@ namespace Market
         }
         private void AraButtonClicked(object sender, RoutedEventArgs e)
         {
-            long InputIDNumber = long.Parse(IDNumberText.Text);
+            
 
             if (IDNumberText.Text != "")
             {
+                long InputIDNumber = long.Parse(IDNumberText.Text);
                 var context = new MarketDBContext();
 
                 var query = context.Customers.Where(s => s.IDNumber == InputIDNumber);
