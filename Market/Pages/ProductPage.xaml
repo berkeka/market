@@ -10,7 +10,7 @@
 
     <Grid>
         <Label Content="Ürünler" HorizontalAlignment="Left" Margin="51,49,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="ProductList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="500">
+        <ListView x:Name="ProductList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="500" SelectionMode="Single" SelectionChanged="ProductList_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Ürün ismi" DisplayMemberBinding="{Binding Name}" Width="300"/>
@@ -27,10 +27,13 @@
         <TextBox x:Name="PriceText" HorizontalAlignment="Left" Height="30" Margin="600,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"/>
         <Label Content="Uyari Limiti" HorizontalAlignment="Left" Margin="681,203,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="WarningLimitText" HorizontalAlignment="Left" Height="30" Margin="685,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65"/>
-        <Button Content="Ekle" Click="EkleButtonClicked" HorizontalAlignment="Left" Margin="600,290,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
+        <Button Content="Onayla" Click="EkleButtonClicked" HorizontalAlignment="Left" Margin="633,325,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
+        <Button x:Name="DegistirButton" Content="Degistir" Click="DegistirButtonClicked" HorizontalAlignment="Left" Margin="639,280,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
+        <Button Content="Secimi Temizle" Click="TemizleButtonClicked" HorizontalAlignment="Left" Margin="466,32,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
         <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
         </Button>
+        
 
     </Grid>
 </Page>
