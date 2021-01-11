@@ -19,11 +19,12 @@ namespace Market.Entities
         public Product()
         {
         }
-        public Product(string Barcode, string Name, double Price)
+        public Product(string Barcode, string Name, double Price, double WarningLimit)
         {
             this.Barcode = Barcode;
             this.Name = Name;
             this.Price = Price;
+            this.WarningLimit = WarningLimit;
         }
     }
 }

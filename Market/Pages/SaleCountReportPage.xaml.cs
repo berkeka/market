@@ -25,7 +25,7 @@ namespace Market.Pages
         {
             var context = new MarketDBContext();
 
-            var result = context.Database.SqlQuery<ProductItem>(@"select 1 as ID, cast(1 as float) as Price, Products.Name as ""Name"", Products.Barcode as Barcode, SUM(ProductSales.Amount) as Amount
+            var result = context.Database.SqlQuery<ProductItem>(@"select 1 as ID, cast(1 as float) as Price, cast(1 as float) as WarningLimit, Products.Name as ""Name"", Products.Barcode as Barcode, SUM(ProductSales.Amount) as Amount
                                                                 from ProductSales
                                                                 join Products
                                                                 on ProductSales.ProductID = Products.ID

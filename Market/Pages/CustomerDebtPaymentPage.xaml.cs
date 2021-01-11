@@ -43,7 +43,8 @@ namespace Market.Pages
                     CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
                     
                     CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-                    double sum = cd.DebtAmount;
+                    double sum = 0.0;
+                    if(cd != null) { sum = cd.DebtAmount; }
                     // Set content of the label to sum
                     SumLabel.Content = sum.ToString();
 
