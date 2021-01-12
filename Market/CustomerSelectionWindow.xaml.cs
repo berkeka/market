@@ -23,11 +23,8 @@ namespace Market
         public long selectedCustomerIDNumber { get; set; }
         public CustomerSelectionWindow()
         {
-            var context = new MarketDBContext();
-            List<Customer> ls = context.Customers.ToList();
-
             InitializeComponent();
-            CustomerList.ItemsSource = ls;
+            RefreshList("");
         }
         private void AraButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -76,6 +73,22 @@ namespace Market
                 MessageBox.Show("Wrong Selection");
             }
             
+        }
+
+        private void RefreshList(string input)
+        {
+            // Refresh the list with customers with the given input text
+            var context = new MarketDBContext();
+            List<Customer> ls = context.Customers.Where(c => c.IDNumber.ToString().Contains(input)).ToList();
+            CustomerList.ItemsSource = ls;
+        }
+
+        private void IDNumberTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(IDNumberText != null)
+            {
+                RefreshList(IDNumberText.Text);
+            }
         }
     }
 }
