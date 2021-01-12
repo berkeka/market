@@ -54,8 +54,16 @@ namespace Market.Pages
                 List.ItemsSource = reversed_items;
             }
         }
-        
+        //Go back to report main page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
+            ReportMainPage newPage = new ReportMainPage();
+
+            main.Title = newPage.Title;
+            main.Content = newPage.Content;
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();

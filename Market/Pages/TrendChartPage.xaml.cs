@@ -122,7 +122,16 @@ namespace Market.Pages
             // Set date strings to labels on the X axis
             Chart.AxisX.First().Labels = DateLabels;
         }
+        //Go back to report main page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
+            ReportMainPage newPage = new ReportMainPage();
+
+            main.Title = newPage.Title;
+            main.Content = newPage.Content;
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();

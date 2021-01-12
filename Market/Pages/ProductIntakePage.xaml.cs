@@ -138,7 +138,16 @@ namespace Market.Pages
             ProductList.Items.Clear();
             context.SaveChanges();
         }
+        //Go back to sale page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
+            SalePage newPage = new SalePage();
+
+            main.Title = newPage.Title;
+            main.Content = newPage.Content;
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
