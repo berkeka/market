@@ -152,6 +152,19 @@ namespace Market
                 main.Content = NewWindow;
             }
         }
+        private void UserButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            AddUserPage NewWindow = new AddUserPage();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
+        }
+        private void SupplierButtonClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
         public class StockItem
         {
             public string Title { get; set; }
