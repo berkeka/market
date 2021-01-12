@@ -152,7 +152,7 @@ namespace Market
             context.Sales.Add(sale);
             context.SaveChanges();
             
-            var query = context.CustomerDebts.Where(i => i.IDNumber == CustomerIDNumber);
+            var query = context.CustomerDebts.Where(i => i.CustomerIDNumber == CustomerIDNumber);
             if (query.Count() != 0)
             {
                 CustomerDebt cstdebt = context.CustomerDebts.Find(CustomerIDNumber);
