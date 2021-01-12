@@ -9,6 +9,27 @@
       Title="SupplierPage">
 
     <Grid>
-        
+        <Label Content="Tedarikçiler" HorizontalAlignment="Left" Margin="51,49,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="SupplierList" HorizontalAlignment="Left" Height="330" Margin="51,75,0,0" VerticalAlignment="Top" Width="480">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Şirket no" DisplayMemberBinding="{Binding ID}" Width="60"/>
+                    <GridViewColumn Header="Şirket ismi" DisplayMemberBinding="{Binding Name}" Width="250"/>
+                    <GridViewColumn Header="Telefon Numarası" DisplayMemberBinding="{Binding PhoneNumber}" Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Şirket ismi:" HorizontalAlignment="Left" Margin="600,49,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NameText" HorizontalAlignment="Left" Height="30" Margin="600,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <Label Content="Telefon Numarası:" HorizontalAlignment="Left" Margin="600,110,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="PhoneNumberText" HorizontalAlignment="Left" Height="30" Margin="600,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <Button Content="Ekle" Click="EkleButtonClicked" HorizontalAlignment="Left" Margin="600,189,0,0" VerticalAlignment="Top" Width="65" Height="25"/>
+        <Button Content="Sil" Click="SilButtonClicked" HorizontalAlignment="Left" Margin="685,189,0,0" VerticalAlignment="Top" Width="65" Height="25"/>
+        <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
+        </Button>
+        <Button Click="GoBackButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,50,0">
+            <Image Source="../Assets/Images/goBack.png" Height="40" Width="40"/>
+        </Button>
     </Grid>
 </Page>
