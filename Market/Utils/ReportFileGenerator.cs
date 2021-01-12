@@ -9,19 +9,21 @@ using iTextSharp.text.pdf;
 using System.IO;
 using System.Data;
 using System.Windows;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace Market.Utils
 {
     class ReportFileGenerator
     {
-        public void SingleCustomerReport(long CustomerID)
+        public void SingleCustomerReport(long CustomerID, int choice)
         {
 
             var context = new MarketDBContext();
 
             Customer customer = context.Customers.Find(CustomerID);
 
-            var result = context.Database.SqlQuery<ProductItem>($@"select 1 as ID, 'abc' as Barcode, cast(1 as float) as WarningLimit, Products.Price as Price, Products.Name, a.Amount
+            var result = context.Database.SqlQuery<ReportItem>($@"select Products.Price as Price, Products.Name, a.Amount
                                                                 from (select ProductID, SUM(Amount) Amount
 	                                                                from Sales
 	                                                                join ProductSales
@@ -31,11 +33,31 @@ namespace Market.Utils
                                                                 join Products
                                                                 on Products.ID = a.ProductID;");
 
-            List<ProductItem> piList = result.ToList();
+            List<ReportItem> riList = result.ToList();
 
-            if(piList.Count == 0) {Console.WriteLine("Selected customer bought no items"); return; }
+            if (riList.Count == 0) { Console.WriteLine("Selected customer bought no items"); return; }
 
-            // Create a A4 sized document
+            if(choice == 1) { SinglePdf(customer, riList); }
+            else { SingleExcel(customer, riList); }
+        }
+
+        public void SingleExcel(Customer customer, List<ReportItem> riList)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string fileName = "/Rapor_" + customer.Name + "_" + customer.LastName + ".xls";
+
+            //string fullfilename = path + fileName;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            ExcelPackage excel = new ExcelPackage(new FileInfo(path + fileName));
+            ExcelWorksheet sheetcreate = excel.Workbook.Worksheets.Add("Accounts");
+
+            sheetcreate.Cells.LoadFromCollection(riList);
+            excel.Save();
+        }
+
+        public void SinglePdf(Customer customer, List<ReportItem> riList)
+        {
             Document document = new Document(PageSize.A4, 30, 30, 30, 30);
 
             // Set file path to desktop and create filename using customer name and lastname
@@ -56,7 +78,7 @@ namespace Market.Utils
                 customerPara.Font = FontFactory.GetFont(FontFactory.HELVETICA, 12f, BaseColor.GREEN);
                 customerPara.SpacingAfter = 30;
                 document.Add(customerPara);
-                
+
                 // Create a table for sold items ( 4 columns )
                 PdfPTable table = new PdfPTable(4);
                 table.DefaultCell.Border = Rectangle.NO_BORDER;
@@ -74,13 +96,13 @@ namespace Market.Utils
 
                 // Add all products to the table and calculate sum of spent money
                 double sum = 0;
-                foreach (ProductItem pi in piList)
+                foreach (ReportItem ri in riList)
                 {
-                    cellList.Add(new PdfPCell(new Phrase(pi.Name)));
-                    cellList.Add(new PdfPCell(new Phrase(pi.Price.ToString())));
-                    cellList.Add(new PdfPCell(new Phrase(pi.Amount.ToString())));
+                    cellList.Add(new PdfPCell(new Phrase(ri.Name)));
+                    cellList.Add(new PdfPCell(new Phrase(ri.Price.ToString())));
+                    cellList.Add(new PdfPCell(new Phrase(ri.Amount.ToString())));
 
-                    double paidAmount = (pi.Amount * pi.Price);
+                    double paidAmount = (ri.Amount * ri.Price);
                     sum += paidAmount;
                     cellList.Add(new PdfPCell(new Phrase(paidAmount.ToString())));
                 }
@@ -112,7 +134,7 @@ namespace Market.Utils
             List<Customer> cList = resultCustomer.ToList();
 
             //Check if there is any customer
-            if(cList.Count() == 0) { Console.WriteLine("There is no registered customer in database"); return; }
+            if (cList.Count() == 0) { Console.WriteLine("There is no registered customer in database"); return; }
 
             // Create a A4 sized document
             Document document = new Document(PageSize.A4, 30, 30, 30, 30);
@@ -141,7 +163,7 @@ namespace Market.Utils
                 table.DefaultCell.Border = Rectangle.NO_BORDER;
                 List<PdfPCell> cellList = new List<PdfPCell>();
 
-                
+
                 cellList.Add(new PdfPCell(new Phrase("Musteri adi")));
                 cellList.Add(new PdfPCell(new Phrase("Musteri soyadi")));
                 cellList.Add(new PdfPCell(new Phrase("Toplam satis")));
@@ -149,7 +171,7 @@ namespace Market.Utils
                 cellList.Add(new PdfPCell(new Phrase("Toplam Kalan")));
 
                 // Add all products to the table and calculate sum of spent money
-                
+
                 foreach (Customer c in cList)
                 {
                     cellList.Add(new PdfPCell(new Phrase(c.Name)));
@@ -157,7 +179,7 @@ namespace Market.Utils
 
                     Customer customer = context.Customers.Find(c.IDNumber);
 
-                    var resultSale = context.Database.SqlQuery<ProductItem>($@"select 1 as ID, 'abc' as Barcode, Products.Price as Price, Products.Name, a.Amount
+                    var resultSale = context.Database.SqlQuery<ReportItem>($@"select Products.Price as Price, Products.Name, a.Amount
                                                                 from (select ProductID, SUM(Amount) Amount
 	                                                                from Sales
 	                                                                join ProductSales
@@ -167,27 +189,27 @@ namespace Market.Utils
                                                                 join Products
                                                                 on Products.ID = a.ProductID;");
 
-                    List<ProductItem> piList = resultSale.ToList();
+                    List<ReportItem> riList = resultSale.ToList();
 
-                    if (piList.Count == 0) 
-                    { 
-                        cellList.Add(new PdfPCell(new Phrase("No purchase"))); 
+                    if (riList.Count == 0)
+                    {
+                        cellList.Add(new PdfPCell(new Phrase("No purchase")));
                     }
                     else
                     {
                         double sumPaid = 0;
-                        foreach (ProductItem pi in piList)
+                        foreach (ReportItem ri in riList)
                         {
-                            sumPaid += (pi.Amount * pi.Price);
+                            sumPaid += (ri.Amount * ri.Price);
                         }
                         cellList.Add(new PdfPCell(new Phrase(sumPaid.ToString())));
                     }
-                    
+
                     var resultPayment = context.Database.SqlQuery<CustomerPayment>($@"select ID, CustomerIDNumber, PaymentAmount, Date from CustomerPayments where CustomerPayments.CustomerIDNumber = {customer.IDNumber}");
 
                     List<CustomerPayment> cpList = resultPayment.ToList();
 
-                    if(cpList.Count() == 0)
+                    if (cpList.Count() == 0)
                     {
                         cellList.Add(new PdfPCell(new Phrase("No payment")));
                     }
@@ -200,13 +222,13 @@ namespace Market.Utils
                         }
                         cellList.Add(new PdfPCell(new Phrase(sumPayment.ToString())));
                     }
-                    
+
                     var queryDebt = context.CustomerDebts.Find(customer.IDNumber);
 
                     //Check if there is any debt
-                    if(queryDebt != null) 
-                    { 
-                        cellList.Add(new PdfPCell(new Phrase(queryDebt.DebtAmount.ToString()))); 
+                    if (queryDebt != null)
+                    {
+                        cellList.Add(new PdfPCell(new Phrase(queryDebt.DebtAmount.ToString())));
                     }
                     else
                     {
@@ -227,4 +249,13 @@ namespace Market.Utils
             }
         }
     }
+}
+public class ReportItem
+{
+
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public double Amount { get; set; }
+    ReportItem() { }
+
 }
