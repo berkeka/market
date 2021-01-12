@@ -14,7 +14,6 @@ namespace Market.Entities
         public double Price { get; set; }
         public double WarningLimit { get; set; }
         public List<ProductSale> ProductSales { get; set; }
-        public List<Stock> Stocks { get; set; }
 
         public Product()
         {

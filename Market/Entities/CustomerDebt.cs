@@ -12,7 +12,6 @@ namespace Market.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ID { get; set; }
         public long CustomerIDNumber { get; set; }
         public double DebtAmount { get; set; }
         public CustomerDebt()

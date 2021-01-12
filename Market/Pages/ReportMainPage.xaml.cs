@@ -22,7 +22,7 @@ namespace Market.Pages
     /// </summary>
     public partial class ReportMainPage : Page
     {
-        
+
         public ReportMainPage()
         {
             InitializeComponent();
@@ -47,7 +47,7 @@ namespace Market.Pages
             main.Content = NewPage.Content;
         }
 
-        
+
         private void CustomerReportButtonClicked(object sender, RoutedEventArgs e)
         {
             var context = new MarketDBContext();
@@ -55,10 +55,12 @@ namespace Market.Pages
             CustomerSelectionWindow csw = new CustomerSelectionWindow();
             csw.ShowDialog();
 
-            if(csw.selectedCustomerIDNumber == 0) { return; }
-
+            if (csw.selectedCustomerIDNumber == 0) { return; }
+            FileSelectionWindow fsw = new FileSelectionWindow();
+            fsw.ShowDialog();
+            if(fsw.selection == 0) { return; }
             ReportFileGenerator fileGenerator = new ReportFileGenerator();
-            fileGenerator.SingleCustomerReport(csw.selectedCustomerIDNumber);
+            fileGenerator.SingleCustomerReport(csw.selectedCustomerIDNumber, fsw.selection);
         }
         private void MultiCustomerReportButtonClicked(object sender, RoutedEventArgs e)
         {
