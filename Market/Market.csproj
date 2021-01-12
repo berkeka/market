@@ -139,6 +139,9 @@
     <Compile Include="Pages\StockPage.xaml.cs">
       <DependentUpon>StockPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SupplierPage.xaml.cs">
+      <DependentUpon>SupplierPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\ReportFileGenerator.cs" />
     <Page Include="CustomerSelectionWindow.xaml">
       <SubType>Designer</SubType>
@@ -197,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\StockPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SupplierPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
