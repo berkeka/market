@@ -13,7 +13,6 @@ namespace Market.Entities
         public string Barcode { get; set; }
         public double PriceForUnit { get; set; }
         public double Amount { get; set; }
-        public List<Product> Products { get; set; }
         public Storage()
         {
         }

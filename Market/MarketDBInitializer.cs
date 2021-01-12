@@ -14,15 +14,25 @@ namespace Market
         {
             if (!context.Database.Exists())
             {
-                User User1 = new User("Admin", "12345", "admin", "admin");
-                Product Product1 = new Product("1", "a", 1);
+                User User1 = new User("admin", "12345", "admin", "admin");
+                Product Product1 = new Product("1", "Çikolata", 3, 100);
+                Product Product2 = new Product("2", "Elma", 4, 50);
                 Customer Customer1 = new Customer(1234567890, "Berke", "Kalkan");
-                CustomerDebt CustomerDebt1 = new CustomerDebt(1234567890, 40);
 
                 context.Users.Add(User1);
                 context.Products.Add(Product1);
+                context.Products.Add(Product2);
                 context.Customers.Add(Customer1);
-                context.CustomerDebts.Add(CustomerDebt1);
+
+                // Trigger that deletes products sales related to sale
+                context.Database.ExecuteSqlCommand(@"CREATE OR ALTER TRIGGER trig_delete_sale
+                                                    On Sales
+                                                    AFTER DELETE
+                                                    AS 
+                                                    BEGIN
+                                                    DELETE ProductSales FROM ProductSales INNER JOIN deleted ON deleted.ID = SaleID
+                                                    END;");
+
                 context.SaveChanges();
             }
         }

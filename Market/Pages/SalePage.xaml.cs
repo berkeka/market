@@ -34,13 +34,34 @@ namespace Market
                 List<StockItem> items = new List<StockItem>();
                 for (int i = 1; i <= queryStock.Count(); i++)
                 {
-                    var temp = queryPrd.Find(i);
-                    var tempp = queryStock.Find(temp.Barcode);
-                    int amountt = (int)tempp.Amount;
-                    if(amountt > 100) { amountt = 100; }
-                    items.Add(new StockItem() { Title = temp.Name, Completion = amountt });
+                    string color = "";
+                    var product = queryPrd.Find(i);
+                    var productStock = queryStock.Find(product.Barcode);
+                    int amountPercent;
+                    if (product.WarningLimit != 0)
+                    {
+                        amountPercent = (int)((100 * productStock.Amount) / product.WarningLimit);
+                        // We have less products than the warning limit
+                        if ((product.WarningLimit / 2) > productStock.Amount)
+                        {
+                            // Less than %50 of the wanted amount
+                            
+                            color = "Crimson"; 
+                        }
+                        else if (amountPercent < 80)
+                        {
+                            // Less than %50 of the wanted amount
+                            color = "Yellow";
+                        }
+                        else
+                        {
+                            // Equal or More than the wanted amount
+                            color = "Green";
+                        }
+                        items.Add(new StockItem() { Title = product.Name, Completion = amountPercent, Color = color });
+                    } 
                 }
-                StockList.ItemsSource = items;                
+                StockList.ItemsSource = items.OrderBy(i => i.Completion);                
             }
         }
         private void PesinButtonClicked(object sender, RoutedEventArgs e)
@@ -126,6 +147,7 @@ namespace Market
         {
             public string Title { get; set; }
             public int Completion { get; set; }
+            public string Color { get; set; }
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {

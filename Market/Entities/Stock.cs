@@ -14,6 +14,7 @@ namespace Market.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Barcode { get; set; }
         public double Amount { get; set; }
+        public int ProductID { get; set; }
         public Stock() { }
         public Stock(string Barcode, double Amount)
         {

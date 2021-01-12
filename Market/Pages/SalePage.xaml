@@ -25,10 +25,11 @@
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="150" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding Title}" />
-                        <ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />
+                        <ProgressBar Name="pbStatus" Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" Foreground="{Binding Color}"/>
+                        <TextBlock Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

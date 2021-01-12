@@ -21,7 +21,7 @@ namespace Market.Utils
 
             Customer customer = context.Customers.Find(CustomerID);
 
-            var result = context.Database.SqlQuery<ProductItem>($@"select 1 as ID, 'abc' as Barcode, Products.Price as Price, Products.Name, a.Amount
+            var result = context.Database.SqlQuery<ProductItem>($@"select 1 as ID, 'abc' as Barcode, cast(1 as float) as WarningLimit, Products.Price as Price, Products.Name, a.Amount
                                                                 from (select ProductID, SUM(Amount) Amount
 	                                                                from Sales
 	                                                                join ProductSales
