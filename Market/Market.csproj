@@ -100,6 +100,7 @@
     <Compile Include="Entities\ProductSale.cs" />
     <Compile Include="Entities\Sale.cs" />
     <Compile Include="Entities\Stock.cs" />
+    <Compile Include="Entities\Supplier.cs" />
     <Compile Include="FileSelectionWindow.xaml.cs">
       <DependentUpon>FileSelectionWindow.xaml</DependentUpon>
     </Compile>
