@@ -15,10 +15,16 @@
         <Label Content="Parola oluştur:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,280,0,0"/>
         <Label Content="Parolayı doğrula:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,350,0,0"/>
         <TextBox x:Name="NameText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="210,70,0,0"/>
-        <TextBox x:Name="LastName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="210,140,0,0"/>
+        <TextBox x:Name="LastNameText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="210,140,0,0"/>
         <TextBox x:Name="UserNameText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="210,210,0,0"/>
         <PasswordBox x:Name="PasswordText" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="120" Margin="210,280,0,0"/>
         <PasswordBox x:Name="ConfirmPasswordText" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="120" Margin="210,350,0,0"/>
         <Button Click="CompleteButtonClicked" Content="Tamamla" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="491,350,0,0"/>
+        <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
+        </Button>
+        <Button Click="GoBackButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,50,0">
+            <Image Source="../Assets/Images/goBack.png" Height="40" Width="40"/>
+        </Button>
     </Grid>
 </Page>
