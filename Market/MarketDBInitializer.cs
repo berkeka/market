@@ -33,6 +33,18 @@ namespace Market
                                                     DELETE ProductSales FROM ProductSales INNER JOIN deleted ON deleted.ID = SaleID
                                                     END;");
 
+                context.Database.ExecuteSqlCommand(@"CREATE PROCEDURE CustomerSales @InputID BIGINT
+                                                    AS
+                                                    select Products.Price as Price, Products.Name, a.Amount
+                                                    from (select ProductID, SUM(Amount) Amount
+	                                                    from Sales
+	                                                    join ProductSales
+	                                                    on Sales.ID = ProductSales.SaleID
+	                                                    where Sales.CustomerIDNumber = @InputID
+	                                                    group by ProductID) a
+                                                    join Products
+                                                    on Products.ID = a.ProductID;");
+
                 context.SaveChanges();
             }
         }

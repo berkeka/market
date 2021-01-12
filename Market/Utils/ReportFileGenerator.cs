@@ -23,15 +23,7 @@ namespace Market.Utils
 
             Customer customer = context.Customers.Find(CustomerID);
 
-            var result = context.Database.SqlQuery<ReportItem>($@"select Products.Price as Price, Products.Name, a.Amount
-                                                                from (select ProductID, SUM(Amount) Amount
-	                                                                from Sales
-	                                                                join ProductSales
-	                                                                on Sales.ID = ProductSales.SaleID
-	                                                                where Sales.CustomerIDNumber = {customer.IDNumber}
-	                                                                group by ProductID) a
-                                                                join Products
-                                                                on Products.ID = a.ProductID;");
+            var result = context.Database.SqlQuery<ReportItem>($@"EXEC CustomerSales @InputID = {CustomerID};");
 
             List<ReportItem> riList = result.ToList();
 
@@ -179,15 +171,7 @@ namespace Market.Utils
 
                     Customer customer = context.Customers.Find(c.IDNumber);
 
-                    var resultSale = context.Database.SqlQuery<ReportItem>($@"select Products.Price as Price, Products.Name, a.Amount
-                                                                from (select ProductID, SUM(Amount) Amount
-	                                                                from Sales
-	                                                                join ProductSales
-	                                                                on Sales.ID = ProductSales.SaleID
-	                                                                where Sales.CustomerIDNumber = {customer.IDNumber}
-	                                                                group by ProductID) a
-                                                                join Products
-                                                                on Products.ID = a.ProductID;");
+                    var resultSale = context.Database.SqlQuery<ReportItem>($@"EXEC CustomerSales @InputID = {customer.IDNumber};");
 
                     List<ReportItem> riList = resultSale.ToList();
 
