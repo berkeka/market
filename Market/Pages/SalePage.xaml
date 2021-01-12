@@ -34,7 +34,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Stoktaki ürün miktarı" HorizontalAlignment="Left" Height="34" Margin="91,140,0,0" VerticalAlignment="Top" Width="121"/>
-        <Label Content="Sadece 100 un altı" HorizontalAlignment="Left" Height="44" Margin="346,338,0,0" VerticalAlignment="Top" Width="111"/>
+        <Button Content="Stoktaki ürünler" Click="StockButtonClicked" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="100" Height="28"/>        
+        <Label Content="(Sadece mevcudu 100'ün altında olanlar)" HorizontalAlignment="Left" Height="34" Margin="91,384,0,0" VerticalAlignment="Top" Width="231"/>
     </Grid>
 </Page>
