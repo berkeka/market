@@ -23,6 +23,28 @@ namespace Market.Pages
         public StockPage()
         {
             InitializeComponent();
+
+            var context = new MarketDBContext();
+
+            var queryPrd = context.Products;
+            var queryStock = context.Stocks;
+            if (queryStock.Any())
+            {
+                List<StockItem> items = new List<StockItem>();
+                for (int i = 1; i <= queryStock.Count(); i++)
+                {
+                    var product = queryPrd.Find(i);
+                    var productStock = queryStock.Find(product.Barcode);
+                    items.Add(new StockItem() { Barcode = productStock.Barcode, Name = product.Name, Amount = productStock.Amount });
+                }
+                StockList.ItemsSource = items.OrderBy(i => i.Amount);
+            }
+        }
+        public class StockItem
+        {
+            public string Barcode { get; set; }
+            public string Name { get; set; }
+            public double Amount { get; set; }
         }
         //Go back to sale page
         private void GoBackButtonClicked(object sender, RoutedEventArgs e)
