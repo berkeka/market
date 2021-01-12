@@ -151,7 +151,7 @@ namespace Market
             var query = context.CustomerDebts.Where(i => i.CustomerIDNumber == CustomerIDNumber);
             if (query.Count() != 0)
             {
-                CustomerDebt cstdebt = context.CustomerDebts.Find(CustomerIDNumber);
+                CustomerDebt cstdebt = query.First();
                 double sum = 0.0;
                 // Loop through each item in the list
                 for (int i = 0; i < ItemList.Items.Count; i++)
