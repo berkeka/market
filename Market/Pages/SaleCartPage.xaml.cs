@@ -109,6 +109,9 @@ namespace Market
 
             // Calculate new sum
             RefreshSum();
+
+            BarcodeText.Text = String.Empty;
+            AmountText.Text = String.Empty;
         }
 
         private void CikarButtonClicked(object sender, RoutedEventArgs e)

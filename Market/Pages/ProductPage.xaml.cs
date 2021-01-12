@@ -77,6 +77,11 @@ namespace Market.Pages
             }
             context.SaveChanges();
             RefreshList(ProductList);
+
+            NameText.Text = String.Empty;
+            BarcodeText.Text = String.Empty;
+            PriceText.Text = String.Empty;
+            WarningLimitText.Text = String.Empty;
         }
 
         public void RefreshList(ListView List)
