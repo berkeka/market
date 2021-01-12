@@ -109,6 +109,9 @@ namespace Market
 
             // Calculate new sum
             RefreshSum();
+
+            BarcodeText.Text = String.Empty;
+            AmountText.Text = String.Empty;
         }
 
         private void CikarButtonClicked(object sender, RoutedEventArgs e)
@@ -215,7 +218,16 @@ namespace Market
             // Set content of the label to sum of all values
             SumLabel.Content = sum.ToString();
         }
+        //Go back to sale page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
+            SalePage newPage = new SalePage();
+
+            main.Title = newPage.Title;
+            main.Content = newPage.Content;
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();

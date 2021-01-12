@@ -94,6 +94,15 @@ namespace Market
                 main.Content = NewWindow;
             }
         }
+        private void StockButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            StockPage NewWindow = new StockPage();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow.Content;
+        }
 
         private void MusteriButtonClicked(object sender, RoutedEventArgs e)
         {

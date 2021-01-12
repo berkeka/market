@@ -77,6 +77,11 @@ namespace Market.Pages
             }
             context.SaveChanges();
             RefreshList(ProductList);
+
+            NameText.Text = String.Empty;
+            BarcodeText.Text = String.Empty;
+            PriceText.Text = String.Empty;
+            WarningLimitText.Text = String.Empty;
         }
 
         public void RefreshList(ListView List)
@@ -138,6 +143,16 @@ namespace Market.Pages
                 if (e.AddedItems.Count > 0) { DegistirButton.IsEnabled = true; }
             }
             
+        }
+        //Go back to sale page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            SalePage newPage = new SalePage();
+
+            main.Title = newPage.Title;
+            main.Content = newPage.Content;
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
