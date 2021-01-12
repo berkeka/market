@@ -127,7 +127,6 @@ namespace Market.Pages
                     else
                     {
                         Stock stck = new Stock(item.Barcode, item.Amount);
-                        stck.ProductID = item.ID;
                         context.Stocks.Add(stck);
                     }
                 }
