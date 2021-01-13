@@ -47,7 +47,7 @@ namespace Market.Pages
             if (csw.selectedCustomerIDNumber == 0) { return; }
             FileSelectionWindow fsw = new FileSelectionWindow();
             fsw.ShowDialog();
-            if(fsw.selection == 0) { return; }
+            if (fsw.selection == 0) { return; }
             ReportFileGenerator fileGenerator = new ReportFileGenerator();
             fileGenerator.SingleCustomerReport(csw.selectedCustomerIDNumber, fsw.selection);
         }
@@ -57,9 +57,11 @@ namespace Market.Pages
             var query = context.CustomerDebts;
 
             if (!query.Any()) { MessageBox.Show("There is no customer debt!"); return; }
-
+            FileSelectionWindow fsw = new FileSelectionWindow();
+            fsw.ShowDialog();
+            if (fsw.selection == 0) { return; }
             ReportFileGenerator fileGenerator = new ReportFileGenerator();
-            fileGenerator.AllCustomerReport();
+            fileGenerator.AllCustomerReport(fsw.selection);
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
