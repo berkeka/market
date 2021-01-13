@@ -29,6 +29,37 @@ namespace Market.Pages
         }
         private void SilButtonClicked(object sender, RoutedEventArgs e)
         {
+            var context = new MarketDBContext();
+
+            var selection = SaleRecordList.SelectedItem;
+            if(selection == null) { MessageBox.Show("Seçim yapılmadı"); return; }
+
+            SaleItem saleItem = (SaleItem)selection;
+            string message = $"Do you want to delete selected sale?";
+            string caption = "Confirmation";
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+            if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
+            {
+                //Ask for login
+                var returnValue = false;
+
+                LogInWindow Login = new LogInWindow();
+                returnValue = (bool)Login.ShowDialog();
+
+                if (returnValue == false) { return; }
+
+                Sale sale = context.Sales.Find(saleItem.ID);
+                context.Sales.Remove(sale);
+                
+                context.SaveChanges();
+                SaleIDText.Text = String.Empty;
+                RefreshList("");
+            }
+            else
+            {
+                return;
+            }
 
         }
         public class SaleItem
@@ -36,27 +67,6 @@ namespace Market.Pages
             public string FullName { get; set; }
             public int ID { get; set; }
             public DateTime Date { get; set; }
-        }
-        //Go back to sale page
-        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
-        {
-            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            SalePage newPage = new SalePage();
-
-            main.Title = newPage.Title;
-            main.Content = newPage.Content;
-        }
-        private void HomeButtonClicked(object sender, RoutedEventArgs e)
-        {
-            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
         }
         private void RefreshList(string input)
         {
@@ -85,5 +95,27 @@ namespace Market.Pages
                 RefreshList(SaleIDText.Text);
             }
         }
+        //Go back to sale page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            SalePage newPage = new SalePage();
+
+            main.Title = newPage.Title;
+            main.Content = newPage.Content;
+        }
+        private void HomeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+            // Close the newly initialized window
+            new_main.Close();
+        }
+        
     }
 }

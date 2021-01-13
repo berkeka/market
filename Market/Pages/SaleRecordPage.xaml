@@ -10,7 +10,7 @@
 
     <Grid>
         <Label Content="Kayıtlı satışlar" HorizontalAlignment="Left" Margin="51,57,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="SaleRecordList" HorizontalAlignment="Left" Height="294" Margin="51,95,0,0" VerticalAlignment="Top" Width="500">
+        <ListView x:Name="SaleRecordList" HorizontalAlignment="Left" Height="294" Margin="51,95,0,0" VerticalAlignment="Top" Width="500" SelectionMode="Single">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="İsim Soyisim" DisplayMemberBinding="{Binding FullName}" Width="250"/>
