@@ -28,6 +28,11 @@ namespace Market.Pages
             InitializeComponent();
         }
 
+        private void ProfitButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new ProfitPage());
+        }
+
         private void ProductSaleButtonClicked(object sender, RoutedEventArgs e)
         {
             App.NavigateTo(new SaleCountReportPage());
