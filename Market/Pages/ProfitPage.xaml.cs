@@ -81,6 +81,10 @@ namespace Market.Pages
                 double profit = sumSale + sumCustPaym - sumSupplPaym;
 
                 ProfitLabel.Content = profit;
+                
+                Brush color;
+                color = (profit > 0) ? Brushes.Green : Brushes.Red ;
+                ProfitLabel.Foreground = color;
             }
 
         }
