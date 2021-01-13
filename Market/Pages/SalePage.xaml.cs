@@ -171,6 +171,15 @@ namespace Market
             public int Completion { get; set; }
             public string Color { get; set; }
         }
+        private void SaleRecordButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            SaleRecordPage NewWindow = new SaleRecordPage();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
