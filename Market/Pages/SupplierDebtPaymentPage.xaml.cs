@@ -37,6 +37,7 @@ namespace Market.Pages
                 _SelectedSupplierID = value;
                 if (_SelectedSupplierID != 0)
                 {
+                    RefreshList(PaymentList);
                     RefreshSum(SumLabel);
                 }
             }
@@ -51,7 +52,7 @@ namespace Market.Pages
                 var context = new MarketDBContext();
 
                 //                                                                                  This operation removes the currency part of the string
-                if (double.Parse(PaymentAmountText.Text) <= double.Parse(SumLabel.Content.ToString().Remove(SumLabel.Content.ToString().Length -1, 2)))
+                if (double.Parse(PaymentAmountText.Text) <= double.Parse(SumLabel.Content.ToString().Remove(SumLabel.Content.ToString().Length -1, 1)))
                 {
                     double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
 
