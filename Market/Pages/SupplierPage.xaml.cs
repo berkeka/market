@@ -25,6 +25,7 @@ namespace Market.Pages
         {
             InitializeComponent();
             RefreshList(SupplierList);
+            SilButton.IsEnabled = false;
         }
         private void EkleButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -115,6 +116,18 @@ namespace Market.Pages
             main.Content = new_main.Content;
             // Close the newly initialized window
             new_main.Close();
+        }
+
+        private void SupplierList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count - e.RemovedItems.Count > 0)
+            {
+                SilButton.IsEnabled = true;
+            }
+            else
+            {
+                SilButton.IsEnabled = false;
+            }
         }
     }
 }
