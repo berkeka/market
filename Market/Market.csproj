@@ -95,7 +95,7 @@
       <DependentUpon>CustomerSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\CustomerDebt.cs" />
-    <Compile Include="Entities\CustomerPayment.cs" />
+    <Compile Include="Entities\Payment.cs" />
     <Compile Include="Entities\ProductItem.cs" />
     <Compile Include="Entities\ProductSale.cs" />
     <Compile Include="Entities\Sale.cs" />

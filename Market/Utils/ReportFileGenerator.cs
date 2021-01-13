@@ -189,9 +189,9 @@ namespace Market.Utils
                         cellList.Add(new PdfPCell(new Phrase(sumPaid.ToString())));
                     }
 
-                    var resultPayment = context.Database.SqlQuery<CustomerPayment>($@"select ID, CustomerIDNumber, PaymentAmount, Date from CustomerPayments where CustomerPayments.CustomerIDNumber = {customer.IDNumber}");
+                    var resultPayment = context.Database.SqlQuery<Payment>($@"select ID, CustomerIDNumber, PaymentAmount, Date from CustomerPayments where CustomerPayments.CustomerIDNumber = {customer.IDNumber}");
 
-                    List<CustomerPayment> cpList = resultPayment.ToList();
+                    List<Payment> cpList = resultPayment.ToList();
 
                     if (cpList.Count() == 0)
                     {
@@ -200,7 +200,7 @@ namespace Market.Utils
                     else
                     {
                         double sumPayment = 0;
-                        foreach (CustomerPayment cp in cpList)
+                        foreach (Payment cp in cpList)
                         {
                             sumPayment += cp.PaymentAmount;
                         }

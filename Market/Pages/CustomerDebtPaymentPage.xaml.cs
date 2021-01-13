@@ -49,7 +49,7 @@ namespace Market.Pages
                     SumLabel.Content = sum.ToString();
 
 
-                    PaymentList.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<CustomerPayment>();
+                    PaymentList.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<Payment>();
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace Market.Pages
                 {
                     double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
 
-                    CustomerPayment cp = new CustomerPayment(this.SelectedCustomerIDNumber, InputPaymentAmount, DateTime.Now);
+                    Payment cp = new Payment(this.SelectedCustomerIDNumber, 0,  InputPaymentAmount, DateTime.Now);
                     context.CustomerPayments.Add(cp);
 
                     CustomerDebt tcd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
@@ -88,7 +88,7 @@ namespace Market.Pages
         {
             var context = new MarketDBContext();
 
-            List.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<CustomerPayment>();
+            List.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<Payment>();
         }
         public void RefreshSum(Label label)
         {

@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace Market.Entities
 {
-    class CustomerPayment
+    class Payment
     {
         public int ID { get; set; }
         public long CustomerIDNumber { get; set; }
+        public int SupplierID { get; set; }
         public double PaymentAmount { get; set; }
         public DateTime Date { get; set; }
 
-        public CustomerPayment()
+        public Payment()
         {
         }
-        public CustomerPayment(long CustomerIDNumber, double PaymentAmount, DateTime Date)
+        public Payment(long CustomerIDNumber, int SupplierID, double PaymentAmount, DateTime Date)
         {
             this.CustomerIDNumber = CustomerIDNumber;
+            this.SupplierID = SupplierID;
             this.PaymentAmount = PaymentAmount;
             this.Date = Date;
         }
