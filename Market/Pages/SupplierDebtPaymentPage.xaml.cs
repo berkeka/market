@@ -37,7 +37,6 @@ namespace Market.Pages
                 _SelectedSupplierID = value;
                 if (_SelectedSupplierID != 0)
                 {
-
                     RefreshSum(SumLabel);
                 }
             }
@@ -45,26 +44,59 @@ namespace Market.Pages
         private int _SelectedSupplierID;
         private void OdeButtonClicked(object sender, EventArgs e)
         {
+           
 
-            RefreshList(PaymentList);
-            RefreshSum(SumLabel);
+            if (PaymentAmountText.Text != "")
+            {
+                var context = new MarketDBContext();
+
+                //                                                                                  This operation removes the currency part of the string
+                if (double.Parse(PaymentAmountText.Text) <= double.Parse(SumLabel.Content.ToString().Remove(SumLabel.Content.ToString().Length -1, 2)))
+                {
+                    double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
+
+                    Payment p = new Payment(0, SelectedSupplierID, InputPaymentAmount, DateTime.Now);
+                    context.Payments.Add(p);
+
+                    context.SaveChanges();
+
+                    RefreshList(PaymentList);
+                    RefreshSum(SumLabel);
+
+                    PaymentAmountText.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Wrong amount!");
+                }
+            }
         }
         public void RefreshList(ListView List)
         {
-           
+            var context = new MarketDBContext();
+
+            List.ItemsSource = context.Payments.Where(p => p.SupplierID == SelectedSupplierID).ToList<Payment>();
         }
         public void RefreshSum(Label label)
         {
             var context = new MarketDBContext();
+            Supplier sup = context.Suppliers.Find(SelectedSupplierID);
 
             var storages = context.Storages.Where(s => s.SupplierID == SelectedSupplierID).ToList();
+            var payments = context.Payments.Where(p => p.SupplierID == SelectedSupplierID).ToList();
             double sum = 0.0;
             foreach(Storage storage in storages)
             {
                 sum += (storage.Amount * storage.PriceForUnit);
             }
+            foreach(Payment payment in payments)
+            {
+                sum -= payment.PaymentAmount;
+            }
+
             // Set content of the label to sum
-            SumLabel.Content = sum.ToString() + "₺";
+            SumLabel.Content = sum.ToString() + " ₺";
+            SupplierLabel.Content = sup.Name;
         }
 
         private void GoBackButtonClicked(object sender, RoutedEventArgs e)
