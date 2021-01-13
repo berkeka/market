@@ -29,7 +29,7 @@ namespace Market.Utils
 
             if (riList.Count == 0) { Console.WriteLine("Selected customer bought no items"); return; }
 
-            if(choice == 1) { SinglePdf(customer, riList); }
+            if (choice == 1) { SinglePdf(customer, riList); }
             else { SingleExcel(customer, riList); }
         }
 
@@ -117,7 +117,7 @@ namespace Market.Utils
             }
         }
 
-        public void AllCustomerReport()
+        public void AllCustomerReport(int choice)
         {
             var context = new MarketDBContext();
 
@@ -127,6 +127,80 @@ namespace Market.Utils
 
             //Check if there is any customer
             if (cList.Count() == 0) { Console.WriteLine("There is no registered customer in database"); return; }
+
+            if (choice == 1) { AllPdf(cList); }
+            else { AllExcel(cList); }
+        }
+        public void AllExcel(List<Customer> cList)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string fileName = "/Toplu_musteri_raporu.xls";
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            ExcelPackage excel = new ExcelPackage(new FileInfo(path + fileName));
+            ExcelWorksheet sheetcreate = excel.Workbook.Worksheets.Add("Accounts");
+
+            var context = new MarketDBContext();
+
+            var rl = new List<ReportList>();
+
+            foreach (Customer c in cList)
+            {
+
+                Customer cstmr = context.Customers.Find(c.IDNumber);
+
+                var resultSale = context.Database.SqlQuery<ReportItem>($@"EXEC CustomerSales @InputID = {cstmr.IDNumber};");
+
+                List<ReportItem> riList = resultSale.ToList();
+
+                double purchase = 0;
+                if (riList.Count > 0)
+                {
+                    double sumPaid = 0;
+                    foreach (ReportItem ri in riList)
+                    {
+                        sumPaid += (ri.Amount * ri.Price);
+                    }
+                    purchase = sumPaid;
+                }
+                
+
+                var resultPayment = context.Database.SqlQuery<Payment>($@"select ID, CustomerIDNumber, PaymentAmount, SupplierID, Date from Payments where Payments.CustomerIDNumber = {cstmr.IDNumber}");
+
+                List<Payment> cpList = resultPayment.ToList();
+
+                double payment = 0;
+                if (cpList.Count() > 0)
+                {
+                    double sumPayment = 0;
+                    foreach (Payment cp in cpList)
+                    {
+                        sumPayment += cp.PaymentAmount;
+                    }
+                    payment = sumPayment;
+                }
+                
+
+                var queryDebt = context.CustomerDebts.Find(cstmr.IDNumber);
+
+                double debt = 0;
+                //Check if there is any debt
+                if (queryDebt != null)
+                {
+                    debt = queryDebt.DebtAmount;
+                }
+
+                rl.Add(new ReportList { Name = c.Name, LastName = c.LastName, Purchase = purchase, PaymentAmount = payment, Debt = debt });
+            }
+
+            sheetcreate.Cells.LoadFromCollection(rl);
+            excel.Save();
+        }
+
+        public void AllPdf(List<Customer> cList)
+        {
+            var context = new MarketDBContext();
 
             // Create a A4 sized document
             Document document = new Document(PageSize.A4, 30, 30, 30, 30);
@@ -139,7 +213,6 @@ namespace Market.Utils
 
             if (document.IsOpen() == false)
             {
-
                 document.Open();
                 //Report title
                 string infoText = $"Toplu musteri raporu\n";
@@ -162,16 +235,16 @@ namespace Market.Utils
                 cellList.Add(new PdfPCell(new Phrase("Toplam odeme")));
                 cellList.Add(new PdfPCell(new Phrase("Toplam Kalan")));
 
-                // Add all products to the table and calculate sum of spent money
+                // Add all customers to the table and calculate
 
                 foreach (Customer c in cList)
                 {
                     cellList.Add(new PdfPCell(new Phrase(c.Name)));
                     cellList.Add(new PdfPCell(new Phrase(c.LastName)));
 
-                    Customer customer = context.Customers.Find(c.IDNumber);
+                    Customer cstmr = context.Customers.Find(c.IDNumber);
 
-                    var resultSale = context.Database.SqlQuery<ReportItem>($@"EXEC CustomerSales @InputID = {customer.IDNumber};");
+                    var resultSale = context.Database.SqlQuery<ReportItem>($@"EXEC CustomerSales @InputID = {cstmr.IDNumber};");
 
                     List<ReportItem> riList = resultSale.ToList();
 
@@ -189,7 +262,7 @@ namespace Market.Utils
                         cellList.Add(new PdfPCell(new Phrase(sumPaid.ToString())));
                     }
 
-                    var resultPayment = context.Database.SqlQuery<Payment>($@"select ID, CustomerIDNumber, PaymentAmount, Date from CustomerPayments where CustomerPayments.CustomerIDNumber = {customer.IDNumber}");
+                    var resultPayment = context.Database.SqlQuery<Payment>($@"select ID, CustomerIDNumber, PaymentAmount, SupplierID, Date from Payments where Payments.CustomerIDNumber = {cstmr.IDNumber}");
 
                     List<Payment> cpList = resultPayment.ToList();
 
@@ -207,7 +280,7 @@ namespace Market.Utils
                         cellList.Add(new PdfPCell(new Phrase(sumPayment.ToString())));
                     }
 
-                    var queryDebt = context.CustomerDebts.Find(customer.IDNumber);
+                    var queryDebt = context.CustomerDebts.Find(cstmr.IDNumber);
 
                     //Check if there is any debt
                     if (queryDebt != null)
@@ -242,4 +315,18 @@ public class ReportItem
     public double Amount { get; set; }
     ReportItem() { }
 
+}
+
+public class ReportList
+{
+    public string Name { get; set; }
+    public string LastName { get; set; }
+    public double Purchase { get; set; }
+    public double PaymentAmount { get; set; }
+    public double Debt { get; set; }
+    public ReportList()
+    {
+
+    }
+    public ReportList(string Name, string LastName, double Purchase, double PaymentAmount, double Debt) { }
 }
