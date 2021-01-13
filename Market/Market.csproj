@@ -91,6 +91,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\ProfitPage.xaml.cs">
+      <DependentUpon>ProfitPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CustomerSelectionWindow.xaml.cs">
       <DependentUpon>CustomerSelectionWindow.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <DependentUpon>SupplierSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ReportFileGenerator.cs" />
+    <Page Include="Pages\ProfitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CustomerSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
