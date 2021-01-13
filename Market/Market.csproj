@@ -91,7 +91,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CustomerSelectionWindow.xaml.cs">
+    <Compile Include="Windows\CustomerSelectionWindow.xaml.cs">
       <DependentUpon>CustomerSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\CustomerDebt.cs" />
@@ -101,7 +101,7 @@
     <Compile Include="Entities\Sale.cs" />
     <Compile Include="Entities\Stock.cs" />
     <Compile Include="Entities\Supplier.cs" />
-    <Compile Include="FileSelectionWindow.xaml.cs">
+    <Compile Include="Windows\FileSelectionWindow.xaml.cs">
       <DependentUpon>FileSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddUserPage.xaml.cs">
@@ -117,11 +117,11 @@
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Storage.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="LogInWindow.xaml.cs">
+    <Compile Include="Windows\LogInWindow.xaml.cs">
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MarketDBContext.cs" />
-    <Compile Include="MarketDBInitializer.cs" />
+    <Compile Include="Utils\MarketDBInitializer.cs" />
     <Compile Include="Pages\ProductIntakePage.xaml.cs">
       <DependentUpon>ProductIntakePage.xaml</DependentUpon>
     </Compile>
@@ -152,15 +152,15 @@
     <Compile Include="Pages\SupplierPage.xaml.cs">
       <DependentUpon>SupplierPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SupplierSelectionWindow.xaml.cs">
+    <Compile Include="Windows\SupplierSelectionWindow.xaml.cs">
       <DependentUpon>SupplierSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ReportFileGenerator.cs" />
-    <Page Include="CustomerSelectionWindow.xaml">
+    <Page Include="Windows\CustomerSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FileSelectionWindow.xaml">
+    <Page Include="Windows\FileSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,7 +176,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LogInWindow.xaml">
+    <Page Include="Windows\LogInWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -236,7 +236,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SupplierSelectionWindow.xaml">
+    <Page Include="Windows\SupplierSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

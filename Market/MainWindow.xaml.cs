@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Market.Pages;
+using Market.Utils;
 
 namespace Market
 {
@@ -57,21 +58,13 @@ namespace Market
                 // Set Session
                 App.CreateSession();
                 // Change page
-                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-                SalePage NewWindow = new SalePage();
-
-                main.Title = NewWindow.Title;
-                main.Content = NewWindow;
+                App.NavigateTo(new SalePage());
             }
         }
 
         private void RaporButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            ReportMainPage NewWindow = new ReportMainPage();
-
-            main.Title = NewWindow.Title;
-            main.Content = NewWindow;
+            App.NavigateTo(new ReportMainPage());
         }
     }
 }

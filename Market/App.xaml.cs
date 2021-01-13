@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using Market.Pages;
 
 namespace Market
 {
@@ -26,6 +28,30 @@ namespace Market
         {
             App.LastLogin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             App.LoggedUser = 0;
+        }
+
+        public static void NavigateTo(Page page)
+        {
+            // Get the instance of the main window
+            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            // Change content of the main window 
+            main.Title = page.Title;
+            main.Content = page.Content;
+        }
+
+        public static void NavigateToMain()
+        {
+            // Get the instance of the main window
+            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            MainWindow new_main = new MainWindow();
+
+            main.Title = new_main.Title;
+            main.Content = new_main.Content;
+
+            // Close the newly initialized window
+            new_main.Close();
         }
     }
 }

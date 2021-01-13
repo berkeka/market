@@ -62,12 +62,7 @@ namespace Market.Pages
             }
 
         }
-        public class SaleItem
-        {
-            public string FullName { get; set; }
-            public int ID { get; set; }
-            public DateTime Date { get; set; }
-        }
+
         private void RefreshList(string input)
         {
             var context = new MarketDBContext();
@@ -98,24 +93,17 @@ namespace Market.Pages
         //Go back to sale page
         private void GoBackButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            SalePage newPage = new SalePage();
-
-            main.Title = newPage.Title;
-            main.Content = newPage.Content;
+            App.NavigateTo(new SalePage());
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
-        
+        public class SaleItem
+        {
+            public string FullName { get; set; }
+            public int ID { get; set; }
+            public DateTime Date { get; set; }
+        }
     }
 }

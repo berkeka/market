@@ -37,6 +37,7 @@ namespace Market.Pages
                 _SelectedSupplierID = value;
                 if (_SelectedSupplierID != 0)
                 {
+                    RefreshList(PaymentList);
                     RefreshSum(SumLabel);
                 }
             }
@@ -51,7 +52,7 @@ namespace Market.Pages
                 var context = new MarketDBContext();
 
                 //                                                                                  This operation removes the currency part of the string
-                if (double.Parse(PaymentAmountText.Text) <= double.Parse(SumLabel.Content.ToString().Remove(SumLabel.Content.ToString().Length -1, 2)))
+                if (double.Parse(PaymentAmountText.Text) <= double.Parse(SumLabel.Content.ToString().Remove(SumLabel.Content.ToString().Length -1, 1)))
                 {
                     double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
 
@@ -101,23 +102,11 @@ namespace Market.Pages
 
         private void GoBackButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            SalePage newPage = new SalePage();
-
-            main.Title = newPage.Title;
-            main.Content = newPage.Content;
+            App.NavigateTo(new SalePage());
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
     }
 }

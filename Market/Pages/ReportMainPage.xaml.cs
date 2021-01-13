@@ -30,23 +30,12 @@ namespace Market.Pages
 
         private void ProductSaleButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            SaleCountReportPage NewPage = new SaleCountReportPage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage.Content;
+            App.NavigateTo(new SaleCountReportPage());
         }
         private void TrendButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            TrendChartPage NewPage = new TrendChartPage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage.Content;
+            App.NavigateTo(new TrendChartPage());
         }
-
 
         private void CustomerReportButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -74,14 +63,7 @@ namespace Market.Pages
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
     }
 }
