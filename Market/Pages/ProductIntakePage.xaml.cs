@@ -33,8 +33,9 @@ namespace Market.Pages
 
             // Input Format
             // 1- DispatchID
-            // 2- Barcode, Price, Amount
+            // 2- SupplierID
             // 3- Barcode, Price, Amount
+            // 4- Barcode, Price, Amount
 
             OpenFileDialog fd = new OpenFileDialog();
 
@@ -52,16 +53,22 @@ namespace Market.Pages
                 if(Rows.Length > 1)
                 {
                     DispatchNoLabel.Content = "";
+                    SupplierNameLabel.Content = "";
                     ProductList.Items.Clear();
                     try
                     {
                         // Get the Dispatch id from the file
                         int InputDispatchID = int.Parse(Rows[0]);
-                        // Set the dispatch id value to the corresponding label
+                        int SupplierID = int.Parse(Rows[1]);
+                        var supplier = context.Suppliers.Find(SupplierID);
+                        if(supplier == null) { System.Windows.MessageBox.Show("No supplier with the given ID."); return; }
+
+                        // Set the dispatch id and supplier name values to the corresponding labels
                         DispatchNoLabel.Content = Rows[0];
-                        
+                        SupplierNameLabel.Content = supplier.Name;
+
                         // Loop through rows
-                        for (int i = 1; i < Rows.Length; i++)
+                        for (int i = 2; i < Rows.Length; i++)
                         {
                             // Split the row into values
                             var Values = Rows.ElementAt(i).Split(',');
@@ -104,6 +111,9 @@ namespace Market.Pages
         {
             var context = new MarketDBContext();
             int DispatchID = int.Parse(DispatchNoLabel.Content.ToString());
+            string SupplierName = (string)SupplierNameLabel.Content;
+
+            Supplier supplier = context.Suppliers.Where(s => s.Name == SupplierName).First();
 
             // If there are products on the list and dispatchID is new
             if(context.Storages.Where(x => x.DispatchNoteID == DispatchID).Any()) { System.Windows.MessageBox.Show("Dispatch with the given ID exists."); return; }
@@ -112,7 +122,7 @@ namespace Market.Pages
                 for(int i = 0; i < ProductList.Items.Count; i++)
                 {
                     ProductItem item = (ProductItem)ProductList.Items.GetItemAt(i);
-                    Storage s = new Storage(DispatchID, item.Barcode, item.Price, item.Amount);
+                    Storage s = new Storage(DispatchID, supplier.ID, item.Barcode, item.Price, item.Amount);
                     context.Storages.Add(s);
 
                     var query = context.Stocks.Where(t => t.Barcode == item.Barcode);
@@ -136,6 +146,7 @@ namespace Market.Pages
                 System.Windows.MessageBox.Show("File not selected");
             }
             ProductList.Items.Clear();
+            DispatchNoLabel.Content = "";
             context.SaveChanges();
         }
         //Go back to sale page
