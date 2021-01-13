@@ -39,5 +39,6 @@
         <Button Content="Stoktaki ürünler" Click="StockButtonClicked" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="100" Height="28"/>        
         <Label Content="(Uyarı limitine göre yüzdeler alınır)" HorizontalAlignment="Left" Height="34" Margin="91,384,0,0" VerticalAlignment="Top" Width="231"/>
         <Button Content="Kullanıcı oluştur" Click="UserButtonClicked" HorizontalAlignment="Left" Margin="467,215,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Satış kaydı" Click="SaleRecordButtonClicked" HorizontalAlignment="Left" Margin="467,293,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
     </Grid>
 </Page>
