@@ -1,0 +1,32 @@
+﻿<Page x:Class="Market.Pages.SaleRecordPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Market.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SaleRecordPage">
+
+    <Grid>
+        <Label Content="Kayıtlı satışlar" HorizontalAlignment="Left" Margin="51,57,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="SaleRecordList" HorizontalAlignment="Left" Height="294" Margin="51,95,0,0" VerticalAlignment="Top" Width="500" SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="İsim Soyisim" DisplayMemberBinding="{Binding FullName}" Width="250"/>
+                    <GridViewColumn Header="SaleID" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="Tarih" DisplayMemberBinding="{Binding Date}" Width="150"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Sale ID" HorizontalAlignment="Left" Margin="610,93,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="SaleIDText" HorizontalAlignment="Left" Height="30" Margin="610,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" TextChanged="SaleIDText_TextChanged"/>
+        <Button Content="Sil" Click="SilButtonClicked" HorizontalAlignment="Left" Margin="655,177,0,0" VerticalAlignment="Top" Width="60"/>
+        <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
+        </Button>
+        <Button Click="GoBackButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,50,0">
+            <Image Source="../Assets/Images/goBack.png" Height="40" Width="40"/>
+        </Button>
+    </Grid>
+</Page>

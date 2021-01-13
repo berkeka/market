@@ -152,11 +152,33 @@ namespace Market
                 main.Content = NewWindow;
             }
         }
+        private void UserButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            AddUserPage NewWindow = new AddUserPage();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
+        }
+        private void SupplierButtonClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
         public class StockItem
         {
             public string Title { get; set; }
             public int Completion { get; set; }
             public string Color { get; set; }
+        }
+        private void SaleRecordButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+            SaleRecordPage NewWindow = new SaleRecordPage();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
