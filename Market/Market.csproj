@@ -95,11 +95,12 @@
       <DependentUpon>CustomerSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\CustomerDebt.cs" />
-    <Compile Include="Entities\CustomerPayment.cs" />
+    <Compile Include="Entities\Payment.cs" />
     <Compile Include="Entities\ProductItem.cs" />
     <Compile Include="Entities\ProductSale.cs" />
     <Compile Include="Entities\Sale.cs" />
     <Compile Include="Entities\Stock.cs" />
+    <Compile Include="Entities\Supplier.cs" />
     <Compile Include="FileSelectionWindow.xaml.cs">
       <DependentUpon>FileSelectionWindow.xaml</DependentUpon>
     </Compile>
@@ -144,6 +145,15 @@
     </Compile>
     <Compile Include="Pages\StockPage.xaml.cs">
       <DependentUpon>StockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SupplierDebtPaymentPage.xaml.cs">
+      <DependentUpon>SupplierDebtPaymentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SupplierPage.xaml.cs">
+      <DependentUpon>SupplierPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierSelectionWindow.xaml.cs">
+      <DependentUpon>SupplierSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ReportFileGenerator.cs" />
     <Page Include="CustomerSelectionWindow.xaml">
@@ -214,7 +224,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\SupplierDebtPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SupplierPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\TrendChartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SupplierSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

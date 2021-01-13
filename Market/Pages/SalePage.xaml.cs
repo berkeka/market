@@ -157,14 +157,42 @@ namespace Market
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
             AddUserPage NewWindow = new AddUserPage();
-
+            
             main.Title = NewWindow.Title;
             main.Content = NewWindow;
         }
         private void SupplierButtonClicked(object sender, RoutedEventArgs e)
         {
+            // Gets the instance of MainWindow
+            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
+            SupplierPage NewWindow = new SupplierPage();
+
+            main.Title = NewWindow.Title;
+            main.Content = NewWindow;
         }
+
+        private void TedarikBorcButtonClicked(object sender, RoutedEventArgs e)
+        {
+            SupplierSelectionWindow dw = new SupplierSelectionWindow();
+
+            bool returnValue = (bool)dw.ShowDialog();
+
+            if (returnValue == true)
+            {
+                int ss = dw.selectedSupplierID;
+
+                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
+                SupplierDebtPaymentPage NewWindow = new SupplierDebtPaymentPage();
+                NewWindow.SelectedSupplierID = ss;
+
+                main.Title = NewWindow.Title;
+                main.Content = NewWindow;
+            }
+        }
+
+
         public class StockItem
         {
             public string Title { get; set; }

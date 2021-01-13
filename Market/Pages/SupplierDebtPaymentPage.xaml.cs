@@ -13,70 +13,57 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Market.Entities;
-using Market.Pages;
 
 namespace Market.Pages
 {
     /// <summary>
-    /// Interaction logic for CustomerDebtPaymentPage.xaml
+    /// Interaction logic for SupplierDebtPaymentPage.xaml
     /// </summary>
-    public partial class CustomerDebtPaymentPage : Page
+    public partial class SupplierDebtPaymentPage : Page
     {
-        
-        public CustomerDebtPaymentPage()
+        public SupplierDebtPaymentPage()
         {
             InitializeComponent();
         }
-        public long SelectedCustomerIDNumber
+
+        public int SelectedSupplierID
         {
             get
             {
-                return _SelectedCustomerIDNumber;
+                return _SelectedSupplierID;
             }
             set
             {
-                _SelectedCustomerIDNumber = value;
-                if (_SelectedCustomerIDNumber != 0)
+                _SelectedSupplierID = value;
+                if (_SelectedSupplierID != 0)
                 {
-                    var context = new MarketDBContext();
-                    Customer c = context.Customers.Find(SelectedCustomerIDNumber);
-                    CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
-                    
-                    CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-                    double sum = 0.0;
-                    if(cd != null) { sum = cd.DebtAmount; }
-                    // Set content of the label to sum
-                    SumLabel.Content = sum.ToString();
-
-
-                    PaymentList.ItemsSource = context.Payments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<Payment>();
+                    RefreshSum(SumLabel);
                 }
             }
         }
-        private long _SelectedCustomerIDNumber;
+        private int _SelectedSupplierID;
         private void OdeButtonClicked(object sender, EventArgs e)
         {
-            var context = new MarketDBContext();
+           
 
             if (PaymentAmountText.Text != "")
             {
-                CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-                if(double.Parse(PaymentAmountText.Text) <= cd.DebtAmount)
+                var context = new MarketDBContext();
+
+                //                                                                                  This operation removes the currency part of the string
+                if (double.Parse(PaymentAmountText.Text) <= double.Parse(SumLabel.Content.ToString().Remove(SumLabel.Content.ToString().Length -1, 2)))
                 {
                     double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
 
-                    Payment cp = new Payment(this.SelectedCustomerIDNumber, 0,  InputPaymentAmount, DateTime.Now);
-                    context.Payments.Add(cp);
-
-                    CustomerDebt tcd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-                    tcd.DebtAmount -= InputPaymentAmount;
+                    Payment p = new Payment(0, SelectedSupplierID, InputPaymentAmount, DateTime.Now);
+                    context.Payments.Add(p);
 
                     context.SaveChanges();
 
                     RefreshList(PaymentList);
                     RefreshSum(SumLabel);
 
-                    PaymentAmountText.Text = String.Empty;
+                    PaymentAmountText.Text = "";
                 }
                 else
                 {
@@ -88,18 +75,30 @@ namespace Market.Pages
         {
             var context = new MarketDBContext();
 
-            List.ItemsSource = context.Payments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<Payment>();
+            List.ItemsSource = context.Payments.Where(p => p.SupplierID == SelectedSupplierID).ToList<Payment>();
         }
         public void RefreshSum(Label label)
         {
             var context = new MarketDBContext();
+            Supplier sup = context.Suppliers.Find(SelectedSupplierID);
 
-            CustomerDebt da = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-            double sum = da.DebtAmount;
+            var storages = context.Storages.Where(s => s.SupplierID == SelectedSupplierID).ToList();
+            var payments = context.Payments.Where(p => p.SupplierID == SelectedSupplierID).ToList();
+            double sum = 0.0;
+            foreach(Storage storage in storages)
+            {
+                sum += (storage.Amount * storage.PriceForUnit);
+            }
+            foreach(Payment payment in payments)
+            {
+                sum -= payment.PaymentAmount;
+            }
+
             // Set content of the label to sum
-            SumLabel.Content = sum.ToString();
+            SumLabel.Content = sum.ToString() + " ₺";
+            SupplierLabel.Content = sup.Name;
         }
-        //Go back to sale page
+
         private void GoBackButtonClicked(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
