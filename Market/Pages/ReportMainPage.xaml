@@ -13,7 +13,7 @@
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
         </Button>
         <Button Content="Button" HorizontalAlignment="Left" Margin="150,150,0,0" VerticalAlignment="Top" Height="40" Width="100"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="300,150,0,0" VerticalAlignment="Top" Height="40" Width="100"/>
+        <Button Content="Kar-zarar" Click="ProfitButtonClicked" HorizontalAlignment="Left" Margin="300,150,0,0" VerticalAlignment="Top" Height="40" Width="100"/>
         <Button Content="Tekil Müşteri Raporu" Click="CustomerReportButtonClicked" HorizontalAlignment="Left" Margin="150,220,0,0" VerticalAlignment="Top" Height="40" Width="100"/>
         <Button Content="Çoklu Müşteri Raporu" Click="MultiCustomerReportButtonClicked" HorizontalAlignment="Left" Margin="300,220,0,0" VerticalAlignment="Top" Height="40" Width="100"/>
         <Button Content="Trend Grafiği" Click="TrendButtonClicked" HorizontalAlignment="Left" Margin="450,150,0,0" VerticalAlignment="Top" Height="40" Width="100"/>
