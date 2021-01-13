@@ -11,6 +11,7 @@ namespace Market.Entities
         public int ID { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
+        public List<Storage> Storages { get; set; }
 
         public Supplier() { }
         public Supplier(string Name, string PhoneNumber)
