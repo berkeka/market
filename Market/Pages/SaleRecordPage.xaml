@@ -13,9 +13,9 @@
         <ListView x:Name="SaleRecordList" HorizontalAlignment="Left" Height="294" Margin="51,95,0,0" VerticalAlignment="Top" Width="500">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="SaleID" DisplayMemberBinding="{Binding ID}" Width="125"/>
-                    <GridViewColumn Header="Tutar" DisplayMemberBinding="{Binding Name}" Width="125"/>
-                    <GridViewColumn Header="Tarih" DisplayMemberBinding="{Binding Date}" Width="250"/>
+                    <GridViewColumn Header="İsim Soyisim" DisplayMemberBinding="{Binding FullName}" Width="250"/>
+                    <GridViewColumn Header="SaleID" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="Tarih" DisplayMemberBinding="{Binding Date}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>
