@@ -121,7 +121,7 @@
       <DependentUpon>LogInWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MarketDBContext.cs" />
-    <Compile Include="MarketDBInitializer.cs" />
+    <Compile Include="Utils\MarketDBInitializer.cs" />
     <Compile Include="Pages\ProductIntakePage.xaml.cs">
       <DependentUpon>ProductIntakePage.xaml</DependentUpon>
     </Compile>
