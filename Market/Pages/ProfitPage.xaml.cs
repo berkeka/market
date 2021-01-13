@@ -29,66 +29,58 @@ namespace Market.Pages
 
             var query = context.Sales;
 
+            DatePicker.DisplayDateStart = query.First().Date;
+
             if (query.Any())
             {
-                
-                // If selected date isn't possible
-                if (query.First().Date >= DatePicker.SelectedDate) { MessageBox.Show("Selected date should be after first sale's date.");}
-                else
+                DateTime date = DateTime.Now;
+
+                if (DatePicker.SelectedDate != null)
                 {
-                    DateTime date = DateTime.Now;
+                    date = (DateTime)DatePicker.SelectedDate;
+                }
 
-                    if (DatePicker.SelectedDate != null)
+                var querySale = context.Sales;
+                var queryPayment = context.Payments;
+
+                if (date != null)
+                {
+                    querySale.Where(d => d.Date < date);
+                    queryPayment.Where(d => d.Date < date);
+                }
+
+                double sumSale = 0;
+                //Summary of all sales until selected date
+                foreach (Sale sale in querySale.Where(s => s.CustomerIDNumber == null).ToList())
+                {
+                    var queryProdSale = context.ProductSales.Where(p => p.SaleID == sale.ID);
+
+                    foreach (ProductSale ps in queryProdSale.ToList())
                     {
-                        date = (DateTime)DatePicker.SelectedDate;
+                        var prod = context.Products.Find(ps.ProductID);
+                        sumSale += ps.Amount * prod.Price;
                     }
+                }
 
-                    var querySale = context.Sales;
-                    var queryPayment = context.Payments;
+                double sumCustPaym = 0;
+                var queryCustPaym = context.Payments.Where(c => c.CustomerIDNumber != 0);
 
-                    if (date != null)
-                    {
-                        querySale.Where(d => d.Date < date);
-                        queryPayment.Where(d => d.Date < date);
-                    }                                     
+                foreach (Payment paymCust in queryCustPaym.ToList())
+                {
+                    sumCustPaym += paymCust.PaymentAmount;
+                }
 
-                    double sumSale = 0;
-                    //Summary of all sales until selected date
-                    foreach(Sale sale in querySale.ToList())
-                    {
-                        var queryProdSale = context.ProductSales.Where(p => p.SaleID == sale.ID);
-                        
-                        foreach(ProductSale ps in queryProdSale.ToList())
-                        {
-                            var prod = context.Products.Find(ps.ProductID);
-                            sumSale += ps.Amount * prod.Price;
-                        }
-                    }
+                double sumSupplPaym = 0;
+                var querySupplPaym = context.Payments.Where(c => c.SupplierID != 0);
+                foreach (Payment paymSuppl in querySupplPaym.ToList())
+                {
+                    sumSupplPaym += paymSuppl.PaymentAmount;
+                }
 
-                    double sumCustPaym = 0;
-                    double sumSupplPaym = 0;
-                    foreach(Payment payment in queryPayment.ToList())
-                    {
-                        var queryCustPaym = context.Payments.Where(c => c.CustomerIDNumber != 0);
+                //Calculate profit
+                double profit = sumSale + sumCustPaym - sumSupplPaym;
 
-                        foreach(Payment paymCust in queryCustPaym.ToList())
-                        {
-                            sumCustPaym += paymCust.PaymentAmount;
-                        }
-
-                        var querySupplPaym = context.Payments.Where(c => c.SupplierID != 0);
-
-                        foreach(Payment paymSuppl in querySupplPaym.ToList())
-                        {
-                            sumSupplPaym += paymSuppl.PaymentAmount;
-                        }
-                    }
-
-                    //Calculate profit
-                    double profit = sumSale + sumCustPaym - sumSupplPaym;
-
-                    ProfitLabel.Content = profit;
-                }                
+                ProfitLabel.Content = profit;
             }
 
         }
