@@ -20,7 +20,7 @@
             </ListView.View>
         </ListView>
         <Label Content="Sale ID" HorizontalAlignment="Left" Margin="610,93,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="SaleIDText" HorizontalAlignment="Left" Height="30" Margin="610,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
+        <TextBox x:Name="SaleIDText" HorizontalAlignment="Left" Height="30" Margin="610,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" TextChanged="SaleIDText_TextChanged"/>
         <Button Content="Sil" Click="SilButtonClicked" HorizontalAlignment="Left" Margin="655,177,0,0" VerticalAlignment="Top" Width="60"/>
         <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>

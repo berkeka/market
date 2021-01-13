@@ -25,22 +25,7 @@ namespace Market.Pages
         {
             InitializeComponent();
 
-            var context = new MarketDBContext();
-
-            var querySale = context.Sales;
-            var queryCstmr = context.Customers;
-
-            if (querySale.Any())
-            {
-                List<SaleItem> si = new List<SaleItem>();
-                foreach(Sale sale in querySale.ToList())
-                {
-                    var cstmr = queryCstmr.Find(sale.CustomerIDNumber);
-                    string cFullName = cstmr.Name + " " + cstmr.LastName;
-                    si.Add(new SaleItem() { FullName = cFullName, ID = sale.ID, Date = sale.Date });
-                }
-                SaleRecordList.ItemsSource = si.OrderBy(i => i.Date);
-            }
+            RefreshList("");
         }
         private void SilButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -72,6 +57,33 @@ namespace Market.Pages
             main.Content = new_main.Content;
             // Close the newly initialized window
             new_main.Close();
+        }
+        private void RefreshList(string input)
+        {
+            var context = new MarketDBContext();
+
+            var querySale = context.Sales;
+            var queryCstmr = context.Customers;
+
+            if (querySale.Any())
+            {
+                List<SaleItem> si = new List<SaleItem>();
+                foreach (Sale sale in querySale.Where(c => c.ID.ToString().Contains(input)).ToList())
+                {
+                    var cstmr = queryCstmr.Find(sale.CustomerIDNumber);
+                    string cFullName = cstmr.Name + " " + cstmr.LastName;
+                    si.Add(new SaleItem() { FullName = cFullName, ID = sale.ID, Date = sale.Date });
+                }
+                SaleRecordList.ItemsSource = si.OrderBy(i => i.Date);
+            }
+        }
+
+        private void SaleIDText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SaleIDText != null)
+            {
+                RefreshList(SaleIDText.Text);
+            }
         }
     }
 }
