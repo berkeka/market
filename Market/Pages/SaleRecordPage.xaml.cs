@@ -76,7 +76,7 @@ namespace Market.Pages
                 foreach (Sale sale in querySale.Where(c => c.ID.ToString().Contains(input)).ToList())
                 {
                     var cstmr = queryCstmr.Find(sale.CustomerIDNumber);
-                    string cFullName = cstmr.Name + " " + cstmr.LastName;
+                    string cFullName = cstmr == null ? "Peşin satış" : cstmr.Name + " " + cstmr.LastName;
                     si.Add(new SaleItem() { FullName = cFullName, ID = sale.ID, Date = sale.Date });
                 }
                 SaleRecordList.ItemsSource = si.OrderBy(i => i.Date);
