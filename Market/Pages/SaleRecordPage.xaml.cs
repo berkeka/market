@@ -53,8 +53,9 @@ namespace Market.Pages
                 context.Sales.Remove(sale);
                 
                 context.SaveChanges();
-                SaleIDText.Text = String.Empty;
                 RefreshList("");
+
+                SaleIDText.Text = String.Empty;
             }
             else
             {
@@ -70,9 +71,10 @@ namespace Market.Pages
             var querySale = context.Sales;
             var queryCstmr = context.Customers;
 
+            List<SaleItem> si = new List<SaleItem>();
+
             if (querySale.Any())
-            {
-                List<SaleItem> si = new List<SaleItem>();
+            {                
                 foreach (Sale sale in querySale.Where(c => c.ID.ToString().Contains(input)).ToList())
                 {
                     var cstmr = queryCstmr.Find(sale.CustomerIDNumber);
@@ -80,6 +82,10 @@ namespace Market.Pages
                     si.Add(new SaleItem() { FullName = cFullName, ID = sale.ID, Date = sale.Date });
                 }
                 SaleRecordList.ItemsSource = si.OrderBy(i => i.Date);
+            }
+            else
+            {
+                SaleRecordList.ItemsSource = si;
             }
         }
 
