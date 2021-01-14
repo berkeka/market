@@ -28,11 +28,10 @@ namespace Market.Pages
             var context = new MarketDBContext();
 
             var query = context.Sales;
-
-            DatePicker.DisplayDateStart = query.First().Date;
-
+            
             if (query.Any())
             {
+                DatePicker.DisplayDateStart = query.First().Date;
                 DateTime date = DateTime.Now;
 
                 if (DatePicker.SelectedDate != null)

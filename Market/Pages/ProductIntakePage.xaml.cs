@@ -122,7 +122,7 @@ namespace Market.Pages
                 for(int i = 0; i < ProductList.Items.Count; i++)
                 {
                     ProductItem item = (ProductItem)ProductList.Items.GetItemAt(i);
-                    Storage s = new Storage(DispatchID, supplier.ID, item.Barcode, item.Price, item.Amount);
+                    Storage s = new Storage(DispatchID, supplier.ID, item.Barcode, item.Price, item.Amount, DateTime.Now);
                     context.Storages.Add(s);
 
                     var query = context.Stocks.Where(t => t.Barcode == item.Barcode);

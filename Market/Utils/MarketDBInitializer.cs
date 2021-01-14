@@ -25,12 +25,31 @@ namespace Market
                 context.Customers.Add(Customer1);
 
                 // Trigger that deletes products sales related to sale
+                context.Database.ExecuteSqlCommand(@"CREATE PROCEDURE CalculateStockAfterSaleDeletion @SaleID INT
+                                                    AS
+                                                    UPDATE Stocks 
+                                                    SET 
+                                                        Amount = Amount + (select a.Amount
+						                                                    from (select * 
+							                                                    from ProductSales
+							                                                    where SaleID = @SaleID) a)
+                                                    WHERE Stocks.Barcode = (select Products.Barcode
+						                                                    from (select * 
+							                                                    from ProductSales
+							                                                    where SaleID = @SaleID) a
+						                                                    join Products
+						                                                    on Products.ID = a.ProductID);");
+
                 context.Database.ExecuteSqlCommand(@"CREATE OR ALTER TRIGGER trig_delete_sale
                                                     On Sales
                                                     AFTER DELETE
                                                     AS 
                                                     BEGIN
-                                                    DELETE ProductSales FROM ProductSales INNER JOIN deleted ON deleted.ID = SaleID
+	                                                    DECLARE @SaleID INT
+                                                        SELECT TOP 1 @SaleID = ID
+                                                        FROM    DELETED
+	                                                    EXEC CalculateStockAfterSaleDeletion @SaleID
+	                                                    DELETE ProductSales FROM ProductSales INNER JOIN deleted ON deleted.ID = SaleID;
                                                     END;");
 
                 context.Database.ExecuteSqlCommand(@"CREATE PROCEDURE CustomerSales @InputID BIGINT
