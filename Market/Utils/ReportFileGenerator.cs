@@ -36,13 +36,14 @@ namespace Market.Utils
         public void SingleExcel(Customer customer, List<ReportItem> riList)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string fileName = "/Rapor_" + customer.Name + "_" + customer.LastName + ".xls";
+            String date = DateTime.Now.ToString("HHmmss");
+            string fileName = "/Rapor_" + customer.Name + "_" + customer.LastName + "_" + date + ".xlsx";
 
             //string fullfilename = path + fileName;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             ExcelPackage excel = new ExcelPackage(new FileInfo(path + fileName));
-            ExcelWorksheet sheetcreate = excel.Workbook.Worksheets.Add("Accounts");
+            ExcelWorksheet sheetcreate = excel.Workbook.Worksheets.Add("Rapor");
 
             sheetcreate.Cells.LoadFromCollection(riList);
             excel.Save();
@@ -52,9 +53,11 @@ namespace Market.Utils
         {
             Document document = new Document(PageSize.A4, 30, 30, 30, 30);
 
+            String date = DateTime.Now.ToString("HHmmss");
+
             // Set file path to desktop and create filename using customer name and lastname
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string fileName = "/Rapor_" + customer.Name + "_" + customer.LastName + ".pdf";
+            string fileName = "/Rapor_" + customer.Name + "_" + customer.LastName + date + ".pdf";
 
             PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(path + fileName, FileMode.Create));
 
@@ -133,13 +136,14 @@ namespace Market.Utils
         }
         public void AllExcel(List<Customer> cList)
         {
+            String date = DateTime.Now.ToString("HHmmss");
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string fileName = "/Toplu_musteri_raporu.xls";
+            string fileName = "/Toplu_musteri_raporu" + date + ".xls";
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             ExcelPackage excel = new ExcelPackage(new FileInfo(path + fileName));
-            ExcelWorksheet sheetcreate = excel.Workbook.Worksheets.Add("Accounts");
+            ExcelWorksheet sheetcreate = excel.Workbook.Worksheets.Add("Rapor");
 
             var context = new MarketDBContext();
 
@@ -204,10 +208,11 @@ namespace Market.Utils
 
             // Create a A4 sized document
             Document document = new Document(PageSize.A4, 30, 30, 30, 30);
+            String date = DateTime.Now.ToString("HHmmss");
 
             // Set file path to desktop and create filename
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string fileName = "/Toplu_musteri_raporu.pdf";
+            string fileName = "/Toplu_musteri_raporu"+ date + ".pdf";
 
             PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(path + fileName, FileMode.Create));
 
