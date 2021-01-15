@@ -36,12 +36,12 @@ namespace Market.Pages
             var context = new MarketDBContext();
 
             // Check inputs for exceptions
-            if (BarcodeText.Text == null || NameText.Text == null || PriceText.Text == null) { MessageBox.Show("Boş metin alanı!"); return; }
+            if (BarcodeText.Text == "" || NameText.Text == "" || PriceText.Text == "") { MessageBox.Show("Boş metin alanı!"); return; }
             string InputBarcode = BarcodeText.Text;
             string InputName = NameText.Text;
             int InputPrice = int.Parse(PriceText.Text);
             double InputWarningPrice = 0.0;
-            if (WarningLimitText.Text != null)
+            if (WarningLimitText.Text != "")
             {
                 InputWarningPrice = double.Parse(WarningLimitText.Text);
             }

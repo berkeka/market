@@ -87,7 +87,7 @@ namespace Market.Utils
                 cellList.Add(new PdfPCell(new Phrase("Urun Ismi")));
                 cellList.Add(new PdfPCell(new Phrase("Urun Fiyati")));
                 cellList.Add(new PdfPCell(new Phrase("Urun Miktari")));
-                cellList.Add(new PdfPCell(new Phrase("Odenen Fiyat")));
+                cellList.Add(new PdfPCell(new Phrase("Toplam Fiyat")));
 
                 // Add all products to the table and calculate sum of spent money
                 double sum = 0;
