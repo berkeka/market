@@ -36,7 +36,7 @@ namespace Market.Pages
             var context = new MarketDBContext();
 
             // Check inputs for exceptions
-            if (BarcodeText.Text == null || NameText.Text == null || PriceText.Text == null) { MessageBox.Show("Empty field!"); return; }
+            if (BarcodeText.Text == null || NameText.Text == null || PriceText.Text == null) { MessageBox.Show("Boş metin alanı!"); return; }
             string InputBarcode = BarcodeText.Text;
             string InputName = NameText.Text;
             int InputPrice = int.Parse(PriceText.Text);
@@ -54,7 +54,7 @@ namespace Market.Pages
                 Product product = (Product)ProductList.SelectedItem;
 
                 var productWithGivenBarcode = context.Products.Where(prd => prd.Barcode == InputBarcode);
-                if (productWithGivenBarcode.Any() && productWithGivenBarcode.First().Barcode != product.Barcode) {MessageBox.Show("Product with the given Barcode exists"); return;}
+                if (productWithGivenBarcode.Any() && productWithGivenBarcode.First().Barcode != product.Barcode) {MessageBox.Show("Girilen barkoda sahip sistemde kayıtlı ürün var!"); return;}
 
                 var dbProduct = context.Products.Find(product.ID);
                 dbProduct.Name = InputName;
@@ -68,7 +68,7 @@ namespace Market.Pages
             {
                 // This part of the code handles adding products
 
-                if (context.Products.Where(prd => prd.Barcode == InputBarcode).Any()) { MessageBox.Show("Product with the given Barcode exists"); return; }
+                if (context.Products.Where(prd => prd.Barcode == InputBarcode).Any()) { MessageBox.Show("Girilen barkoda sahip sistemde kayıtlı ürün var!"); return; }
 
                 Product p = new Product(InputBarcode, InputName, InputPrice, InputWarningPrice);
                 p.WarningLimit = InputWarningPrice;

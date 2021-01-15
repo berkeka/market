@@ -37,9 +37,9 @@ namespace Market.Pages
 
             // Exception control
             // If date fields are empty
-            if (StartDatePicker.SelectedDate == null || EndDatePicker.SelectedDate == null) { MessageBox.Show("Please select dates"); return; }
+            if (StartDatePicker.SelectedDate == null || EndDatePicker.SelectedDate == null) { MessageBox.Show("Lütfen tarihleri seçiniz"); return; }
             // If selected dates aren't possible
-            if (StartDatePicker.SelectedDate >= EndDatePicker.SelectedDate) { MessageBox.Show("Start date should be before the end date"); return; }
+            if (StartDatePicker.SelectedDate >= EndDatePicker.SelectedDate) { MessageBox.Show("Başlangıç tarihi bitiş tarihinden önce olmalı"); return; }
 
             DateTime Start = (DateTime)StartDatePicker.SelectedDate;
             DateTime End = (DateTime)EndDatePicker.SelectedDate;
@@ -55,7 +55,7 @@ namespace Market.Pages
 
             // Get selected Products
             var selectedItems = ProductList.SelectedItems;
-            if (selectedItems.Count == 0) { MessageBox.Show("Please select a product"); return; }
+            if (selectedItems.Count == 0) { MessageBox.Show("Lütfen ürün seçiniz"); return; }
 
             ChartValues<string> DateLabels = new ChartValues<string>();
 

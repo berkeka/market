@@ -8,11 +8,11 @@
         ResizeMode="CanMinimize"
         Title="LogInWindow" Height="300" Width="400">
     <Grid>
-        <Label Content="Username" HorizontalAlignment="Left" Margin="112,70,0,0" VerticalAlignment="Top"/>
-        <Label Content="Password" HorizontalAlignment="Left" Margin="115,120,0,0" VerticalAlignment="Top"/>
+        <Label Content="Kullanıcı adı" HorizontalAlignment="Left" Margin="102,70,0,0" VerticalAlignment="Top"/>
+        <Label Content="Parola" HorizontalAlignment="Left" Margin="115,120,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="UsernameText" HorizontalAlignment="Left" Margin="180,74,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="22"/>
         <PasswordBox x:Name="PasswordText" HorizontalAlignment="Left" Margin="180,124,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
-        <Button Content="LogIn" Click="LoginButtonClicked" HorizontalAlignment="Left" Margin="200,180,0,0" VerticalAlignment="Top" Width="76"/>
+        <Button Content="Giriş yap" Click="LoginButtonClicked" HorizontalAlignment="Left" Margin="200,180,0,0" VerticalAlignment="Top" Width="76"/>
 
 
     </Grid>

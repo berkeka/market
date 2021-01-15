@@ -35,8 +35,8 @@ namespace Market.Pages
             if(selection == null) { MessageBox.Show("Seçim yapılmadı"); return; }
 
             SaleItem saleItem = (SaleItem)selection;
-            string message = $"Do you want to delete selected sale?";
-            string caption = "Confirmation";
+            string message = $"Seçilen satışı silmek istiyor musunuz?";
+            string caption = "Onay";
             MessageBoxButton buttons = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Question;
             if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)

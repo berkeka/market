@@ -26,35 +26,6 @@ namespace Market
             InitializeComponent();
             RefreshList("");
         }
-        private void AraButtonClicked(object sender, RoutedEventArgs e)
-        {
-            
-
-            if (IDNumberText.Text != "")
-            {
-                long InputIDNumber = long.Parse(IDNumberText.Text);
-                var context = new MarketDBContext();
-
-                var query = context.Customers.Where(s => s.IDNumber == InputIDNumber);
-                if (query.Count() != 0)
-                {
-                    Customer cstmr = context.Customers.Find(InputIDNumber);
-
-                    this.selectedCustomerIDNumber = cstmr.IDNumber;
-                    this.DialogResult = true;
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Wrong ID!");
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("Sign customer's ID to textbox!");
-            }
-        }
         private void SecButtonClicked(object sender, RoutedEventArgs e)
         {
             var selection = CustomerList.SelectedItem;
@@ -70,7 +41,7 @@ namespace Market
             }
             else
             {
-                MessageBox.Show("Wrong Selection");
+                MessageBox.Show("Listeden müşteri seçin");
             }
             
         }

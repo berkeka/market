@@ -48,7 +48,7 @@ namespace Market
             }
             else
             {
-                MessageBox.Show("Username or Password is wrong!");
+                MessageBox.Show("Kullanıcı adı veya parola hatalı!");
                 this.DialogResult = false;
             }
         }

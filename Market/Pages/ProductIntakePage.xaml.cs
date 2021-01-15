@@ -61,7 +61,7 @@ namespace Market.Pages
                         int InputDispatchID = int.Parse(Rows[0]);
                         int SupplierID = int.Parse(Rows[1]);
                         var supplier = context.Suppliers.Find(SupplierID);
-                        if(supplier == null) { System.Windows.MessageBox.Show("No supplier with the given ID."); return; }
+                        if(supplier == null) { System.Windows.MessageBox.Show("Verilen ID'ye sahip kayıtlı tedarikçi yok."); return; }
 
                         // Set the dispatch id and supplier name values to the corresponding labels
                         DispatchNoLabel.Content = Rows[0];
@@ -96,12 +96,12 @@ namespace Market.Pages
                         Console.WriteLine(ex.Message);
                         ProductList.Items.Clear();
                         DispatchNoLabel.Content = "";
-                        System.Windows.MessageBox.Show("Flawed Input file");
+                        System.Windows.MessageBox.Show("Hatalı girdi dosyası");
                     }
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("Flawed Input file");
+                    System.Windows.MessageBox.Show("Hatalı girdi dosyası");
                 }
             }
                 
@@ -116,7 +116,7 @@ namespace Market.Pages
             Supplier supplier = context.Suppliers.Where(s => s.Name == SupplierName).First();
 
             // If there are products on the list and dispatchID is new
-            if(context.Storages.Where(x => x.DispatchNoteID == DispatchID).Any()) { System.Windows.MessageBox.Show("Dispatch with the given ID exists."); return; }
+            if(context.Storages.Where(x => x.DispatchNoteID == DispatchID).Any()) { System.Windows.MessageBox.Show("Verilen ID'ye sahip sistemde kayıtlı irsaliye var."); return; }
             if(ProductList.Items.Count > 0 )
             {
                 for(int i = 0; i < ProductList.Items.Count; i++)
@@ -143,7 +143,7 @@ namespace Market.Pages
             }
             else
             {
-                System.Windows.MessageBox.Show("File not selected");
+                System.Windows.MessageBox.Show("Dosya seçilmedi");
             }
             ProductList.Items.Clear();
             DispatchNoLabel.Content = "";
