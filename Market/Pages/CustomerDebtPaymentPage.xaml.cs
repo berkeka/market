@@ -80,7 +80,7 @@ namespace Market.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Wrong amount!");
+                    MessageBox.Show("Mevcut borçtan fazla girdiniz!");
                 }
             }
         }

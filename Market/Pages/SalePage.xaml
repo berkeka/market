@@ -9,18 +9,20 @@
       Title="SalePage">
 
     <Grid>
+        <Rectangle Fill="#F0F0F0" HorizontalAlignment="Left" Height="78" Stroke="Black" VerticalAlignment="Top" Width="273" Margin="80,57,0,0"/>
+        <Rectangle Fill="#F0F0F0" HorizontalAlignment="Left" Height="304" Stroke="Black" VerticalAlignment="Top" Width="283" Margin="445,91,0,0"/>
         <Button Content="Peşin" Click="PesinButtonClicked" HorizontalAlignment="Left" Margin="91,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
         <Button Content="Cari" Click="CariButtonClicked" HorizontalAlignment="Left" Margin="241,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Müşteri Oluştur" Click="MusteriButtonClicked" HorizontalAlignment="Left" Margin="602,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Ürün Oluştur" Click="UrunButtonClicked" HorizontalAlignment="Left" Margin="467,70,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Ürün Girişi" Click="UrunGirisButtonClicked" HorizontalAlignment="Left" Margin="467,140,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Müşteri Oluştur" Click="MusteriButtonClicked" HorizontalAlignment="Left" Margin="467,179,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Ürün Oluştur" Click="UrunButtonClicked" HorizontalAlignment="Left" Margin="467,110,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Ürün Girişi" Click="UrunGirisButtonClicked" HorizontalAlignment="Left" Margin="602,110,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
         <Button Click="HomeButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
             <Image Source="../Assets/Images/Home.png" Height="40" Width="40"/>
         </Button>
-        <Button Content="Borçlar" Click="BorcButtonClicked" HorizontalAlignment="Left" Margin="602,140,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Tedarikçi" Click="SupplierButtonClicked" HorizontalAlignment="Left" Margin="602,215,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Tedarikçi Borçları" Click="TedarikBorcButtonClicked" HorizontalAlignment="Left" Margin="602,285,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Çıkış" Click="CikisButtonClicked" HorizontalAlignment="Left" Margin="602,356,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
+        <Button Content="Borçlar" Click="BorcButtonClicked" HorizontalAlignment="Left" Margin="467,321,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Tedarikçi" Click="SupplierButtonClicked" HorizontalAlignment="Left" Margin="467,248,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Tedarikçi Borçları" Click="TedarikBorcButtonClicked" HorizontalAlignment="Left" Margin="602,248,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Çıkış" Click="CikisButtonClicked" HorizontalAlignment="Left" Margin="674,10,0,0" VerticalAlignment="Top" Width="54" Height="28"/>
         <ListBox Name="StockList" HorizontalContentAlignment="Stretch" Margin="91,179,459,66">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -36,9 +38,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Content="Stoktaki ürünler" Click="StockButtonClicked" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="100" Height="28"/>        
+        <Button Content="Stoktaki ürünler" Click="StockButtonClicked" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
         <Label Content="(Uyarı limitine göre yüzdeler alınır)" HorizontalAlignment="Left" Height="34" Margin="91,384,0,0" VerticalAlignment="Top" Width="231"/>
-        <Button Content="Kullanıcı oluştur" Click="UserButtonClicked" HorizontalAlignment="Left" Margin="467,215,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
-        <Button Content="Satış kaydı" Click="SaleRecordButtonClicked" HorizontalAlignment="Left" Margin="467,293,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Button Content="Kullanıcı oluştur" Click="UserButtonClicked" HorizontalAlignment="Left" Margin="540,10,0,0" VerticalAlignment="Top" Width="101" Height="28"/>
+        <Button Content="Satış kaydı" Click="SaleRecordButtonClicked" HorizontalAlignment="Left" Margin="602,179,0,0" VerticalAlignment="Top" Width="100" Height="50"/>
+        <Label Content="Satış" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="196,26,0,0" FontSize="14"/>
+
     </Grid>
 </Page>

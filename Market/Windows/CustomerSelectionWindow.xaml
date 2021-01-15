@@ -19,8 +19,7 @@
             </ListView.View>
         </ListView>
         <Label Content="Kimlik numarası:" HorizontalAlignment="Left" Margin="600,50,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="IDNumberText" TextChanged="IDNumberTextChanged" HorizontalAlignment="Left" Height="30" Margin="600,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>
-        <Button Content="Ara" Click="AraButtonClicked" HorizontalAlignment="Left" Margin="610,125,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
+        <TextBox x:Name="IDNumberText" TextChanged="IDNumberTextChanged" HorizontalAlignment="Left" Height="30" Margin="600,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150"/>        
         <Button Content="Seç" Click="SecButtonClicked" HorizontalAlignment="Left" Margin="556,365,0,0" VerticalAlignment="Top" Width="100" Height="40" RenderTransformOrigin="0.212,1.301"/>
     </Grid>
 </Window>

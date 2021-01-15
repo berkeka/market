@@ -26,10 +26,7 @@ namespace Market
             InitializeComponent();
             RefreshList("");
         }
-        private void AraButtonClicked(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
         private void SecButtonClicked(object sender, RoutedEventArgs e)
         {
             var selection = SupplierList.SelectedItem;
@@ -45,7 +42,7 @@ namespace Market
             }
             else
             {
-                MessageBox.Show("Wrong Selection");
+                MessageBox.Show("Listeden tedarikçi seçiniz");
             }
 
         }

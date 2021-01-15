@@ -35,8 +35,8 @@ namespace Market.Pages
             if(selection == null) { MessageBox.Show("Seçim yapılmadı"); return; }
 
             SaleItem saleItem = (SaleItem)selection;
-            string message = $"Do you want to delete selected sale?";
-            string caption = "Confirmation";
+            string message = $"Seçilen satışı silmek istiyor musunuz?";
+            string caption = "Onay";
             MessageBoxButton buttons = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Question;
             if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
@@ -53,8 +53,9 @@ namespace Market.Pages
                 context.Sales.Remove(sale);
                 
                 context.SaveChanges();
-                SaleIDText.Text = String.Empty;
                 RefreshList("");
+
+                SaleIDText.Text = String.Empty;
             }
             else
             {
@@ -70,9 +71,10 @@ namespace Market.Pages
             var querySale = context.Sales;
             var queryCstmr = context.Customers;
 
+            List<SaleItem> si = new List<SaleItem>();
+
             if (querySale.Any())
-            {
-                List<SaleItem> si = new List<SaleItem>();
+            {                
                 foreach (Sale sale in querySale.Where(c => c.ID.ToString().Contains(input)).ToList())
                 {
                     var cstmr = queryCstmr.Find(sale.CustomerIDNumber);
@@ -80,6 +82,10 @@ namespace Market.Pages
                     si.Add(new SaleItem() { FullName = cFullName, ID = sale.ID, Date = sale.Date });
                 }
                 SaleRecordList.ItemsSource = si.OrderBy(i => i.Date);
+            }
+            else
+            {
+                SaleRecordList.ItemsSource = si;
             }
         }
 

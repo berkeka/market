@@ -49,12 +49,12 @@ namespace Market.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Supplier with the given name exists.");
+                    MessageBox.Show("Girilen isimde tedarikçi bulunmakta.");
                 }
             }
             else
             {
-                MessageBox.Show("Please fill name and phone number fields.");
+                MessageBox.Show("Lütfen isim ve telefon numarası giriniz.");
             }
                 
         }
@@ -65,8 +65,8 @@ namespace Market.Pages
             var selectedItems = SupplierList.SelectedItems;
             if(selectedItems.Count > 0)
             {
-                string message = $"Do you want to delete selected {selectedItems.Count} suppliers?";
-                string caption = "Confirmation";
+                string message = $"Seçilen {selectedItems.Count} tedarikçiyi silmek istiyor musunuz?";
+                string caption = "Onay";
                 MessageBoxButton buttons = MessageBoxButton.YesNo;
                 MessageBoxImage icon = MessageBoxImage.Question;
                 if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)

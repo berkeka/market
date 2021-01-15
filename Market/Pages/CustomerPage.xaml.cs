@@ -53,12 +53,12 @@ namespace Market
                 }
                 else
                 {
-                    MessageBox.Show("Customer was registered before.");
+                    MessageBox.Show("Girilen kimlik numarasına sahip kayıtlı müşteri var!");
                 }
             }
             else 
             {
-                MessageBox.Show("Please fill name, lastname and id!");
+                MessageBox.Show("Lütfen isim, soyisim ve kimlik numarası giriniz!");
             }
         }
 

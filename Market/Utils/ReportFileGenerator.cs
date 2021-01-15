@@ -27,7 +27,7 @@ namespace Market.Utils
 
             List<ReportItem> riList = result.ToList();
 
-            if (riList.Count == 0) { Console.WriteLine("Selected customer bought no items"); return; }
+            if (riList.Count == 0) { Console.WriteLine("Seçilen müşteri satın alım yapmamış"); return; }
 
             if (choice == 1) { SinglePdf(customer, riList); }
             else { SingleExcel(customer, riList); }
@@ -129,7 +129,7 @@ namespace Market.Utils
             List<Customer> cList = resultCustomer.ToList();
 
             //Check if there is any customer
-            if (cList.Count() == 0) { Console.WriteLine("There is no registered customer in database"); return; }
+            if (cList.Count() == 0) { Console.WriteLine("Veri tabanında kayıtlı müşteri yok"); return; }
 
             if (choice == 1) { AllPdf(cList); }
             else { AllExcel(cList); }
