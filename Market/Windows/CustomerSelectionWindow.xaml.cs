@@ -23,39 +23,8 @@ namespace Market
         public long selectedCustomerIDNumber { get; set; }
         public CustomerSelectionWindow()
         {
-            var context = new MarketDBContext();
-            List<Customer> ls = context.Customers.ToList();
-
             InitializeComponent();
-            CustomerList.ItemsSource = ls;
-        }
-        private void AraButtonClicked(object sender, RoutedEventArgs e)
-        {
-            long InputIDNumber = long.Parse(IDNumberText.Text);
-
-            if (IDNumberText.Text != "")
-            {
-                var context = new MarketDBContext();
-
-                var query = context.Customers.Where(s => s.IDNumber == InputIDNumber);
-                if (query.Count() != 0)
-                {
-                    Customer cstmr = context.Customers.Find(InputIDNumber);
-
-                    this.selectedCustomerIDNumber = cstmr.IDNumber;
-                    this.DialogResult = true;
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Wrong ID!");
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("Sign customer's ID to textbox!");
-            }
+            RefreshList("");
         }
         private void SecButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -72,9 +41,25 @@ namespace Market
             }
             else
             {
-                MessageBox.Show("Wrong Selection");
+                MessageBox.Show("Listeden müşteri seçin");
             }
             
+        }
+
+        private void RefreshList(string input)
+        {
+            // Refresh the list with customers with the given input text
+            var context = new MarketDBContext();
+            List<Customer> ls = context.Customers.Where(c => c.IDNumber.ToString().Contains(input)).ToList();
+            CustomerList.ItemsSource = ls;
+        }
+
+        private void IDNumberTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(IDNumberText != null)
+            {
+                RefreshList(IDNumberText.Text);
+            }
         }
     }
 }

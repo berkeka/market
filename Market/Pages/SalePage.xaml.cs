@@ -34,75 +34,75 @@ namespace Market
                 List<StockItem> items = new List<StockItem>();
                 for (int i = 1; i <= queryStock.Count(); i++)
                 {
-                    var temp = queryPrd.Find(i);
-                    var tempp = queryStock.Find(temp.Barcode);
-                    int amountt = (int)tempp.Amount;
-                    if(amountt > 100) { amountt = 100; }
-                    items.Add(new StockItem() { Title = temp.Name, Completion = amountt });
+                    string color = "";
+                    var product = queryPrd.Find(i);
+                    var productStock = queryStock.Find(product.Barcode);
+                    int amountPercent;
+                    if (product.WarningLimit != 0)
+                    {
+                        amountPercent = (int)((100 * productStock.Amount) / product.WarningLimit);
+                        // We have less products than the warning limit
+                        if ((product.WarningLimit / 2) > productStock.Amount)
+                        {
+                            // Less than %50 of the wanted amount
+                            
+                            color = "Crimson"; 
+                        }
+                        else if (amountPercent < 80)
+                        {
+                            // Less than %50 of the wanted amount
+                            color = "Yellow";
+                        }
+                        else
+                        {
+                            // Equal or More than the wanted amount
+                            color = "Green";
+                        }
+                        items.Add(new StockItem() { Title = product.Name, Completion = amountPercent, Color = color });
+                    } 
                 }
-                StockList.ItemsSource = items;                
+                StockList.ItemsSource = items.OrderBy(i => i.Completion);                
             }
         }
         private void PesinButtonClicked(object sender, RoutedEventArgs e)
         {
-            // Gets the instance of MainWindow
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            SaleCartPage NewWindow = new SaleCartPage();
-
-            main.Title = NewWindow.Title;
-            main.Content = NewWindow;
-
+            App.NavigateTo(new SaleCartPage());
         }
-        private void CariButtonClicked(object sender, RoutedEventArgs e)
+
+        private void StockButtonClicked(object sender, RoutedEventArgs e)
         {
-            CustomerSelectionWindow csw = new CustomerSelectionWindow();
-
-            bool returnValue = (bool)csw.ShowDialog();
-
-            if(returnValue == true)
-            {
-                long sc = csw.selectedCustomerIDNumber;
-
-                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-                SaleCartPage NewWindow = new SaleCartPage();
-                NewWindow.SelectedCustomerIDNumber = sc;
-
-                main.Title = NewWindow.Title;
-                main.Content = NewWindow;
-            }
+            App.NavigateTo(new StockPage());
         }
 
         private void MusteriButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            CustomerPage NewWindow = new CustomerPage();
-
-            main.Title = NewWindow.Title;
-            main.Content = NewWindow;
+            App.NavigateTo(new CustomerPage());
         }
 
         private void UrunButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            ProductPage NewPage = new ProductPage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage;
+            App.NavigateTo(new ProductPage());
         }
 
         private void UrunGirisButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            ProductIntakePage NewPage = new ProductIntakePage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage;
+            App.NavigateTo(new ProductIntakePage());
         }
+
+        private void SaleRecordButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new SaleRecordPage());
+        }
+
+        private void UserButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new AddUserPage());
+        }
+        private void SupplierButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new SupplierPage());
+        }
+
         private void BorcButtonClicked(object sender, RoutedEventArgs e)
         {
             CustomerSelectionWindow dw = new CustomerSelectionWindow();
@@ -113,43 +113,61 @@ namespace Market
             {
                 long sc = dw.selectedCustomerIDNumber;
 
-                MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
                 CustomerDebtPaymentPage NewWindow = new CustomerDebtPaymentPage();
                 NewWindow.SelectedCustomerIDNumber = sc;
 
-                main.Title = NewWindow.Title;
-                main.Content = NewWindow;
+                App.NavigateTo(NewWindow);
             }
+        }
+        private void CariButtonClicked(object sender, RoutedEventArgs e)
+        {
+            CustomerSelectionWindow csw = new CustomerSelectionWindow();
+
+            bool returnValue = (bool)csw.ShowDialog();
+
+            if (returnValue == true)
+            {
+                long sc = csw.selectedCustomerIDNumber;
+
+                SaleCartPage NewWindow = new SaleCartPage();
+                NewWindow.SelectedCustomerIDNumber = sc;
+
+                App.NavigateTo(NewWindow);
+            }
+        }
+
+        private void TedarikBorcButtonClicked(object sender, RoutedEventArgs e)
+        {
+            SupplierSelectionWindow dw = new SupplierSelectionWindow();
+
+            bool returnValue = (bool)dw.ShowDialog();
+
+            if (returnValue == true)
+            {
+                int ss = dw.selectedSupplierID;
+
+                SupplierDebtPaymentPage NewWindow = new SupplierDebtPaymentPage();
+                NewWindow.SelectedSupplierID = ss;
+
+                App.NavigateTo(NewWindow);
+            }
+        }
+        private void HomeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateToMain();
+        }
+        private void CikisButtonClicked(object sender, RoutedEventArgs e)
+        {
+            //Log out
+            App.DestroySession();
+
+            App.NavigateToMain();
         }
         public class StockItem
         {
             public string Title { get; set; }
             public int Completion { get; set; }
-        }
-        private void HomeButtonClicked(object sender, RoutedEventArgs e)
-        {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
-        }
-        private void CikisButtonClicked(object sender, RoutedEventArgs e)
-        {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            MainWindow new_main = new MainWindow();
-
-            //Log out
-            App.DestroySession();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            public string Color { get; set; }
         }
     }
 }

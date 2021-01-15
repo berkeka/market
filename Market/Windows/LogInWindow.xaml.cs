@@ -33,7 +33,7 @@ namespace Market
 
             // Get inputs from UsernameText PasswordText text boxes
             string InputUsername = UsernameText.Text;
-            string InputPassword = PasswordText.Text;
+            string InputPassword = PasswordText.Password;
 
             // Check if credientials are correct
 
@@ -48,7 +48,7 @@ namespace Market
             }
             else
             {
-                MessageBox.Show("Username or Password is wrong!");
+                MessageBox.Show("Kullanıcı adı veya parola hatalı!");
                 this.DialogResult = false;
             }
         }

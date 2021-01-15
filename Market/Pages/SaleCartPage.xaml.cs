@@ -52,7 +52,7 @@ namespace Market
             double Amount;
 
             // If AmountText is empty
-            if(AmountText.Text == "") { MessageBox.Show("Wrong Amount!"); return; }
+            if(AmountText.Text == "") { MessageBox.Show("Miktar giriniz!"); return; }
 
             // Parse amount value
             Amount = double.Parse(AmountText.Text);
@@ -60,14 +60,14 @@ namespace Market
             var queryStrg = context.Stocks.Where(a => a.Barcode == InputBarcode);
 
             //Check the product in storage
-            if(!queryStrg.Any()) { MessageBox.Show("There is no product with this barcode!"); return; }
+            if(!queryStrg.Any()) { MessageBox.Show("Geçersiz barkod!"); return; }
             Stock s = queryStrg.First();
             
             var query = context.Products.Where(i => i.Barcode == InputBarcode);
             // If no product exists with the given barcode
-            if (!query.Any()) { MessageBox.Show("Couldn't find Product"); return; }
+            if (!query.Any()) { MessageBox.Show("Ürün bulunamadı"); return; }
             // If amount isn't possible
-            if (Amount < 1) { MessageBox.Show("Wrong Amount!"); return; }
+            if (Amount < 1) { MessageBox.Show("Geçersiz miktar!"); return; }
 
             // Create object for new item
             Product p = query.First();
@@ -86,7 +86,7 @@ namespace Market
                     //Compare the input with available amount of product
                     if ((s.Amount - piFromWindow.Amount) < Amount)
                     {
-                        MessageBox.Show("Available product is fewer than input");
+                        MessageBox.Show("Girdi miktarı ürün mevcudundan fazla");
                         return;
                     }
                     productInList = true;
@@ -94,25 +94,24 @@ namespace Market
                     ItemList.Items.Remove(piFromWindow);
                     ItemList.Items.Add(piFromWindow);
                 }
-                else
-                {
-                    if(s.Amount < Amount)
-                    {
-                        MessageBox.Show("Available product is fewer than input");
-                        return;
-                    }
-                    piFromWindow.Amount += pi.Amount;
-                }
             }
                     
             // If product wasn't already in the list 
             if(!productInList)
             {
+                if (s.Amount < Amount)
+                {
+                    MessageBox.Show("Girdi miktarı ürün mevcudundan fazla");
+                    return;
+                }
                 ItemList.Items.Add(pi);
             }
 
             // Calculate new sum
             RefreshSum();
+
+            BarcodeText.Text = String.Empty;
+            AmountText.Text = String.Empty;
         }
 
         private void CikarButtonClicked(object sender, RoutedEventArgs e)
@@ -136,7 +135,7 @@ namespace Market
         private void TamamlaButtonClicked(object sender, RoutedEventArgs e)
         {
             
-            if (ItemList.Items.IsEmpty) { MessageBox.Show("List is Empty"); return; }
+            if (ItemList.Items.IsEmpty) { MessageBox.Show("Liste boş"); return; }
 
             var context = new MarketDBContext();
 
@@ -152,10 +151,10 @@ namespace Market
             context.Sales.Add(sale);
             context.SaveChanges();
             
-            var query = context.CustomerDebts.Where(i => i.IDNumber == CustomerIDNumber);
+            var query = context.CustomerDebts.Where(i => i.CustomerIDNumber == CustomerIDNumber);
             if (query.Count() != 0)
             {
-                CustomerDebt cstdebt = context.CustomerDebts.Find(CustomerIDNumber);
+                CustomerDebt cstdebt = query.First();
                 double sum = 0.0;
                 // Loop through each item in the list
                 for (int i = 0; i < ItemList.Items.Count; i++)
@@ -203,7 +202,7 @@ namespace Market
             // Clear the list after sale is complete
             ItemList.Items.Clear();
             RefreshSum();
-            MessageBox.Show("Completed Sale");
+            MessageBox.Show("Satış tamamlandı");
         }
 
         private void RefreshSum()
@@ -219,17 +218,14 @@ namespace Market
             // Set content of the label to sum of all values
             SumLabel.Content = sum.ToString();
         }
-
+        //Go back to sale page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new SalePage());
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
 
     }

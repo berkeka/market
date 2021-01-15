@@ -37,9 +37,9 @@ namespace Market.Pages
 
             // Exception control
             // If date fields are empty
-            if (StartDatePicker.SelectedDate == null || EndDatePicker.SelectedDate == null) { MessageBox.Show("Please select dates"); return; }
+            if (StartDatePicker.SelectedDate == null || EndDatePicker.SelectedDate == null) { MessageBox.Show("Lütfen tarihleri seçiniz"); return; }
             // If selected dates aren't possible
-            if (StartDatePicker.SelectedDate >= EndDatePicker.SelectedDate) { MessageBox.Show("Start date should be before the end date"); return; }
+            if (StartDatePicker.SelectedDate >= EndDatePicker.SelectedDate) { MessageBox.Show("Başlangıç tarihi bitiş tarihinden önce olmalı"); return; }
 
             DateTime Start = (DateTime)StartDatePicker.SelectedDate;
             DateTime End = (DateTime)EndDatePicker.SelectedDate;
@@ -55,7 +55,7 @@ namespace Market.Pages
 
             // Get selected Products
             var selectedItems = ProductList.SelectedItems;
-            if (selectedItems.Count == 0) { MessageBox.Show("Please select a product"); return; }
+            if (selectedItems.Count == 0) { MessageBox.Show("Lütfen ürün seçiniz"); return; }
 
             ChartValues<string> DateLabels = new ChartValues<string>();
 
@@ -122,17 +122,14 @@ namespace Market.Pages
             // Set date strings to labels on the X axis
             Chart.AxisX.First().Labels = DateLabels;
         }
-
+        //Go back to report main page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new ReportMainPage());
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
     }
 }

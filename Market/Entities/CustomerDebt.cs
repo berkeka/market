@@ -12,14 +12,14 @@ namespace Market.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long IDNumber { get; set; }
+        public long CustomerIDNumber { get; set; }
         public double DebtAmount { get; set; }
         public CustomerDebt()
         {
         }
-        public CustomerDebt(long IDNumber, double DebtAmount)
+        public CustomerDebt(long CustomerIDNumber, double DebtAmount)
         {
-            this.IDNumber = IDNumber;
+            this.CustomerIDNumber = CustomerIDNumber;
             this.DebtAmount = DebtAmount;
         }
     }

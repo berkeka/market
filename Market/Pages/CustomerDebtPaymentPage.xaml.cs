@@ -43,12 +43,13 @@ namespace Market.Pages
                     CustomerLabel.Content = "Seçilmiş Müşteri: " + c.Name + " " + c.LastName;
                     
                     CustomerDebt cd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
-                    double sum = cd.DebtAmount;
+                    double sum = 0.0;
+                    if(cd != null) { sum = cd.DebtAmount; }
                     // Set content of the label to sum
                     SumLabel.Content = sum.ToString();
 
 
-                    PaymentList.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<CustomerPayment>();
+                    PaymentList.ItemsSource = context.Payments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<Payment>();
                 }
             }
         }
@@ -64,8 +65,8 @@ namespace Market.Pages
                 {
                     double InputPaymentAmount = double.Parse(PaymentAmountText.Text);
 
-                    CustomerPayment cp = new CustomerPayment(this.SelectedCustomerIDNumber, InputPaymentAmount, DateTime.Now);
-                    context.CustomerPayments.Add(cp);
+                    Payment cp = new Payment(this.SelectedCustomerIDNumber, 0,  InputPaymentAmount, DateTime.Now);
+                    context.Payments.Add(cp);
 
                     CustomerDebt tcd = context.CustomerDebts.Find(this.SelectedCustomerIDNumber);
                     tcd.DebtAmount -= InputPaymentAmount;
@@ -79,7 +80,7 @@ namespace Market.Pages
                 }
                 else
                 {
-                    MessageBox.Show("Wrong amount!");
+                    MessageBox.Show("Mevcut borçtan fazla girdiniz!");
                 }
             }
         }
@@ -87,7 +88,7 @@ namespace Market.Pages
         {
             var context = new MarketDBContext();
 
-            List.ItemsSource = context.CustomerPayments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<CustomerPayment>();
+            List.ItemsSource = context.Payments.Where(s => s.CustomerIDNumber == this.SelectedCustomerIDNumber).ToList<Payment>();
         }
         public void RefreshSum(Label label)
         {
@@ -98,16 +99,14 @@ namespace Market.Pages
             // Set content of the label to sum
             SumLabel.Content = sum.ToString();
         }
+        //Go back to sale page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new SalePage());
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
     }
 }

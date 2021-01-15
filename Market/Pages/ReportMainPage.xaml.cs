@@ -22,32 +22,26 @@ namespace Market.Pages
     /// </summary>
     public partial class ReportMainPage : Page
     {
-        
+
         public ReportMainPage()
         {
             InitializeComponent();
         }
 
+        private void ProfitButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new ProfitPage());
+        }
+
         private void ProductSaleButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            SaleCountReportPage NewPage = new SaleCountReportPage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage.Content;
+            App.NavigateTo(new SaleCountReportPage());
         }
         private void TrendButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            TrendChartPage NewPage = new TrendChartPage();
-
-            main.Title = NewPage.Title;
-            main.Content = NewPage.Content;
+            App.NavigateTo(new TrendChartPage());
         }
 
-        
         private void CustomerReportButtonClicked(object sender, RoutedEventArgs e)
         {
             var context = new MarketDBContext();
@@ -55,21 +49,28 @@ namespace Market.Pages
             CustomerSelectionWindow csw = new CustomerSelectionWindow();
             csw.ShowDialog();
 
-            if(csw.selectedCustomerIDNumber == 0) { return; }
-
+            if (csw.selectedCustomerIDNumber == 0) { return; }
+            FileSelectionWindow fsw = new FileSelectionWindow();
+            fsw.ShowDialog();
+            if (fsw.selection == 0) { return; }
             ReportFileGenerator fileGenerator = new ReportFileGenerator();
-            fileGenerator.SingleCustomerReport(csw.selectedCustomerIDNumber);
+            fileGenerator.SingleCustomerReport(csw.selectedCustomerIDNumber, fsw.selection);
+        }
+        private void MultiCustomerReportButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var context = new MarketDBContext();
+            var query = context.CustomerDebts;
+
+            if (!query.Any()) { MessageBox.Show("There is no customer debt!"); return; }
+            FileSelectionWindow fsw = new FileSelectionWindow();
+            fsw.ShowDialog();
+            if (fsw.selection == 0) { return; }
+            ReportFileGenerator fileGenerator = new ReportFileGenerator();
+            fileGenerator.AllCustomerReport(fsw.selection);
         }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
     }
 }

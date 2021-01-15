@@ -25,7 +25,7 @@ namespace Market.Pages
         {
             var context = new MarketDBContext();
 
-            var result = context.Database.SqlQuery<ProductItem>(@"select 1 as ID, cast(1 as float) as Price, Products.Name as ""Name"", Products.Barcode as Barcode, SUM(ProductSales.Amount) as Amount
+            var result = context.Database.SqlQuery<ProductItem>(@"select 1 as ID, cast(1 as float) as Price, cast(1 as float) as WarningLimit, Products.Name as ""Name"", Products.Barcode as Barcode, SUM(ProductSales.Amount) as Amount
                                                                 from ProductSales
                                                                 join Products
                                                                 on ProductSales.ProductID = Products.ID
@@ -54,18 +54,14 @@ namespace Market.Pages
                 List.ItemsSource = reversed_items;
             }
         }
-        
-
+        //Go back to report main page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new ReportMainPage());
+        }
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            MainWindow new_main = new MainWindow();
-
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
     }
 }

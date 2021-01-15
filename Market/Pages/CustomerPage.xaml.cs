@@ -53,12 +53,12 @@ namespace Market
                 }
                 else
                 {
-                    MessageBox.Show("Customer was registered before.");
+                    MessageBox.Show("Girilen kimlik numarasına sahip kayıtlı müşteri var!");
                 }
             }
             else 
             {
-                MessageBox.Show("Please fill name, lastname and id!");
+                MessageBox.Show("Lütfen isim, soyisim ve kimlik numarası giriniz!");
             }
         }
 
@@ -69,19 +69,15 @@ namespace Market
             List.ItemsSource = context.Customers.ToList<Customer>();
         }
 
+        //Go back to sale page
+        private void GoBackButtonClicked(object sender, RoutedEventArgs e)
+        {
+            App.NavigateTo(new SalePage());
+        }
+
         private void HomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            // Get the instance of the MainWindow
-            MainWindow main = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-
-            // Initialize new MainWindow
-            MainWindow new_main = new MainWindow();
-
-            // Rebuild mainWindow
-            main.Title = new_main.Title;
-            main.Content = new_main.Content;
-            // Close the newly initialized window
-            new_main.Close();
+            App.NavigateToMain();
         }
     }
 }
